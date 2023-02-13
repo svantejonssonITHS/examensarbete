@@ -13,3 +13,7 @@ npm-debug.log*
 
 # turbo
 .turbo
+
+# builds
+build
+dist

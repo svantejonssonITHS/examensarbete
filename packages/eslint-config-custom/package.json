@@ -2,10 +2,16 @@
 	"name": "eslint-config-custom",
 	"version": "0.0.0",
 	"main": "index.js",
+	"scripts": {
+		"format": "prettier --write ."
+	},
 	"dependencies": {
-		"eslint": "^7.23.0",
+		"eslint": "^8.0.1",
 		"eslint-config-prettier": "^8.3.0",
-		"eslint-config-turbo": "latest"
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-config-turbo": "latest",
+		"@typescript-eslint/eslint-plugin": "5.44.0",
+		"@typescript-eslint/parser": "5.44.0"
 	},
 	"publishConfig": {
 		"access": "restricted"

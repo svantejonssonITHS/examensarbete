@@ -12,7 +12,7 @@
 	],
 	"scripts": {
 		"lint": "turbo run lint",
-		"format": "prettier run format",
+		"format": "turbo run format",
 		"dev": "turbo run dev"
 	},
 	"devDependencies": {
