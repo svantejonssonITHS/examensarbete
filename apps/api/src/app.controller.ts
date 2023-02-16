@@ -1,4 +1,7 @@
+// External dependencies
 import { Controller, Get } from '@nestjs/common';
+
+// Internal dependencies
 import { AppService } from './app.service';
 
 @Controller()
