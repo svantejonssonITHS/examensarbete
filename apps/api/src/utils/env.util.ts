@@ -9,5 +9,6 @@ export default {
 	DATABASE_NAME: process.env.DATABASE_NAME,
 	DATABASE_USERNAME: process.env.DATABASE_USERNAME,
 	DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
-	DATABASE_SYNCHRONIZE: process.env.DATABASE_SYNCHRONIZE.toLocaleLowerCase() === 'true'
+	DATABASE_SYNCHRONIZE: process.env.DATABASE_SYNCHRONIZE.toLocaleLowerCase() === 'true',
+	VASTTRAFIK_API_KEY: process.env.VASTTRAFIK_API_KEY
 };
