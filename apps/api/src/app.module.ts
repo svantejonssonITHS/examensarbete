@@ -4,12 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Internal dependencies
 import env from './utils/env.util';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { Geometry, Position, Station } from './entities';
+import { HealthModule } from './routes/health/health.module';
 
 @Module({
 	imports: [
+		// Database
 		TypeOrmModule.forRoot({
 			type: 'mysql',
 			host: env.DATABASE_HOST,
@@ -19,9 +19,9 @@ import { Geometry, Position, Station } from './entities';
 			database: env.DATABASE_NAME,
 			synchronize: env.DATABASE_SYNCHRONIZE,
 			entities: [Geometry, Position, Station]
-		})
-	],
-	controllers: [AppController],
-	providers: [AppService]
+		}),
+		// Routes
+		HealthModule
+	]
 })
 export class AppModule {}

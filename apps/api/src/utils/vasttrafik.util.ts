@@ -1,5 +1,6 @@
 // External dependencies
 import axios from 'axios';
+import { Logger } from '@nestjs/common';
 
 // Internal dependencies
 import env from './env.util';
@@ -17,21 +18,24 @@ export default {
 	getHealth: async () => {
 		try {
 			const journeyPlanner = await vasttrafik.get('/bin/rest.exe/v2/trip');
-			const geography = await vasttrafik.get('/geo/v2/StopPoints');
+			const geography = await vasttrafik.get('/geo/v2/StopAreas?offset=0&limit=1');
 			const trafficSituations = await vasttrafik.get('/ts/v1/traffic-situations');
 
 			return {
-				overall: journeyPlanner.status === 200 && geography.status === 200 && trafficSituations.status === 200,
-				journeyPlanner: journeyPlanner.status === 200,
-				geography: geography.status === 200,
-				trafficSituations: trafficSituations.status === 200
+				connected:
+					journeyPlanner.status === 200 && geography.status === 200 && trafficSituations.status === 200,
+				journeyPlanner: { connected: journeyPlanner.status === 200 },
+				geography: { connected: geography.status === 200 },
+				trafficSituations: { connected: trafficSituations.status === 200 }
 			};
 		} catch (error) {
+			Logger.error('An error occurred while trying to get health of Västtrafik APIs', error.stack, 'Västtrafik');
+
 			return {
-				overall: false,
-				journeyPlanner: false,
-				geography: false,
-				trafficSituations: false
+				connected: false,
+				journeyPlanner: { connected: false },
+				geography: { connected: false },
+				trafficSituations: { connected: false }
 			};
 		}
 	}
