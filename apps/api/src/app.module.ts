@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import env from './utils/env.util';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { Geometry, Position, Station } from './entities';
 
 @Module({
 	imports: [
@@ -17,7 +18,7 @@ import { AppService } from './app.service';
 			password: env.DATABASE_PASSWORD,
 			database: env.DATABASE_NAME,
 			synchronize: env.DATABASE_SYNCHRONIZE,
-			entities: []
+			entities: [Geometry, Position, Station]
 		})
 	],
 	controllers: [AppController],
