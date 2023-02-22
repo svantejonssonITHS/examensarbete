@@ -4,6 +4,7 @@ import { Logger } from '@nestjs/common';
 
 // Internal dependencies
 import env from './env.util';
+import { VasttrafikHealth } from '$src/types';
 
 // Create object västtrafik
 const vasttrafik = axios.create({
@@ -15,7 +16,7 @@ const vasttrafik = axios.create({
 });
 
 export default {
-	getHealth: async () => {
+	getHealth: async (): Promise<VasttrafikHealth> => {
 		try {
 			const journeyPlanner = await vasttrafik.get('/bin/rest.exe/v2/trip');
 			const geography = await vasttrafik.get('/geo/v2/StopAreas?offset=0&limit=1');

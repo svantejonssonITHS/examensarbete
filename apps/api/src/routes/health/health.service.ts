@@ -4,12 +4,13 @@ import { DataSource } from 'typeorm';
 
 // Internal dependencies
 import vasttrafik from 'src/utils/vasttrafik.util';
+import { HealthResponse } from '_packages/shared/types';
 
 @Injectable()
 export class HealthService {
 	constructor(private dataSource: DataSource) {}
 
-	async getHealth(): Promise<any> {
+	async getHealth(): Promise<HealthResponse> {
 		try {
 			// Check health of database
 			const databaseHealth = await this.databaseHealth();
@@ -18,6 +19,10 @@ export class HealthService {
 			const vasttrafikHealth = await vasttrafik.getHealth();
 
 			return {
+				success: true,
+				message: 'Successfully fetched health of services',
+				uptime: process.uptime(),
+				timestamp: Date.now(),
 				database: {
 					connected: databaseHealth
 				},
@@ -27,6 +32,10 @@ export class HealthService {
 			Logger.error('An error occurred while trying to get health of services', error.stack, 'Health');
 
 			return {
+				success: false,
+				message: 'An error occurred while trying to get health of services',
+				uptime: process.uptime(),
+				timestamp: Date.now(),
 				database: {
 					connected: false
 				},
