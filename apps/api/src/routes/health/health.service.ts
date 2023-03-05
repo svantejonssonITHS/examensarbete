@@ -3,12 +3,12 @@ import { Injectable, Logger } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 
 // Internal dependencies
-import vasttrafik from 'src/utils/vasttrafik.util';
 import { HealthResponse } from '_packages/shared/types';
+import { VasttrafikProvider } from '$src/providers/vasttrafik/vasttrafik.provider';
 
 @Injectable()
 export class HealthService {
-	constructor(private dataSource: DataSource) {}
+	constructor(private dataSource: DataSource, private vasttrafik: VasttrafikProvider) {}
 
 	async getHealth(): Promise<HealthResponse> {
 		try {
@@ -16,7 +16,7 @@ export class HealthService {
 			const databaseHealth = await this.databaseHealth();
 
 			// Check health of Västtrafik APIs
-			const vasttrafikHealth = await vasttrafik.getHealth();
+			const vasttrafikHealth = await this.vasttrafik.getHealth();
 
 			return {
 				success: true,
