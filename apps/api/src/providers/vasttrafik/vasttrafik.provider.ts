@@ -6,6 +6,7 @@ import { Cache } from 'cache-manager';
 // Internal dependencies
 import { VasttrafikHealth } from '$src/types';
 import env from '$src/utils/env.util';
+import { VasttrafikStopArea } from '$src/types/vasttrafik.type';
 
 const authAPI = axios.create({
 	baseURL: 'https://api.vasttrafik.se:443',
@@ -72,6 +73,30 @@ export class VasttrafikProvider {
 				geography: { connected: false },
 				trafficSituations: { connected: false }
 			};
+		}
+	}
+
+	async getStopAreas(): Promise<VasttrafikStopArea[]> {
+		try {
+			await this.getAccessToken();
+
+			const stopAreas = await vasttrafikAPI.get(
+				'/geo/v2/StopAreas?includeStopPoints=true&includeGeometry=true&srid=4326'
+			);
+
+			if (stopAreas.status !== 200) {
+				throw new Error('Could not get stop areas from Västtrafik API');
+			}
+
+			Logger.log('Successfully fetched stop areas from Västtrafik API', 'Västtrafik');
+
+			return stopAreas.data;
+		} catch (error) {
+			Logger.error(
+				'An error occurred while trying to get stop areas from Västtrafik API',
+				error.stack,
+				'Västtrafik'
+			);
 		}
 	}
 }
