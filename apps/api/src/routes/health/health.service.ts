@@ -18,6 +18,8 @@ export class HealthService {
 			// Check health of Västtrafik APIs
 			const vasttrafikHealth = await this.vasttrafik.getHealth();
 
+			Logger.log('Sending health of services', 'Health');
+
 			return {
 				success: true,
 				message: 'Successfully fetched health of services',
