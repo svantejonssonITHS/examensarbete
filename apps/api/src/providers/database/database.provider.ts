@@ -1,5 +1,5 @@
 // External dependencies
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { DataSource, EntityManager } from 'typeorm';
 
 // Internal dependencies
@@ -8,6 +8,8 @@ import { Geometry, Position, Station } from '$src/entities';
 @Injectable()
 export class DatabaseProvider {
 	constructor(private dataSource: DataSource) {}
+
+	private readonly logger = new Logger(DatabaseProvider.name);
 
 	private queryManager = async (queries: (entityManager: EntityManager) => Promise<unknown>) => {
 		let result = null;
@@ -23,8 +25,10 @@ export class DatabaseProvider {
 			await queryRunner.commitTransaction();
 		} catch (error) {
 			await queryRunner.rollbackTransaction();
+			this.logger.error('An error occurred while trying to execute queries', error.stack);
 		} finally {
 			await queryRunner.release();
+			this.logger.log('Successfully executed queries');
 		}
 
 		return result;

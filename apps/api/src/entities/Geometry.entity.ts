@@ -5,10 +5,10 @@ export class Geometry {
 	@PrimaryGeneratedColumn()
 	readonly id?: number;
 
-	@Column()
+	@Column({ type: 'decimal', precision: 18, scale: 15 })
 	longitude: number;
 
-	@Column()
+	@Column({ type: 'decimal', precision: 18, scale: 15 })
 	latitude: number;
 
 	@Column({ default: 4326 })

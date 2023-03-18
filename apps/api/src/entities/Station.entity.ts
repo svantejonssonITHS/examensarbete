@@ -1,5 +1,5 @@
 // External dependencies
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany, JoinColumn } from 'typeorm';
 
 // Internal dependencies
 import { Geometry } from './Geometry.entity';
@@ -20,8 +20,9 @@ export class Station {
 	shortName: string;
 
 	@OneToOne(() => Geometry, (geometry) => geometry.id)
-	geometry: Geometry;
+	@JoinColumn()
+	geometry?: Geometry;
 
-	@OneToMany(() => Position, (position) => position.id)
-	positions: Position[];
+	@OneToMany(() => Position, (position) => position.station, { cascade: true })
+	positions?: Position[];
 }
