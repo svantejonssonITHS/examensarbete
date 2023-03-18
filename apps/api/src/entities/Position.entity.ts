@@ -7,7 +7,7 @@ import { Geometry } from './Geometry.entity';
 @Entity()
 export class Position {
 	@PrimaryGeneratedColumn()
-	id: number;
+	readonly id?: number;
 
 	@Column()
 	vasttrafikId: string;

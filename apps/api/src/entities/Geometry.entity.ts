@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Geometry {
 	@PrimaryGeneratedColumn()
-	id: number;
+	readonly id?: number;
 
 	@Column()
 	longitude: number;

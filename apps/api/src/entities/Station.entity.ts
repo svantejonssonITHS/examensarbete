@@ -8,7 +8,7 @@ import { Position } from './Position.entity';
 @Entity()
 export class Station {
 	@PrimaryGeneratedColumn()
-	id: number;
+	readonly id?: number;
 
 	@Column()
 	vasttrafikId: string;
