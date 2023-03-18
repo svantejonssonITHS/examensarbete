@@ -10,6 +10,8 @@ import { VasttrafikProvider } from '$src/providers/vasttrafik/vasttrafik.provide
 export class HealthService {
 	constructor(private dataSource: DataSource, private vasttrafik: VasttrafikProvider) {}
 
+	private readonly logger = new Logger(HealthService.name);
+
 	async getHealth(): Promise<HealthResponse> {
 		try {
 			// Check health of database
@@ -18,7 +20,7 @@ export class HealthService {
 			// Check health of Västtrafik APIs
 			const vasttrafikHealth = await this.vasttrafik.getHealth();
 
-			Logger.log('Sending health of services', 'Health');
+			this.logger.log('Sending health of services');
 
 			return {
 				success: true,
@@ -31,7 +33,7 @@ export class HealthService {
 				vasttrafik: vasttrafikHealth
 			};
 		} catch (error) {
-			Logger.error('An error occurred while trying to get health of services', error.stack, 'Health');
+			this.logger.error('An error occurred while trying to get health of services', error.stack);
 
 			return {
 				success: false,
@@ -61,7 +63,7 @@ export class HealthService {
 
 			return true;
 		} catch (error) {
-			Logger.error('An error occurred while trying to get health of database', error.stack, 'Database');
+			this.logger.error('An error occurred while trying to get health of database', error.stack);
 
 			return false;
 		}

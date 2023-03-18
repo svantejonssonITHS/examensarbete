@@ -22,11 +22,14 @@ const vasttrafikAPI = axios.create({
 export class VasttrafikProvider {
 	constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
+	private readonly logger = new Logger(VasttrafikProvider.name);
+
 	async getAccessToken(): Promise<void> {
 		const cachedAccessToken: string | undefined = await this.cacheManager.get<string>('vasttrafikAccessToken');
 
 		if (!cachedAccessToken) {
-			Logger.log('No cached access token found, getting new one from Västtrafik auth API', 'Västtrafik');
+			this.logger.log('No cached access token found, getting new one from Västtrafik auth API', 'Västtrafik');
+
 			const authResponse = await authAPI.post('/token?grant_type=client_credentials', null, {
 				headers: {
 					Authorization: `Basic ${env.VASTTRAFIK_API_KEY}`
@@ -65,7 +68,7 @@ export class VasttrafikProvider {
 				trafficSituations: { connected: trafficSituations.status === 200 }
 			};
 		} catch (error) {
-			Logger.error('An error occurred while trying to get health of Västtrafik APIs', error.stack, 'Västtrafik');
+			this.logger.error('An error occurred while trying to get health of Västtrafik APIs', error.stack);
 
 			return {
 				connected: false,
@@ -88,15 +91,11 @@ export class VasttrafikProvider {
 				throw new Error('Could not get stop areas from Västtrafik API');
 			}
 
-			Logger.log('Successfully fetched stop areas from Västtrafik API', 'Västtrafik');
+			this.logger.log('Successfully fetched stop areas from Västtrafik API');
 
 			return stopAreas.data;
 		} catch (error) {
-			Logger.error(
-				'An error occurred while trying to get stop areas from Västtrafik API',
-				error.stack,
-				'Västtrafik'
-			);
+			this.logger.error('An error occurred while trying to get stop areas from Västtrafik API', error.stack);
 		}
 	}
 }
