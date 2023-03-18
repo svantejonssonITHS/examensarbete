@@ -94,7 +94,7 @@ export class VasttrafikProvider {
 
 			this.logger.log('Successfully fetched stop areas from Västtrafik API');
 
-			return stopAreas.data;
+			return stopAreas.data.stopAreas;
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get stop areas from Västtrafik API', error.stack);
 		}
