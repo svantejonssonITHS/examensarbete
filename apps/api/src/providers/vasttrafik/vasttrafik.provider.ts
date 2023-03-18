@@ -25,7 +25,7 @@ export class VasttrafikProvider {
 	private readonly logger = new Logger(VasttrafikProvider.name);
 
 	async getAccessToken(): Promise<void> {
-		const cachedAccessToken: string | undefined = await this.cacheManager.get<string>('vasttrafikAccessToken');
+		let cachedAccessToken: string | undefined = await this.cacheManager.get<string>('vasttrafikAccessToken');
 
 		if (!cachedAccessToken) {
 			this.logger.log('No cached access token found, getting new one from Västtrafik auth API');
@@ -47,6 +47,8 @@ export class VasttrafikProvider {
 				// TTL (Response is in seconds, we need milliseconds)
 				authResponse.data.expires_in * 1000
 			);
+
+			cachedAccessToken = authResponse.data.access_token;
 		}
 
 		vasttrafikAPI.defaults.headers.Authorization = `Bearer ${cachedAccessToken}`;
