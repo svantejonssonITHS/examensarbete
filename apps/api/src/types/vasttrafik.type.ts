@@ -16,7 +16,8 @@ export type VasttrafikStopArea = {
 	gid: string;
 	number: number;
 	name: string;
-	shortName: string;
+	shortName: string | null;
+	abbreviation: string | null;
 	geometry: VasttrafikGeometry;
 	stopPoints: VasttrafikStopPoint[];
 };
@@ -24,7 +25,8 @@ export type VasttrafikStopArea = {
 export type VasttrafikStopPoint = {
 	gid: string;
 	name: string;
-	shortName: string;
+	shortName: string | null;
+	abbreviation: string | null;
 	designation: string;
 	geometry: VasttrafikGeometry;
 };

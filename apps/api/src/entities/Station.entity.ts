@@ -16,8 +16,11 @@ export class Station {
 	@Column()
 	name: string;
 
-	@Column()
+	@Column({ nullable: true })
 	shortName: string;
+
+	@Column({ nullable: true })
+	abbreviation: string;
 
 	@OneToOne(() => Geometry, (geometry) => geometry.id)
 	@JoinColumn()
