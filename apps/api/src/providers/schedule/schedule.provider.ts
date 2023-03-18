@@ -15,7 +15,7 @@ export class ScheduleProvider {
 	private readonly logger = new Logger(ScheduleProvider.name);
 
 	async updateDatabase() {
-		this.logger.debug('Task run successfully');
+		this.logger.debug('Scheduled update of database started');
 
 		try {
 			const stopAreas = await this.vasttrafikProvider.getStopAreas();

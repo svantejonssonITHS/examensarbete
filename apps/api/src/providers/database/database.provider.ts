@@ -28,7 +28,6 @@ export class DatabaseProvider {
 			this.logger.error('An error occurred while trying to execute queries', error.stack);
 		} finally {
 			await queryRunner.release();
-			this.logger.log('Successfully executed queries');
 		}
 
 		return result;
