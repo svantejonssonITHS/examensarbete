@@ -28,7 +28,7 @@ export class VasttrafikProvider {
 		const cachedAccessToken: string | undefined = await this.cacheManager.get<string>('vasttrafikAccessToken');
 
 		if (!cachedAccessToken) {
-			this.logger.log('No cached access token found, getting new one from Västtrafik auth API', 'Västtrafik');
+			this.logger.log('No cached access token found, getting new one from Västtrafik auth API');
 
 			const authResponse = await authAPI.post('/token?grant_type=client_credentials', null, {
 				headers: {
@@ -69,7 +69,6 @@ export class VasttrafikProvider {
 			};
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get health of Västtrafik APIs', error.stack);
-
 			return {
 				connected: false,
 				journeyPlanner: { connected: false },
