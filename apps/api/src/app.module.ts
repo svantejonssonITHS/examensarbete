@@ -1,11 +1,13 @@
 // External dependencies
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 
 // Internal dependencies
 import env from './utils/env.util';
 import { Geometry, Position, Station } from './entities';
 import { HealthModule } from './routes/health/health.module';
+import { ScheduleProvider } from './providers/schedule/schedule.provider';
 
 @Module({
 	imports: [
@@ -20,8 +22,11 @@ import { HealthModule } from './routes/health/health.module';
 			synchronize: env.DATABASE_SYNCHRONIZE,
 			entities: [Geometry, Position, Station]
 		}),
+		// Scheduling
+		ScheduleModule.forRoot(),
 		// Routes
 		HealthModule
-	]
+	],
+	providers: [ScheduleProvider]
 })
 export class AppModule {}
