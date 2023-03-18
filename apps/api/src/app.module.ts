@@ -1,13 +1,12 @@
 // External dependencies
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ScheduleModule } from '@nestjs/schedule';
 
 // Internal dependencies
 import env from './utils/env.util';
 import { Geometry, Position, Station } from './entities';
 import { HealthModule } from './routes/health/health.module';
-import { ScheduleProvider } from './providers/schedule/schedule.provider';
+import { ScheduleModule } from './providers/schedule/schedule.module';
 
 @Module({
 	imports: [
@@ -23,10 +22,10 @@ import { ScheduleProvider } from './providers/schedule/schedule.provider';
 			entities: [Geometry, Position, Station]
 		}),
 		// Scheduling
-		ScheduleModule.forRoot(),
+		ScheduleModule,
 		// Routes
 		HealthModule
 	],
-	providers: [ScheduleProvider]
+	providers: []
 })
 export class AppModule {}
