@@ -17,7 +17,7 @@ import { DatabaseProvider } from './database.provider';
 			password: env.DATABASE_PASSWORD,
 			database: env.DATABASE_NAME,
 			synchronize: env.DATABASE_SYNCHRONIZE,
-			entities: [Geometry, Position, Station]
+			autoLoadEntities: true
 		}),
 		TypeOrmModule.forFeature([Geometry, Position, Station])
 	],

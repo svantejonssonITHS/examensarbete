@@ -1,31 +1,50 @@
 // External dependencies
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, EntityManager } from 'typeorm';
 
 // Internal dependencies
 import { Geometry, Position, Station } from '$src/entities';
 
 @Injectable()
 export class DatabaseProvider {
-	constructor(
-		@InjectRepository(Geometry)
-		private geometryRepository: Repository<Geometry>,
-		@InjectRepository(Position)
-		private positionRepository: Repository<Position>,
-		@InjectRepository(Station)
-		private stationRepository: Repository<Station>
-	) {}
+	constructor(private dataSource: DataSource) {}
+
+	private queryManager = async (queries: (entityManager: EntityManager) => Promise<unknown>) => {
+		let result = null;
+
+		const queryRunner = this.dataSource.createQueryRunner();
+
+		await queryRunner.connect();
+		await queryRunner.startTransaction();
+
+		try {
+			result = await queries(queryRunner.manager);
+
+			await queryRunner.commitTransaction();
+		} catch (error) {
+			await queryRunner.rollbackTransaction();
+		} finally {
+			await queryRunner.release();
+		}
+
+		return result;
+	};
 
 	public createGeometry = async (geometry: Geometry): Promise<Geometry> => {
-		return this.geometryRepository.save(geometry);
+		return this.queryManager(async (entityManager) => {
+			return await entityManager.save(Geometry, geometry);
+		});
 	};
 
 	public createPosition = async (position: Position): Promise<Position> => {
-		return this.positionRepository.save(position);
+		return this.queryManager(async (entityManager) => {
+			return await entityManager.save(Position, position);
+		});
 	};
 
 	public createStation = async (station: Station): Promise<Station> => {
-		return this.stationRepository.save(station);
+		return this.queryManager(async (entityManager) => {
+			return await entityManager.save(Station, station);
+		});
 	};
 }
