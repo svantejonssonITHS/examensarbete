@@ -5,9 +5,10 @@ import { Module } from '@nestjs/common';
 import { HealthService } from './health.service';
 import { HealthController } from './health.controller';
 import { VasttrafikModule } from '$src/providers/vasttrafik/vasttrafik.module';
+import { DatabaseModule } from '$src/providers/database/database.module';
 
 @Module({
-	imports: [VasttrafikModule],
+	imports: [VasttrafikModule, DatabaseModule],
 	controllers: [HealthController],
 	providers: [HealthService]
 })

@@ -1,53 +1,83 @@
 // External dependencies
 import { Injectable, Logger } from '@nestjs/common';
-import { DataSource, EntityManager } from 'typeorm';
+import { Sequelize } from 'sequelize-typescript';
 
 // Internal dependencies
-import { Geometry, Position, Station } from '$src/entities';
+import { GeometryAttributes, GeometryCreationAttributes } from '$src/models/Geometry.model';
+import { PositionAttributes, PositionCreationAttributes } from '$src/models/Position.model';
+import { StationAttributes, StationCreationAttributes } from '$src/models/Station.model';
 
 @Injectable()
 export class DatabaseProvider {
-	constructor(private dataSource: DataSource) {}
+	constructor(private sequelize: Sequelize) {}
 
 	private readonly logger = new Logger(DatabaseProvider.name);
 
-	private queryManager = async (queries: (entityManager: EntityManager) => Promise<unknown>) => {
-		let result = null;
+	public checkConnection = async (): Promise<boolean> => {
+		try {
+			await this.sequelize.authenticate();
 
-		const queryRunner = this.dataSource.createQueryRunner();
+			this.logger.log('New database connection was successful, database appears healthy');
 
-		await queryRunner.connect();
-		await queryRunner.startTransaction();
+			return true;
+		} catch (error) {
+			this.logger.error('Unable to connect to the database, database appears unhealthy', error.stack);
+
+			return false;
+		}
+	};
+
+	public createGeometry = async (geometry: GeometryCreationAttributes): Promise<GeometryAttributes> => {
+		const transaction = await this.sequelize.transaction();
 
 		try {
-			result = await queries(queryRunner.manager);
+			const queryResult = await this.sequelize.models.Geometry.create(geometry, { transaction });
 
-			await queryRunner.commitTransaction();
+			await transaction.commit();
+
+			return queryResult.dataValues;
 		} catch (error) {
-			await queryRunner.rollbackTransaction();
-			this.logger.error('An error occurred while trying to execute queries', error.stack);
-		} finally {
-			await queryRunner.release();
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to create geometry', error.stack);
+
+			return null;
 		}
-
-		return result;
 	};
 
-	public createGeometry = async (geometry: Geometry): Promise<Geometry> => {
-		return this.queryManager(async (entityManager) => {
-			return await entityManager.save(Geometry, geometry);
-		});
+	public createPosition = async (position: PositionCreationAttributes): Promise<PositionAttributes> => {
+		const transaction = await this.sequelize.transaction();
+
+		try {
+			const queryResult = await this.sequelize.models.Position.create(position, { transaction });
+
+			await transaction.commit();
+
+			return queryResult.dataValues;
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to create position', error.stack);
+
+			return null;
+		}
 	};
 
-	public createPosition = async (position: Position): Promise<Position> => {
-		return this.queryManager(async (entityManager) => {
-			return await entityManager.save(Position, position);
-		});
-	};
+	public createStation = async (station: StationCreationAttributes): Promise<StationAttributes> => {
+		const transaction = await this.sequelize.transaction();
 
-	public createStation = async (station: Station): Promise<Station> => {
-		return this.queryManager(async (entityManager) => {
-			return await entityManager.save(Station, station);
-		});
+		try {
+			const queryResult = await this.sequelize.models.Station.create(station, { transaction });
+
+			await transaction.commit();
+
+			return queryResult.dataValues;
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to create station', error.stack);
+
+			return null;
+		}
 	};
 }

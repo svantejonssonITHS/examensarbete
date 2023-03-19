@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Cache } from 'cache-manager';
 
 // Internal dependencies
-import { VasttrafikHealth } from '$src/types';
+import { VasttrafikHealth } from '$src/types/vasttrafik.type';
 import env from '$src/utils/env.util';
 import { VasttrafikStopArea } from '$src/types/vasttrafik.type';
 
@@ -39,6 +39,8 @@ export class VasttrafikProvider {
 			if (authResponse.status !== 200) {
 				throw new Error('Could not get access token from Västtrafik auth API');
 			}
+
+			this.logger.log('Successfully got access token from Västtrafik auth API');
 
 			await this.cacheManager.set(
 				'vasttrafikAccessToken',

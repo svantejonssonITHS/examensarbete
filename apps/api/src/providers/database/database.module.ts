@@ -1,25 +1,30 @@
 // External dependencies
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 // Internal dependencies
 import env from '$src/utils/env.util';
-import { Geometry, Position, Station } from '$src/entities';
+import { Geometry } from '$src/models/Geometry.model';
+import { Position } from '$src/models/Position.model';
+import { Station } from '$src/models/Station.model';
 import { DatabaseProvider } from './database.provider';
 
 @Module({
 	imports: [
-		TypeOrmModule.forRoot({
-			type: 'mysql',
+		SequelizeModule.forRoot({
+			dialect: 'mysql',
 			host: env.DATABASE_HOST,
 			port: env.DATABASE_PORT,
 			username: env.DATABASE_USERNAME,
 			password: env.DATABASE_PASSWORD,
 			database: env.DATABASE_NAME,
 			synchronize: env.DATABASE_SYNCHRONIZE,
-			autoLoadEntities: true
+			sync: { force: true },
+			autoLoadModels: true,
+			models: [Geometry, Position, Station],
+			logging: false
 		}),
-		TypeOrmModule.forFeature([Geometry, Position, Station])
+		SequelizeModule.forFeature([Geometry, Position, Station])
 	],
 	providers: [DatabaseProvider],
 	exports: [DatabaseProvider]
