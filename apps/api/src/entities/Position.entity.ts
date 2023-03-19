@@ -10,7 +10,7 @@ export class Position {
 	@PrimaryGeneratedColumn()
 	readonly id?: number;
 
-	@Column()
+	@Column({ unique: true })
 	vasttrafikId: string;
 
 	@Column()
