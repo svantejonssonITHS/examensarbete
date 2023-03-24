@@ -1,6 +1,6 @@
 // External dependencies
 import { InferAttributes, Optional } from 'sequelize';
-import { BelongsTo, Column, HasMany, Model, Table } from 'sequelize-typescript';
+import { HasOne, Column, HasMany, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
 import { Geometry } from './Geometry.model';
@@ -23,15 +23,12 @@ export class Station extends Model {
 	@Column({ allowNull: true })
 	abbreviation: string;
 
-	@BelongsTo(() => Geometry, { foreignKey: 'geometryId' })
+	@HasOne(() => Geometry, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
 	geometry: InferAttributes<Geometry>;
 
-	@HasMany(() => Position, { foreignKey: 'stationId' })
+	@HasMany(() => Position, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
 	positions: InferAttributes<Position>[];
 }
 
 export type StationAttributes = InferAttributes<Station>;
-export type StationCreationAttributes = Optional<
-	StationAttributes & { geometryId: number },
-	'id' | 'positions' | 'geometry'
->;
+export type StationCreationAttributes = Optional<StationAttributes, 'id' | 'positions' | 'geometry'>;

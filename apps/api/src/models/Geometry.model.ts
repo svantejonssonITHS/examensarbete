@@ -1,6 +1,6 @@
 // External dependencies
 import { InferAttributes, Optional } from 'sequelize';
-import { Column, HasOne, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
 import { Position } from './Position.model';
@@ -20,15 +20,26 @@ export class Geometry extends Model {
 	@Column({ defaultValue: 4326 })
 	srid: number;
 
-	@HasOne(() => Position, { foreignKey: 'geometryId' })
+	@BelongsTo(() => Position, { foreignKey: 'positionId' })
 	position: Position | number;
 
-	@HasOne(() => Station, { foreignKey: 'geometryId' })
+	@BelongsTo(() => Station, { foreignKey: 'stationId' })
 	station: Station | number;
 }
 
 export type GeometryAttributes = InferAttributes<Geometry>;
-export type GeometryCreationAttributes = Optional<
-	GeometryAttributes & { positionId?: number; stationId?: number },
-	'id' | 'srid' | 'position' | 'station'
->;
+
+type GeometryCreationAttributesBase = Optional<GeometryAttributes, 'id' | 'srid' | 'position' | 'station'>;
+
+interface GeometryForPositionCreationAttributes extends GeometryCreationAttributesBase {
+	positionId: number;
+}
+
+interface GeometryForStationCreationAttributes extends GeometryCreationAttributesBase {
+	stationId: number;
+}
+
+/**
+ * @description Either a positionId or a stationId is required.
+ */
+export type GeometryCreationAttributes = GeometryForPositionCreationAttributes | GeometryForStationCreationAttributes;
