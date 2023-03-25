@@ -1,8 +1,8 @@
-import { GeometryCreationAttributes } from '$src/models/Geometry.model';
-import { PositionCreationAttributes } from '$src/models/Position.model';
-import { StationCreationAttributes } from '$src/models/Station.model';
+// External dependencies
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
+
+// Internal dependencies
 import { DatabaseProvider } from '../database/database.provider';
 import { VasttrafikProvider } from '../vasttrafik/vasttrafik.provider';
 
@@ -13,16 +13,6 @@ export class ScheduleProvider {
 	private readonly logger = new Logger(ScheduleProvider.name);
 
 	async updateDatabase() {
-		// TODO: If vastrafikId already exists, update instead of create. If id in database but not in response, delete it from db. Try bulkInsert instead of create. Clean up function.
-		/*
-		1. Get all stop areas
-		2. For each stop area, create station (if not exists)
-		3. For each stop area, create geometry (if not exists)
-		4. For each stop area, get all stop points
-		5. For each stop point, create position (if not exists)
-		6. For each stop point, create geometry (if not exists)
-		7. If any ids in database but not in response, delete them from db
-		*/
 		this.logger.log('Scheduled update of database started');
 
 		try {
@@ -67,7 +57,8 @@ export class ScheduleProvider {
 				}
 			}
 
-			// TODO: Delete stations and positions that are not in the response from Västtrafik
+			await this.databaseProvider.deleteStationsNotInVasttrafik(stationVasttrafikIds);
+			await this.databaseProvider.deletePositionsNotInVasttrafik(positionVasttrafikIds);
 		} catch (error) {
 			this.logger.error('Scheduled database update failed', error);
 		} finally {

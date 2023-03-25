@@ -69,6 +69,23 @@ export class DatabaseProvider {
 		}
 	};
 
+	public deletePositionsNotInVasttrafik = async (vasttrafikIds: string[]): Promise<void> => {
+		const transaction = await this.sequelize.transaction();
+
+		try {
+			await this.sequelize.query(`DELETE FROM positions WHERE vasttrafikId NOT IN (:vasttrafikIds)`, {
+				replacements: { vasttrafikIds },
+				transaction
+			});
+
+			await transaction.commit();
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to delete position(s)', error.stack);
+		}
+	};
+
 	public upsertStation = async (station: StationCreationAttributes): Promise<StationAttributes> => {
 		const transaction = await this.sequelize.transaction();
 
@@ -87,6 +104,23 @@ export class DatabaseProvider {
 			this.logger.error('An error occurred while trying to create station', error.stack);
 
 			return null;
+		}
+	};
+
+	public deleteStationsNotInVasttrafik = async (vasttrafikIds: string[]): Promise<void> => {
+		const transaction = await this.sequelize.transaction();
+
+		try {
+			await this.sequelize.query(`DELETE FROM stations WHERE vasttrafikId NOT IN (:vasttrafikIds)`, {
+				replacements: { vasttrafikIds },
+				transaction
+			});
+
+			await transaction.commit();
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to delete station(s)', error.stack);
 		}
 	};
 }
