@@ -32,7 +32,7 @@ export class DatabaseProvider {
 
 		try {
 			const queryResult = await this.sequelize.models.Geometry.create(geometry, {
-				updateOnDuplicate: ['positionId', 'stationId'],
+				updateOnDuplicate: ['longitude', 'latitude', 'positionId', 'stationId'],
 				transaction
 			});
 
@@ -53,7 +53,7 @@ export class DatabaseProvider {
 
 		try {
 			const queryResult = await this.sequelize.models.Position.create(position, {
-				updateOnDuplicate: ['vasttrafikId'],
+				updateOnDuplicate: ['name', 'shortName', 'abbreviation', 'designation', 'stationId'],
 				transaction
 			});
 
@@ -74,7 +74,7 @@ export class DatabaseProvider {
 
 		try {
 			const queryResult = await this.sequelize.models.Station.create(station, {
-				updateOnDuplicate: ['vasttrafikId'],
+				updateOnDuplicate: ['name', 'shortName', 'abbreviation'],
 				transaction
 			});
 
