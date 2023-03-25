@@ -29,17 +29,14 @@ export class Geometry extends Model {
 
 export type GeometryAttributes = InferAttributes<Geometry>;
 
-type GeometryCreationAttributesBase = Optional<GeometryAttributes, 'id' | 'srid' | 'position' | 'station'>;
-
-interface GeometryForPositionCreationAttributes extends GeometryCreationAttributesBase {
-	positionId: number;
-}
-
-interface GeometryForStationCreationAttributes extends GeometryCreationAttributesBase {
-	stationId: number;
-}
+type GeometryCreationAttributesBase = Optional<
+	GeometryAttributes & { positionId: number; stationId: number },
+	'id' | 'srid' | 'position' | 'station'
+>;
 
 /**
  * @description Either a positionId or a stationId is required.
  */
-export type GeometryCreationAttributes = GeometryForPositionCreationAttributes | GeometryForStationCreationAttributes;
+export type GeometryCreationAttributes =
+	| Optional<GeometryCreationAttributesBase, 'positionId'>
+	| Optional<GeometryCreationAttributesBase, 'stationId'>;
