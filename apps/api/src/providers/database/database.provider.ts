@@ -27,11 +27,14 @@ export class DatabaseProvider {
 		}
 	};
 
-	public createGeometry = async (geometry: GeometryCreationAttributes): Promise<GeometryAttributes> => {
+	public upsertGeometry = async (geometry: GeometryCreationAttributes): Promise<GeometryAttributes> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			const queryResult = await this.sequelize.models.Geometry.create(geometry, { transaction });
+			const queryResult = await this.sequelize.models.Geometry.create(geometry, {
+				updateOnDuplicate: ['positionId', 'stationId'],
+				transaction
+			});
 
 			await transaction.commit();
 
@@ -45,11 +48,14 @@ export class DatabaseProvider {
 		}
 	};
 
-	public createPosition = async (position: PositionCreationAttributes): Promise<PositionAttributes> => {
+	public upsertPosition = async (position: PositionCreationAttributes): Promise<PositionAttributes> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			const queryResult = await this.sequelize.models.Position.create(position, { transaction });
+			const queryResult = await this.sequelize.models.Position.create(position, {
+				updateOnDuplicate: ['vasttrafikId'],
+				transaction
+			});
 
 			await transaction.commit();
 
@@ -63,11 +69,14 @@ export class DatabaseProvider {
 		}
 	};
 
-	public createStation = async (station: StationCreationAttributes): Promise<StationAttributes> => {
+	public upsertStation = async (station: StationCreationAttributes): Promise<StationAttributes> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			const queryResult = await this.sequelize.models.Station.create(station, { transaction });
+			const queryResult = await this.sequelize.models.Station.create(station, {
+				updateOnDuplicate: ['vasttrafikId'],
+				transaction
+			});
 
 			await transaction.commit();
 
