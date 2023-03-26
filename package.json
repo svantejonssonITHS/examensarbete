@@ -20,5 +20,7 @@
 		"prettier": "latest",
 		"turbo": "latest"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"dotenv": "^16.0.3"
+	}
 }
