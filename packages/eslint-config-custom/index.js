@@ -10,5 +10,8 @@ module.exports = {
 		'@typescript-eslint/no-unused-vars': 'error',
 		'turbo/no-undeclared-env-vars': 'off'
 	},
-	ignorePatterns: ['node_modules', 'dist']
+	ignorePatterns: ['node_modules', 'dist'],
+	env: {
+		node: true
+	}
 };
