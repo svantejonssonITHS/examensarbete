@@ -6,6 +6,7 @@ import { useTheme } from './providers/theme.provider';
 import { Theme } from './types/theme.type';
 import { useTranslation } from 'react-i18next';
 import i18n from './i18n';
+import { Language } from './types/language.type';
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -36,7 +37,7 @@ function App() {
 				<p>{t('Welcome to React')}</p>
 				<button
 					onClick={() => {
-						i18n.changeLanguage(i18n.language === 'en' ? 'fr' : 'en');
+						i18n.changeLanguage(i18n.language === Language.EN ? Language.SV : Language.EN);
 					}}
 				>
 					change lang
