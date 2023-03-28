@@ -4,10 +4,13 @@ import viteLogo from '/vite.svg';
 import './App.css';
 import { useTheme } from './providers/theme.provider';
 import { Theme } from './types/theme.type';
+import { useTranslation } from 'react-i18next';
+import i18n from './i18n';
 
 function App() {
 	const [count, setCount] = useState(0);
 	const [theme, setTheme] = useTheme();
+	const { t } = useTranslation();
 
 	return (
 		<div className="App bg-white dark:bg-black">
@@ -30,9 +33,14 @@ function App() {
 			<h1>Vite + React</h1>
 			<div className="card">
 				<button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
+				<p>{t('Welcome to React')}</p>
+				<button
+					onClick={() => {
+						i18n.changeLanguage(i18n.language === 'en' ? 'fr' : 'en');
+					}}
+				>
+					change lang
+				</button>
 			</div>
 			<p className="read-the-docs">Click on the Vite and React logos to learn more</p>
 		</div>
