@@ -7,6 +7,8 @@ import { Theme } from './types/theme.type';
 import { useTranslation } from 'react-i18next';
 import i18n from './i18n';
 import { Language } from './types/language.type';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -42,6 +44,7 @@ function App() {
 				>
 					change lang
 				</button>
+				<FontAwesomeIcon icon={faEnvelope} />
 			</div>
 			<p className="read-the-docs">Click on the Vite and React logos to learn more</p>
 		</div>
