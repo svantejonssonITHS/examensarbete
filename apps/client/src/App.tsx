@@ -1,51 +1,91 @@
-import { useTheme } from './providers/theme.provider';
-import { Theme } from './types/theme.type';
-import { useTranslation } from 'react-i18next';
-import i18n from './i18n';
-import { Language } from './types/language.type';
-import Button from './components/Button';
+// External dependencies
+import { useState } from 'react';
+
+// Internal dependencies
+import Layout from './components/Layout';
 import IconButton from './components/IconButton';
-import { faCoffee, faWorm, faAnchorLock } from '@fortawesome/free-solid-svg-icons';
+import { faDirections, faList, faUser } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
+import Container from './components/Container';
+
+const buttonContainerStyles = {
+	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 linear',
+	left: 'left-0',
+	right: 'right-0',
+	hide: '!-top-14'
+};
+
+const containerStyles = {
+	base: 'invisible absolute top-0 transition-[left,right,visibility] duration-500 delay-100 linear',
+	left: '-left-full',
+	right: '-right-full',
+	show: {
+		left: '!visible !left-0',
+		right: '!visible !right-0'
+	}
+};
 
 function App() {
-	const [theme, setTheme] = useTheme();
-	const { t } = useTranslation();
+	const [showDirections, setShowDirections] = useState(false);
+	const [showDepartures, setShowDepartures] = useState(false);
+	const [showSettings, setShowSettings] = useState(false);
 
 	return (
-		<div className="App bg-white dark:bg-black">
-			<button
-				className="bg-blue-500 dark:bg-red-500 text-white font-bold py-2 px-4 rounded"
-				onClick={() => {
-					setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT);
-				}}
+		<Layout>
+			{/* Left side of screen */}
+			<div
+				className={clsx(
+					buttonContainerStyles.base,
+					buttonContainerStyles.left,
+					showDirections || showDepartures ? buttonContainerStyles.hide : ''
+				)}
 			>
-				Toggle theme
-			</button>
-			<Button variant="text">{t('Welcome to React')}</Button>
-			<Button variant="text" disabled>
-				Click me
-			</Button>
-			<Button variant="contained">Click me</Button>
-			<Button variant="contained" disabled>
-				Click me
-			</Button>
-			<Button variant="outlined">Click me</Button>
-			<Button variant="outlined" disabled>
-				Click me
-			</Button>
-			<IconButton variant="outlined" icon={faCoffee} />
-			<IconButton variant="outlined" icon={faWorm} />
-			<IconButton variant="outlined" icon={faAnchorLock} />
+				<IconButton
+					icon={faDirections}
+					variant="contained"
+					onClick={() => setShowDirections(!showDirections)}
+				/>
+				<IconButton icon={faList} variant="contained" onClick={() => setShowDepartures(!showDepartures)} />
+			</div>
+			<Container
+				className={clsx(
+					containerStyles.base,
+					containerStyles.left,
+					showDirections ? containerStyles.show.left : ''
+				)}
+			>
+				Directions
+			</Container>
+			<Container
+				className={clsx(
+					containerStyles.base,
+					containerStyles.left,
+					showDepartures ? containerStyles.show.left : ''
+				)}
+			>
+				Departures
+			</Container>
 
-			<p>{t('Welcome to React')}</p>
-			<button
-				onClick={() => {
-					i18n.changeLanguage(i18n.language === Language.EN ? Language.SV : Language.EN);
-				}}
+			{/* Right side of screen */}
+			<div
+				className={clsx(
+					buttonContainerStyles.base,
+					buttonContainerStyles.right,
+					showSettings ? buttonContainerStyles.hide : ''
+				)}
 			>
-				change lang
-			</button>
-		</div>
+				<IconButton icon={faUser} variant="contained" onClick={() => setShowSettings(!showSettings)} />
+			</div>
+			<Container
+				className={clsx(
+					containerStyles.base,
+					containerStyles.right,
+					showSettings ? containerStyles.show.right : ''
+				)}
+			>
+				Settings
+			</Container>
+		</Layout>
 	);
 }
 
