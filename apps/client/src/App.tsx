@@ -26,7 +26,7 @@ const containerStyles = {
 };
 
 function App() {
-	const [showDirections, setShowDirections] = useState(false);
+	const [showJourneyPlanner, setShowJourneyPlanner] = useState(false);
 	const [showDepartures, setShowDepartures] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 
@@ -37,13 +37,13 @@ function App() {
 				className={clsx(
 					buttonContainerStyles.base,
 					buttonContainerStyles.left,
-					showDirections || showDepartures ? buttonContainerStyles.hide : ''
+					showJourneyPlanner || showDepartures ? buttonContainerStyles.hide : ''
 				)}
 			>
 				<IconButton
 					icon={faDirections}
 					variant="contained"
-					onClick={() => setShowDirections(!showDirections)}
+					onClick={() => setShowJourneyPlanner(!showJourneyPlanner)}
 				/>
 				<IconButton icon={faList} variant="contained" onClick={() => setShowDepartures(!showDepartures)} />
 			</div>
@@ -51,7 +51,7 @@ function App() {
 				className={clsx(
 					containerStyles.base,
 					containerStyles.left,
-					showDirections ? containerStyles.show.left : ''
+					showJourneyPlanner ? containerStyles.show.left : ''
 				)}
 			>
 				Directions
