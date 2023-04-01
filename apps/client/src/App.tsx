@@ -3,9 +3,9 @@ import { Theme } from './types/theme.type';
 import { useTranslation } from 'react-i18next';
 import i18n from './i18n';
 import { Language } from './types/language.type';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Button from './components/Button';
+import IconButton from './components/IconButton';
+import { faCoffee, faWorm, faAnchorLock } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
 	const [theme, setTheme] = useTheme();
@@ -33,6 +33,9 @@ function App() {
 			<Button variant="outlined" disabled>
 				Click me
 			</Button>
+			<IconButton variant="outlined" icon={faCoffee} />
+			<IconButton variant="outlined" icon={faWorm} />
+			<IconButton variant="outlined" icon={faAnchorLock} />
 
 			<p>{t('Welcome to React')}</p>
 			<button
@@ -42,7 +45,6 @@ function App() {
 			>
 				change lang
 			</button>
-			<FontAwesomeIcon icon={faEnvelope} />
 		</div>
 	);
 }
