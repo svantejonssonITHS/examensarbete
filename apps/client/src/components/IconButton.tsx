@@ -19,8 +19,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	icon: IconDefinition;
 }
 
-function IconButton({ variant = 'text', icon, ...props }: ButtonProps) {
-	const classes = clsx(styles.base, styles.transition, styles.variant[variant]);
+function IconButton({ className, variant = 'text', icon, ...props }: ButtonProps) {
+	const classes = clsx(className, styles.base, styles.transition, styles.variant[variant]);
 
 	return (
 		<button className={classes} {...props}>
