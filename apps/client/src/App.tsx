@@ -48,22 +48,24 @@ function App() {
 				<IconButton icon={faList} variant="contained" onClick={() => setShowDepartures(!showDepartures)} />
 			</div>
 			<Container
+				title="Journey Planner"
 				className={clsx(
 					containerStyles.base,
 					containerStyles.left,
 					showJourneyPlanner ? containerStyles.show.left : ''
 				)}
 			>
-				Directions
+				content
 			</Container>
 			<Container
+				title="Departures"
 				className={clsx(
 					containerStyles.base,
 					containerStyles.left,
 					showDepartures ? containerStyles.show.left : ''
 				)}
 			>
-				Departures
+				content
 			</Container>
 
 			{/* Right side of screen */}
@@ -77,13 +79,14 @@ function App() {
 				<IconButton icon={faUser} variant="contained" onClick={() => setShowSettings(!showSettings)} />
 			</div>
 			<Container
+				title="Settings"
 				className={clsx(
 					containerStyles.base,
 					containerStyles.right,
 					showSettings ? containerStyles.show.right : ''
 				)}
 			>
-				Settings
+				content
 			</Container>
 		</Layout>
 	);
