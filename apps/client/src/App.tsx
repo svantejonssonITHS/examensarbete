@@ -7,6 +7,7 @@ import IconButton from './components/IconButton';
 import { faDirections, faList, faUser } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import Container from './components/Container';
+import Checkbox from './components/Checkbox';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -30,6 +31,8 @@ function App() {
 	const [showDepartures, setShowDepartures] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 
+	const [tmp, setTmp] = useState(false);
+
 	return (
 		<Layout>
 			{/* Left side of screen */}
@@ -52,7 +55,9 @@ function App() {
 					showJourneyPlanner ? containerStyles.show.left : ''
 				)}
 			>
-				content
+				<Checkbox checked={tmp} onChange={(e) => setTmp(e.target.checked)}>
+					Checkbox
+				</Checkbox>
 			</Container>
 			<Container
 				title="Departures"

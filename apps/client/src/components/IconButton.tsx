@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 const styles = {
-	base: 'rounded-full w-10 h-10 text-sm cursor-pointer disabled:cursor-not-allowed',
-	transition: 'transition duration-300 ease-in-out',
+	base: 'rounded-full w-10 h-10 text-sm cursor-pointer disabled:cursor-not-allowed focus:input_focus',
+	transition: 'input_transition',
 	variant: {
 		text: 'text-blue-600 hover:bg-blue-600/10 active:bg-blue-600/20 disabled:text-gray-500 disabled:bg-transparent dark:text-blue-400 dark:hover:bg-blue-400/10 dark:active:bg-blue-400/20 dark:disabled:text-gray-500 dark:disabled:bg-transparent',
 		contained:

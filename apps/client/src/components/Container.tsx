@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import IconButton from './IconButton';
 
 const containerStyles = {
-	base: 'h-full max-w-[25rem] p-2 border shadow rounded-md overflow-hidden bg-white',
+	base: 'h-full max-w-[25rem] p-2 rounded-md overflow-hidden bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow dark:shadow-white/10 text-black dark:text-white',
 	size: 'p-2 h-full w-full'
 };
 

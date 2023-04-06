@@ -4,7 +4,7 @@ interface LayoutProps extends React.HTMLAttributes<HTMLDivElement> {
 
 function Layout({ children, ...props }: LayoutProps) {
 	return (
-		<div className="p-2 w-screen h-screen overflow-hidden">
+		<div className="p-2 w-screen h-screen overflow-hidden bg-white dark:bg-neutral-900">
 			<div className="relative w-full h-full" {...props}>
 				{children}
 			</div>

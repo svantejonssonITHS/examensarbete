@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 
 const styles = {
-	base: 'rounded-md py-2 px-3 text-sm font-bold uppercase cursor-pointer disabled:cursor-not-allowed',
-	transition: 'transition duration-300 ease-in-out',
+	base: 'rounded-md py-2 px-3 text-sm font-bold uppercase cursor-pointer disabled:cursor-not-allowed focus:input_focus',
+	transition: 'input_transition',
 	variant: {
 		text: 'text-blue-600 hover:bg-blue-600/10 active:bg-blue-600/20 disabled:text-gray-500 disabled:bg-transparent dark:text-blue-400 dark:hover:bg-blue-400/10 dark:active:bg-blue-400/20 dark:disabled:text-gray-500 dark:disabled:bg-transparent',
 		contained:
