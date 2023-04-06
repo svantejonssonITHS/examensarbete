@@ -10,16 +10,17 @@ const containerStyles = {
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 	children: React.ReactNode;
 	title: string;
+	onClose?: () => void;
 }
 
-function Container({ children, title, className, ...props }: ContainerProps) {
+function Container({ children, title, onClose, className, ...props }: ContainerProps) {
 	const containerClasses = clsx(className, containerStyles.base, containerStyles.size);
 
 	return (
 		<div className={containerClasses} {...props}>
 			<header className="flex items-center justify-between">
 				<h1 className="text-lg font-semibold">{title}</h1>
-				<IconButton icon={faClose} />
+				<IconButton icon={faClose} onClick={onClose} />
 			</header>
 			{children}
 		</div>
