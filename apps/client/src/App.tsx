@@ -8,6 +8,7 @@ import { faDirections, faList, faUser } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx';
 import Container from './components/Container';
 import Checkbox from './components/Checkbox';
+import RadioButton from './components/RadioButton';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -58,6 +59,9 @@ function App() {
 				<Checkbox checked={tmp} onChange={(e) => setTmp(e.target.checked)}>
 					Checkbox
 				</Checkbox>
+				<RadioButton checked={tmp} onChange={(e) => setTmp(e.target.checked)}>
+					RadioButton
+				</RadioButton>
 			</Container>
 			<Container
 				title="Departures"
