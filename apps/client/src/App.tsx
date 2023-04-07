@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react';
 // Internal dependencies
 import Layout from './components/Layout';
 import IconButton from './components/IconButton';
-import { faDirections, faList, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faDirections, faList, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import Container from './components/Container';
+import Select from './components/Select';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -30,6 +31,8 @@ function App() {
 	const [showDepartures, setShowDepartures] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const [containerShowing, setContainerShowing] = useState(false);
+
+	const [tmp, setTmp] = useState('');
 
 	useEffect(() => {
 		setContainerShowing(showJourneyPlanner || showDepartures || showSettings);
@@ -67,7 +70,26 @@ function App() {
 					showJourneyPlanner ? containerStyles.show.left : ''
 				)}
 			>
-				content
+				<Select
+					options={[
+						{ label: 'test', value: 'test' },
+						{ label: 'test2', value: 'test2' }
+					]}
+					searchedOptions={async (s, c) => {
+						setTimeout(() => {
+							c([
+								{ label: 'test69', value: 'test3' },
+								{ label: 'test420', value: 'test4' }
+							]);
+						}, 3000);
+					}}
+					onSelect={(s) => {
+						setTmp(s);
+					}}
+					selectedValue={tmp}
+					placeholder="Search for a stop"
+					inputIcon={faSearch}
+				/>
 			</Container>
 			<Container
 				title="Departures"
