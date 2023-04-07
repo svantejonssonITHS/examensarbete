@@ -60,6 +60,7 @@ function Select({
 	const [queryString, setQueryString] = useState<string>('');
 	const [availableOptions, setAvailableOptions] = useState<Option[] | undefined>(options);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
 
 	useEffect(() => {
 		setAvailableOptions(options);
@@ -67,6 +68,11 @@ function Select({
 
 	useEffect(() => {
 		setQueryString(selectedValue?.label || '');
+
+		// If the selected value is among the available options, set the highlighted index to that option
+		if (selectedValue && availableOptions) {
+			setHighlightedIndex(availableOptions.findIndex((option) => option.value === selectedValue.value));
+		}
 	}, [selectedValue]);
 
 	return (
@@ -99,6 +105,29 @@ function Select({
 					if (selectedValue) {
 						setQueryString(selectedValue.label);
 					} else setQueryString('');
+				}}
+				onKeyDown={(e) => {
+					if (['ArrowUp', 'ArrowDown', 'Enter'].includes(e.key)) {
+						e.preventDefault();
+					}
+
+					// arrow up decreases the index
+					if (e.key === 'ArrowUp') {
+						if (highlightedIndex >= 0) {
+							setHighlightedIndex(highlightedIndex - 1);
+						} else {
+							setHighlightedIndex(-1);
+						}
+					} else if (e.key === 'ArrowDown') {
+						if (highlightedIndex < (availableOptions || []).length - 1) {
+							setHighlightedIndex(highlightedIndex + 1);
+						}
+					} else if (e.key === 'Enter' && availableOptions) {
+						if (highlightedIndex >= 0) {
+							onSelect(availableOptions[highlightedIndex]);
+							inputRef.current?.blur();
+						}
+					}
 				}}
 				{...props}
 			/>
@@ -133,6 +162,7 @@ function Select({
 							key={option.value}
 							className={clsx(
 								optionStyles.base,
+								highlightedIndex === availableOptions.indexOf(option) && optionStyles.highlight,
 								selectedValue?.value === option.value && optionStyles.selected
 							)}
 							tabIndex={-1}
