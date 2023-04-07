@@ -96,6 +96,10 @@ function Select({
 					setLoading(true);
 
 					await searchedOptions(queryString, (options) => {
+						// If the query string has changed, don't update the available options
+						// This is necessary because the `searchedOptions` function is asynchronous
+						if (queryString !== e.target.value) return;
+
 						setAvailableOptions(options);
 						setLoading(false);
 					});
