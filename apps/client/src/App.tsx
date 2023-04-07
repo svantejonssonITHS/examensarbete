@@ -8,6 +8,7 @@ import { faDirections, faList, faSearch, faUser } from '@fortawesome/free-solid-
 import clsx from 'clsx';
 import Container from './components/Container';
 import Select from './components/Select';
+import { Option } from './types/option.type';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -32,7 +33,7 @@ function App() {
 	const [showSettings, setShowSettings] = useState(false);
 	const [containerShowing, setContainerShowing] = useState(false);
 
-	const [tmp, setTmp] = useState('');
+	const [tmp, setTmp] = useState<Option | undefined>(undefined);
 
 	useEffect(() => {
 		setContainerShowing(showJourneyPlanner || showDepartures || showSettings);

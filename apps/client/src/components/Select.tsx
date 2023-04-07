@@ -37,8 +37,8 @@ interface SelectProps {
 	className?: string;
 	options?: Option[] | undefined;
 	searchedOptions?: ((queryString: string, callback: (options: Option[]) => void) => Promise<void>) | undefined;
-	selectedValue?: string;
-	onSelect: (selectedValue: string) => void;
+	selectedValue?: Option;
+	onSelect: (selectedValue: Option | undefined) => void;
 	placeholder?: string;
 	inputIcon?: IconDefinition | undefined;
 }
@@ -48,7 +48,7 @@ function Select({
 	options,
 	searchedOptions,
 	onSelect,
-	selectedValue = '',
+	selectedValue,
 	placeholder,
 	inputIcon,
 	...props
@@ -66,9 +66,7 @@ function Select({
 	}, [options]);
 
 	useEffect(() => {
-		console.log('tjo');
-
-		setQueryString(selectedValue || '');
+		setQueryString(selectedValue?.label || '');
 	}, [selectedValue]);
 
 	return (
@@ -78,11 +76,7 @@ function Select({
 				className={clsx(inputStyles.base, inputStyles.transition, !searchedOptions && inputStyles.disabled)}
 				ref={inputRef}
 				placeholder={placeholder}
-				value={
-					selectedValue
-						? availableOptions?.find((option) => option.value === selectedValue)?.label
-						: queryString
-				}
+				value={queryString}
 				onChange={async (e) => {
 					if (!searchedOptions) return setQueryString('');
 
@@ -100,6 +94,12 @@ function Select({
 						setLoading(false);
 					});
 				}}
+				onBlur={() => {
+					// If the user leaves the input field and a value is selected, set the query string to the selected value
+					if (selectedValue) {
+						setQueryString(selectedValue.label);
+					} else setQueryString('');
+				}}
 				{...props}
 			/>
 
@@ -108,7 +108,7 @@ function Select({
 				<button
 					className={clsx(inputIconStyles.base, inputIconStyles.transition)}
 					onClick={(e) => {
-						onSelect('');
+						onSelect(undefined);
 
 						// Unfocus the input
 						inputRef.current?.blur();
@@ -131,7 +131,10 @@ function Select({
 					availableOptions.map((option) => (
 						<button
 							key={option.value}
-							className={clsx(optionStyles.base, selectedValue === option.value && optionStyles.selected)}
+							className={clsx(
+								optionStyles.base,
+								selectedValue?.value === option.value && optionStyles.selected
+							)}
 							tabIndex={-1}
 							onClick={(e) => {
 								// Unfocus the input
@@ -141,7 +144,7 @@ function Select({
 								(e.target as HTMLElement).blur();
 
 								// Call the `onSelect` callback
-								onSelect(option.value);
+								onSelect(option);
 							}}
 						>
 							{option.label}
