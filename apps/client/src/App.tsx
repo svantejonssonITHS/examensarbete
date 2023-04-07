@@ -1,5 +1,5 @@
 // External dependencies
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Internal dependencies
 import Layout from './components/Layout';
@@ -7,8 +7,6 @@ import IconButton from './components/IconButton';
 import { faDirections, faList, faUser } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import Container from './components/Container';
-import Checkbox from './components/Checkbox';
-import RadioButton from './components/RadioButton';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -31,8 +29,11 @@ function App() {
 	const [showJourneyPlanner, setShowJourneyPlanner] = useState(false);
 	const [showDepartures, setShowDepartures] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
+	const [containerShowing, setContainerShowing] = useState(false);
 
-	const [tmp, setTmp] = useState(false);
+	useEffect(() => {
+		setContainerShowing(showJourneyPlanner || showDepartures || showSettings);
+	}, [showJourneyPlanner, showDepartures, showSettings]);
 
 	return (
 		<Layout>
@@ -41,11 +42,21 @@ function App() {
 				className={clsx(
 					buttonContainerStyles.base,
 					buttonContainerStyles.left,
-					showJourneyPlanner || showDepartures ? buttonContainerStyles.hide : ''
+					containerShowing ? buttonContainerStyles.hide : ''
 				)}
 			>
-				<IconButton icon={faDirections} variant="contained" onClick={() => setShowJourneyPlanner(true)} />
-				<IconButton icon={faList} variant="contained" onClick={() => setShowDepartures(true)} />
+				<IconButton
+					icon={faDirections}
+					variant="contained"
+					onClick={() => setShowJourneyPlanner(true)}
+					disabled={containerShowing}
+				/>
+				<IconButton
+					icon={faList}
+					variant="contained"
+					onClick={() => setShowDepartures(true)}
+					disabled={containerShowing}
+				/>
 			</div>
 			<Container
 				title="Journey Planner"
@@ -56,12 +67,7 @@ function App() {
 					showJourneyPlanner ? containerStyles.show.left : ''
 				)}
 			>
-				<Checkbox checked={tmp} onChange={(e) => setTmp(e.target.checked)}>
-					Checkbox
-				</Checkbox>
-				<RadioButton checked={tmp} onChange={(e) => setTmp(e.target.checked)}>
-					RadioButton
-				</RadioButton>
+				content
 			</Container>
 			<Container
 				title="Departures"
@@ -80,10 +86,15 @@ function App() {
 				className={clsx(
 					buttonContainerStyles.base,
 					buttonContainerStyles.right,
-					showSettings ? buttonContainerStyles.hide : ''
+					containerShowing ? buttonContainerStyles.hide : ''
 				)}
 			>
-				<IconButton icon={faUser} variant="contained" onClick={() => setShowSettings(true)} />
+				<IconButton
+					icon={faUser}
+					variant="contained"
+					onClick={() => setShowSettings(true)}
+					disabled={containerShowing}
+				/>
 			</div>
 			<Container
 				title="Settings"
