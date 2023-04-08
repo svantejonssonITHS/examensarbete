@@ -20,7 +20,7 @@ const inputIconStyles = {
 };
 
 const optionContainerStyles = {
-	base: 'absolute top-12 left-0 right-0 z-10 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md overflow-hidden hidden group-focus-within:block peer-focus:!hidden',
+	base: 'absolute top-12 left-0 right-0 z-10 bg-white shadow dark:shadow-white/10 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md overflow-hidden hidden group-focus-within:block peer-focus:!hidden',
 	transition: 'input_transition'
 };
 
@@ -40,7 +40,7 @@ interface SelectProps {
 	searchedOptions?: ((queryString: string, callback: (options: Option[]) => void) => Promise<void>) | undefined;
 	selectedValue?: Option;
 	onSelect: (selectedValue: Option | undefined) => void;
-	placeholder?: string;
+	placeholder?: string | undefined;
 	inputIcon?: IconDefinition | undefined;
 	clearable?: boolean;
 }
