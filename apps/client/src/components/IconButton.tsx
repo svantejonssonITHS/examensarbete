@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 const styles = {
@@ -17,14 +17,15 @@ const styles = {
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: keyof typeof styles.variant;
 	icon: IconDefinition;
+	rotation?: FontAwesomeIconProps['rotation'];
 }
 
-function IconButton({ className, variant = 'text', icon, ...props }: ButtonProps) {
+function IconButton({ className, variant = 'text', icon, rotation, ...props }: ButtonProps) {
 	const classes = clsx(className, styles.base, styles.transition, styles.variant[variant]);
 
 	return (
 		<button className={classes} {...props}>
-			<FontAwesomeIcon icon={icon} />
+			<FontAwesomeIcon icon={icon} rotation={rotation} />
 		</button>
 	);
 }
