@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import Container from './components/Container';
 import Select from './components/Select';
 import { Option } from './types/option.type';
+import Settings from './components/Settings';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -130,6 +131,14 @@ function App() {
 			>
 				content
 			</Container>
+			<Settings
+				className={clsx(
+					containerStyles.base,
+					containerStyles.right,
+					showSettings ? containerStyles.show.right : ''
+				)}
+				onClose={() => setShowSettings(false)}
+			/>
 		</Layout>
 	);
 }

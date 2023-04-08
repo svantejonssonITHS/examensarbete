@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition, faClose } from '@fortawesome/free-solid-svg-icons';
+import { t } from 'i18next';
 
 // Internal dependencies
 import { Option } from '$src/types/option.type';
@@ -41,6 +42,7 @@ interface SelectProps {
 	onSelect: (selectedValue: Option | undefined) => void;
 	placeholder?: string;
 	inputIcon?: IconDefinition | undefined;
+	clearable?: boolean;
 }
 
 function Select({
@@ -51,6 +53,7 @@ function Select({
 	selectedValue,
 	placeholder,
 	inputIcon,
+	clearable = true,
 	...props
 }: SelectProps) {
 	const wrapperClasses = clsx('relative group', className);
@@ -137,7 +140,7 @@ function Select({
 			/>
 
 			{/* Clear button and input icon */}
-			{selectedValue ? (
+			{selectedValue && clearable ? (
 				<button
 					className={clsx(inputIconStyles.base, inputIconStyles.transition)}
 					onClick={(e) => {
@@ -196,7 +199,7 @@ function Select({
 							(e.target as HTMLElement).blur();
 						}}
 					>
-						{loading ? 'Loading...' : 'No results found'}
+						{loading ? t('loading') : t('no-options')}
 					</button>
 				)}
 			</div>
