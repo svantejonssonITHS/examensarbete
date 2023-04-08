@@ -13,10 +13,6 @@ import RadioButton from './RadioButton';
 import { useTheme } from '$src/providers/theme.provider';
 import { Theme } from '$src/types/theme.type';
 
-const labelStyles = {
-	base: 'flex flex-col gap-1 font-semibold text-sm'
-};
-
 interface SettingsProps {
 	className?: string;
 	onClose?: () => void;
