@@ -11,7 +11,10 @@ const sv: Resource = {
 		'loading': 'Laddar...',
 		'theme-select-label': 'Tema',
 		'theme-light': 'Ljust',
-		'theme-dark': 'Mörkt'
+		'theme-dark': 'Mörkt',
+		'from-label': 'Från',
+		'to-label': 'Till',
+		'favorites-label': 'Favoriter'
 	}
 };
 

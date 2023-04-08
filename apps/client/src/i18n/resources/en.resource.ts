@@ -11,7 +11,10 @@ const en: Resource = {
 		'loading': 'Loading...',
 		'theme-select-label': 'Theme',
 		'theme-light': 'Light',
-		'theme-dark': 'Dark'
+		'theme-dark': 'Dark',
+		'from-label': 'From',
+		'to-label': 'To',
+		'favorites-label': 'Favorites'
 	}
 };
 

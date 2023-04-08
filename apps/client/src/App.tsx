@@ -4,12 +4,11 @@ import { useEffect, useState } from 'react';
 // Internal dependencies
 import Layout from './components/Layout';
 import IconButton from './components/IconButton';
-import { faDirections, faList, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faDirections, faList, faUser } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import Container from './components/Container';
-import Select from './components/Select';
-import { Option } from './types/option.type';
 import Settings from './components/Settings';
+import JourneyPlanner from './components/JourneyPlanner';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -33,8 +32,6 @@ function App() {
 	const [showDepartures, setShowDepartures] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const [containerShowing, setContainerShowing] = useState(false);
-
-	const [tmp, setTmp] = useState<Option | undefined>(undefined);
 
 	useEffect(() => {
 		setContainerShowing(showJourneyPlanner || showDepartures || showSettings);
@@ -63,36 +60,14 @@ function App() {
 					disabled={containerShowing}
 				/>
 			</div>
-			<Container
-				title="Journey Planner"
+			<JourneyPlanner
 				onClose={() => setShowJourneyPlanner(false)}
 				className={clsx(
 					containerStyles.base,
 					containerStyles.left,
 					showJourneyPlanner ? containerStyles.show.left : ''
 				)}
-			>
-				<Select
-					options={[
-						{ label: 'test', value: 'test' },
-						{ label: 'test2', value: 'test2' }
-					]}
-					searchedOptions={async (s, c) => {
-						setTimeout(() => {
-							c([
-								{ label: 'test69', value: 'test3' },
-								{ label: 'test420', value: 'test4' }
-							]);
-						}, 3000);
-					}}
-					onSelect={(s) => {
-						setTmp(s);
-					}}
-					selectedValue={tmp}
-					placeholder="Search for a stop"
-					inputIcon={faSearch}
-				/>
-			</Container>
+			/>
 			<Container
 				title="Departures"
 				onClose={() => setShowDepartures(false)}
@@ -120,17 +95,6 @@ function App() {
 					disabled={containerShowing}
 				/>
 			</div>
-			<Container
-				title="Settings"
-				onClose={() => setShowSettings(false)}
-				className={clsx(
-					containerStyles.base,
-					containerStyles.right,
-					showSettings ? containerStyles.show.right : ''
-				)}
-			>
-				content
-			</Container>
 			<Settings
 				className={clsx(
 					containerStyles.base,

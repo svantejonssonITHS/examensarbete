@@ -27,7 +27,7 @@ function Settings({ className, onClose }: SettingsProps) {
 	const [language, setLanguage] = useState(i18n.language);
 
 	return (
-		<Container className={className} title={t('settings-title')} onClose={onClose}>
+		<Container className={clsx(className, 'flex flex-col gap-2')} title={t('settings-title')} onClose={onClose}>
 			<label className={clsx(labelStyles.base)}>
 				{t('language-select-label')}
 				<Select

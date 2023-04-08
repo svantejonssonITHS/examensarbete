@@ -10,5 +10,8 @@ export type Resource = {
 		'theme-select-label': string;
 		'theme-light': string;
 		'theme-dark': string;
+		'from-label': string;
+		'to-label': string;
+		'favorites-label': string;
 	};
 };
