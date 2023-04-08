@@ -15,7 +15,7 @@ const inputStyles = {
 };
 
 const inputIconStyles = {
-	base: 'peer absolute top-1/2 right-1 -translate-x-1/2 -translate-y-1/2 rounded-full h-5 w-5 grid place-items-center text-gray-400 hover:text-gray-500 focus:input_focus',
+	base: 'peer absolute top-1/2 right-1 -translate-x-1/2 -translate-y-1/2 rounded-full h-5 w-5 grid place-items-center text-gray-500 dark:text-gray-400 focus:input_focus',
 	transition: 'input_transition'
 };
 

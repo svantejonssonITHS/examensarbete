@@ -1,6 +1,7 @@
 // External dependencies
 import { t } from 'i18next';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
 
 // Internal dependencies
 import Container from './Container';
@@ -11,6 +12,10 @@ import i18n from '$src/i18n';
 import RadioButton from './RadioButton';
 import { useTheme } from '$src/providers/theme.provider';
 import { Theme } from '$src/types/theme.type';
+
+const labelStyles = {
+	base: 'flex flex-col gap-1'
+};
 
 interface SettingsProps {
 	className?: string;
@@ -23,7 +28,7 @@ function Settings({ className, onClose }: SettingsProps) {
 
 	return (
 		<Container className={className} title={t('settings-title')} onClose={onClose}>
-			<label>
+			<label className={clsx(labelStyles.base)}>
 				{t('language-select-label')}
 				<Select
 					inputIcon={faGlobe}
@@ -40,7 +45,7 @@ function Settings({ className, onClose }: SettingsProps) {
 					clearable={false}
 				/>
 			</label>
-			<label>
+			<label className={clsx(labelStyles.base)}>
 				{t('theme-select-label')}
 				<RadioButton
 					name="theme"
