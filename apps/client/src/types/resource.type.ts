@@ -2,7 +2,7 @@ export type Resource = {
 	translation: {
 		'native-name': string;
 		'journey-planner-title': string;
-		'departues-title': string;
+		'departures-title': string;
 		'settings-title': string;
 		'language-select-label': string;
 		'no-options': string;
@@ -13,5 +13,6 @@ export type Resource = {
 		'from-label': string;
 		'to-label': string;
 		'favorites-label': string;
+		'show-departures': string;
 	};
 };

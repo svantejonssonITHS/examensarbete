@@ -9,4 +9,10 @@
 	.input_transition {
 		@apply transition duration-300 ease-in-out;
 	}
+	.label_base {
+		@apply flex flex-col gap-1 font-semibold text-sm text-black dark:text-white;
+	}
+	.title_base {
+		@apply font-semibold text-base text-black dark:text-white;
+	}
 }

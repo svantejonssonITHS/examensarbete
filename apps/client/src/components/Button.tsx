@@ -13,12 +13,13 @@ const styles = {
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	className?: string;
 	children: React.ReactNode;
 	variant?: keyof typeof styles.variant;
 }
 
-function Button({ children, variant = 'text', ...props }: ButtonProps) {
-	const classes = clsx(styles.base, styles.transition, styles.variant[variant]);
+function Button({ className, children, variant = 'text', ...props }: ButtonProps) {
+	const classes = clsx(className, styles.base, styles.transition, styles.variant[variant]);
 
 	return (
 		<button className={classes} {...props}>

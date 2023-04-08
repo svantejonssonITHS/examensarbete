@@ -14,7 +14,7 @@ import { useTheme } from '$src/providers/theme.provider';
 import { Theme } from '$src/types/theme.type';
 
 const labelStyles = {
-	base: 'flex flex-col gap-1'
+	base: 'flex flex-col gap-1 font-semibold text-sm'
 };
 
 interface SettingsProps {
@@ -28,7 +28,7 @@ function Settings({ className, onClose }: SettingsProps) {
 
 	return (
 		<Container className={clsx(className, 'flex flex-col gap-2')} title={t('settings-title')} onClose={onClose}>
-			<label className={clsx(labelStyles.base)}>
+			<label className="label_base">
 				{t('language-select-label')}
 				<Select
 					inputIcon={faGlobe}
@@ -45,7 +45,7 @@ function Settings({ className, onClose }: SettingsProps) {
 					clearable={false}
 				/>
 			</label>
-			<label className={clsx(labelStyles.base)}>
+			<label className="label_base">
 				{t('theme-select-label')}
 				<RadioButton
 					name="theme"

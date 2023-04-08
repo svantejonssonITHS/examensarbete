@@ -4,7 +4,7 @@ const en: Resource = {
 	translation: {
 		'native-name': 'English',
 		'journey-planner-title': 'Journey Planner',
-		'departues-title': 'Departures',
+		'departures-title': 'Departures',
 		'settings-title': 'Settings',
 		'language-select-label': 'Language',
 		'no-options': 'No options',
@@ -14,7 +14,8 @@ const en: Resource = {
 		'theme-dark': 'Dark',
 		'from-label': 'From',
 		'to-label': 'To',
-		'favorites-label': 'Favorites'
+		'favorites-label': 'Favorites',
+		'show-departures': 'Show departures'
 	}
 };
 

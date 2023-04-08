@@ -9,7 +9,7 @@ import { t } from 'i18next';
 import { Option } from '$src/types/option.type';
 
 const inputStyles = {
-	base: 'rounded-md py-2 px-3 w-full text-sm cursor-pointer disabled:cursor-not-allowed focus:input_focus bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700',
+	base: 'font-normal text-black dark:!text-white rounded-md py-2 px-3 w-full text-sm cursor-pointer disabled:cursor-not-allowed focus:input_focus bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700',
 	transition: 'input_transition',
 	disabled: 'caret-transparent'
 };
@@ -25,7 +25,7 @@ const optionContainerStyles = {
 };
 
 const optionStyles = {
-	base: 'py-2 px-3 w-full text-sm text-left text-black dark:!text-white cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700',
+	base: 'font-normal py-2 px-3 w-full text-sm text-left text-black dark:!text-white cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-700',
 	highlight: 'bg-neutral-100 dark:bg-neutral-700',
 	selected:
 		'!text-white !bg-blue-600 hover:!bg-blue-700 active:!bg-blue-500 dark:bg-blue-500 dark:hover:!bg-blue-400 dark:active:!bg-blue-600'

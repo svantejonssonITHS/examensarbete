@@ -8,7 +8,6 @@ import Select from './Select';
 import IconButton from './IconButton';
 import { faExchange, faSearch, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from './Button';
 
 interface JourneyPlannerProps {
 	className?: string;
@@ -40,7 +39,7 @@ function JourneyPlanner({ className, onClose }: JourneyPlannerProps) {
 				<IconButton icon={faExchange} rotation={90} />
 			</div>
 			<div>
-				<h2>
+				<h2 className="title_base">
 					<FontAwesomeIcon icon={faStar} className="text-yellow-500" /> {t('favorites-label')}
 				</h2>
 			</div>

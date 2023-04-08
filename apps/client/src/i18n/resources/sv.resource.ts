@@ -4,7 +4,7 @@ const sv: Resource = {
 	translation: {
 		'native-name': 'Svenska',
 		'journey-planner-title': 'Reseplanerare',
-		'departues-title': 'Avgångar',
+		'departures-title': 'Avgångar',
 		'settings-title': 'Inställningar',
 		'language-select-label': 'Språk',
 		'no-options': 'Inga alternativ',
@@ -14,7 +14,8 @@ const sv: Resource = {
 		'theme-dark': 'Mörkt',
 		'from-label': 'Från',
 		'to-label': 'Till',
-		'favorites-label': 'Favoriter'
+		'favorites-label': 'Favoriter',
+		'show-departures': 'Visa avgångar'
 	}
 };
 

@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import Container from './components/Container';
 import Settings from './components/Settings';
 import JourneyPlanner from './components/JourneyPlanner';
+import Departures from './components/Departures';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -68,17 +69,14 @@ function App() {
 					showJourneyPlanner ? containerStyles.show.left : ''
 				)}
 			/>
-			<Container
-				title="Departures"
+			<Departures
 				onClose={() => setShowDepartures(false)}
 				className={clsx(
 					containerStyles.base,
 					containerStyles.left,
 					showDepartures ? containerStyles.show.left : ''
 				)}
-			>
-				content
-			</Container>
+			/>
 
 			{/* Right side of screen */}
 			<div
