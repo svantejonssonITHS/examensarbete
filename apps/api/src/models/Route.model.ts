@@ -19,13 +19,11 @@ export class Route extends Model {
 
 	@BelongsTo(() => Station, { foreignKey: 'destinationStationId' })
 	destinationStation: string;
-
-	@BelongsTo(() => Station, { foreignKey: 'viaStationId' })
-	viaStation: string;
-
-	// TODO: Add more columns, see api docs: https://developer.vasttrafik.se/portal/#/api/Reseplaneraren/v2/landerss
 }
 
 export type RouteAttributes = InferAttributes<Route>;
 
-export type RouteCreationAttributes = Optional<RouteAttributes, 'id' | 'originStation' | 'viaStation'>;
+export type RouteCreationAttributes = Optional<
+	RouteAttributes & { originStationId: string; destinationStationId: string },
+	'id' | 'originStation' | 'destinationStation'
+>;
