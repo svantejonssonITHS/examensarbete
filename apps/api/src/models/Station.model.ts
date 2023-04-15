@@ -1,14 +1,15 @@
 // External dependencies
-import { InferAttributes, Optional } from 'sequelize';
 import { HasOne, Column, HasMany, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
-import { Geometry } from './Geometry.model';
-import { Position } from './Position.model';
-import { Route } from './Route.model';
+import { Geometry, Position, Route, Station } from '_packages/shared/types/models';
+import { GeometryModel } from './Geometry.model';
+import { PositionModel } from './Position.model';
+import { RouteModel } from './Route.model';
+import { TableName } from '$src/enums/tableName.enum';
 
-@Table({ timestamps: false })
-export class Station extends Model {
+@Table({ timestamps: false, tableName: TableName.STATIONS })
+export class StationModel extends Model implements Station {
 	@Column({ primaryKey: true, autoIncrement: true })
 	id: number;
 
@@ -24,21 +25,15 @@ export class Station extends Model {
 	@Column({ allowNull: true })
 	abbreviation: string;
 
-	@HasOne(() => Geometry, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
-	geometry?: InferAttributes<Geometry>;
+	@HasOne(() => GeometryModel, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
+	geometry: Geometry;
 
-	@HasMany(() => Position, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
-	positions?: InferAttributes<Position>[];
+	@HasMany(() => PositionModel, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
+	positions: Position[];
 
-	@HasMany(() => Route, { foreignKey: 'originStationId', onDelete: 'CASCADE', hooks: true })
-	routesWhereOrigin?: InferAttributes<Route>[];
+	@HasMany(() => RouteModel, { foreignKey: 'originStationId', onDelete: 'CASCADE', hooks: true })
+	routesWhereOrigin: Route[];
 
-	@HasMany(() => Route, { foreignKey: 'destinationStationId', onDelete: 'CASCADE', hooks: true })
-	routesWhereDestination?: InferAttributes<Route>[];
+	@HasMany(() => RouteModel, { foreignKey: 'destinationStationId', onDelete: 'CASCADE', hooks: true })
+	routesWhereDestination: Route[];
 }
-
-export type StationAttributes = InferAttributes<Station>;
-export type StationCreationAttributes = Optional<
-	StationAttributes,
-	'id' | 'geometry' | 'positions' | 'routesWhereOrigin' | 'routesWhereDestination'
->;

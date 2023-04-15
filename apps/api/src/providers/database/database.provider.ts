@@ -4,9 +4,15 @@ import { Sequelize } from 'sequelize-typescript';
 import { Op } from 'sequelize';
 
 // Internal dependencies
-import { GeometryAttributes, GeometryCreationAttributes } from '$src/models/Geometry.model';
-import { PositionAttributes, PositionCreationAttributes } from '$src/models/Position.model';
-import { StationAttributes, StationCreationAttributes } from '$src/models/Station.model';
+import {
+	Geometry,
+	GeometryCreationAttributes,
+	Position,
+	PositionCreationAttributes,
+	Station,
+	StationCreationAttributes
+} from '_packages/shared/types/models';
+import { TableName } from '$src/enums/tableName.enum';
 
 @Injectable()
 export class DatabaseProvider {
@@ -28,11 +34,11 @@ export class DatabaseProvider {
 		}
 	};
 
-	public upsertGeometry = async (geometry: GeometryCreationAttributes): Promise<GeometryAttributes> => {
+	public upsertGeometry = async (geometry: GeometryCreationAttributes): Promise<Geometry> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			const queryResult = await this.sequelize.models.Geometry.create(geometry, {
+			const queryResult = await this.sequelize.models.GeometryModel.create(geometry, {
 				updateOnDuplicate: ['longitude', 'latitude', 'positionId', 'stationId'],
 				transaction
 			});
@@ -49,11 +55,11 @@ export class DatabaseProvider {
 		}
 	};
 
-	public upsertPosition = async (position: PositionCreationAttributes): Promise<PositionAttributes> => {
+	public upsertPosition = async (position: PositionCreationAttributes): Promise<Position> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			const queryResult = await this.sequelize.models.Position.create(position, {
+			const queryResult = await this.sequelize.models.PositionModel.create(position, {
 				updateOnDuplicate: ['name', 'shortName', 'abbreviation', 'designation', 'stationId'],
 				transaction
 			});
@@ -74,10 +80,13 @@ export class DatabaseProvider {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			await this.sequelize.query(`DELETE FROM positions WHERE vasttrafikId NOT IN (:vasttrafikIds)`, {
-				replacements: { vasttrafikIds },
-				transaction
-			});
+			await this.sequelize.query(
+				`DELETE FROM ${TableName.POSITIONS} WHERE vasttrafikId NOT IN (:vasttrafikIds)`,
+				{
+					replacements: { vasttrafikIds },
+					transaction
+				}
+			);
 
 			await transaction.commit();
 		} catch (error) {
@@ -87,11 +96,11 @@ export class DatabaseProvider {
 		}
 	};
 
-	public upsertStation = async (station: StationCreationAttributes): Promise<StationAttributes> => {
+	public upsertStation = async (station: StationCreationAttributes): Promise<Station> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			const queryResult = await this.sequelize.models.Station.create(station, {
+			const queryResult = await this.sequelize.models.StationModel.create(station, {
 				updateOnDuplicate: ['name', 'shortName', 'abbreviation'],
 				transaction
 			});
@@ -112,7 +121,7 @@ export class DatabaseProvider {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			await this.sequelize.query(`DELETE FROM stations WHERE vasttrafikId NOT IN (:vasttrafikIds)`, {
+			await this.sequelize.query(`DELETE FROM ${TableName.STATIONS} WHERE vasttrafikId NOT IN (:vasttrafikIds)`, {
 				replacements: { vasttrafikIds },
 				transaction
 			});
@@ -129,9 +138,9 @@ export class DatabaseProvider {
 	/**
 	 * @description Limited to 5 results
 	 */
-	public getStationsByName = async (name: string): Promise<StationAttributes[]> => {
+	public getStationsByName = async (name: string): Promise<Station[]> => {
 		try {
-			const queryResult = await this.sequelize.models.Station.findAll({
+			const queryResult = await this.sequelize.models.StationModel.findAll({
 				attributes: ['id', 'name', 'shortName', 'abbreviation'],
 				where: {
 					name: {

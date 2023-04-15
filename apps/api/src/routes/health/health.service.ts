@@ -2,7 +2,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 
 // Internal dependencies
-import { HTTPResponse, HealthResponse } from '_packages/shared/types';
+import { HttpResponse, HealthResponse } from '_packages/shared/types/http';
 import { VasttrafikProvider } from '$src/providers/vasttrafik/vasttrafik.provider';
 import { DatabaseProvider } from '$src/providers/database/database.provider';
 
@@ -12,7 +12,7 @@ export class HealthService {
 
 	private readonly logger = new Logger(HealthService.name);
 
-	async getHealth(): Promise<HTTPResponse<HealthResponse>> {
+	async getHealth(): Promise<HttpResponse<HealthResponse>> {
 		try {
 			// Check health of database
 			const databaseHealth = await this.databaseProvider.checkConnection();

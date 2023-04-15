@@ -1,22 +1,19 @@
 // External dependencies
-import { InferAttributes, Optional } from 'sequelize';
 import { Column, HasMany, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
-import { Route } from './Route.model';
+import { Route, User } from '_packages/shared/types/models';
+import { RouteModel } from './Route.model';
+import { TableName } from '$src/enums/tableName.enum';
 
-@Table({ timestamps: false })
-export class User extends Model {
+@Table({ timestamps: false, tableName: TableName.USERS })
+export class UserModel extends Model implements User {
 	@Column({ primaryKey: true, autoIncrement: true })
 	id: number;
 
 	@Column({ unique: true })
 	auth0Id: string;
 
-	@HasMany(() => Route, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
-	routes: InferAttributes<Route>[];
+	@HasMany(() => RouteModel, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
+	routes: Route[];
 }
-
-export type UserAttributes = InferAttributes<User>;
-
-export type UserCreationAttributes = Optional<UserAttributes, 'id' | 'routes'>;

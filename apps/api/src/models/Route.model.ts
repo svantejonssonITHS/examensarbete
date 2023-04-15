@@ -1,29 +1,23 @@
 // External dependencies
-import { InferAttributes, Optional } from 'sequelize';
 import { BelongsTo, Column, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
-import { Station } from './Station.model';
-import { User } from './User.model';
+import { Route, Station, User } from '_packages/shared/types/models';
+import { StationModel } from './Station.model';
+import { UserModel } from './User.model';
+import { TableName } from '$src/enums/tableName.enum';
 
-@Table({ timestamps: false })
-export class Route extends Model {
+@Table({ timestamps: false, tableName: TableName.ROUTES })
+export class RouteModel extends Model implements Route {
 	@Column({ primaryKey: true, autoIncrement: true })
 	id: number;
 
-	@BelongsTo(() => User, { foreignKey: 'userId' })
-	user: User;
+	@BelongsTo(() => UserModel, { foreignKey: 'userId' })
+	user: User | number;
 
-	@BelongsTo(() => Station, { foreignKey: 'originStationId' })
-	originStation: string;
+	@BelongsTo(() => StationModel, { foreignKey: 'originStationId' })
+	originStation: Station | number;
 
-	@BelongsTo(() => Station, { foreignKey: 'destinationStationId' })
-	destinationStation: string;
+	@BelongsTo(() => StationModel, { foreignKey: 'destinationStationId' })
+	destinationStation: Station | number;
 }
-
-export type RouteAttributes = InferAttributes<Route>;
-
-export type RouteCreationAttributes = Optional<
-	RouteAttributes & { originStationId: string; destinationStationId: string },
-	'id' | 'originStation' | 'destinationStation'
->;

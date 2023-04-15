@@ -1,13 +1,14 @@
 // External dependencies
-import { InferAttributes, Optional } from 'sequelize';
 import { BelongsTo, HasOne, Column, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
-import { Geometry } from './Geometry.model';
-import { Station } from './Station.model';
+import { Geometry, Position, Station } from '_packages/shared/types/models';
+import { GeometryModel } from './Geometry.model';
+import { StationModel } from './Station.model';
+import { TableName } from '$src/enums/tableName.enum';
 
-@Table({ timestamps: false })
-export class Position extends Model {
+@Table({ timestamps: false, tableName: TableName.POSITIONS })
+export class PositionModel extends Model implements Position {
 	@Column({ primaryKey: true, autoIncrement: true })
 	id: number;
 
@@ -18,23 +19,17 @@ export class Position extends Model {
 	name: string;
 
 	@Column({ allowNull: true })
-	shortName: string;
+	shortName: string | null;
 
 	@Column({ allowNull: true })
-	abbreviation: string;
+	abbreviation: string | null;
 
 	@Column
 	designation: string;
 
-	@HasOne(() => Geometry, { foreignKey: 'positionId', onDelete: 'CASCADE', hooks: true })
-	geometry: InferAttributes<Geometry>;
+	@HasOne(() => GeometryModel, { foreignKey: 'positionId', onDelete: 'CASCADE', hooks: true })
+	geometry: Geometry;
 
-	@BelongsTo(() => Station, { foreignKey: 'stationId' })
-	station: InferAttributes<Station>;
+	@BelongsTo(() => StationModel, { foreignKey: 'stationId' })
+	station: Station | number;
 }
-
-export type PositionAttributes = InferAttributes<Position>;
-export type PositionCreationAttributes = Optional<
-	PositionAttributes & { stationId: number },
-	'id' | 'geometry' | 'station'
->;

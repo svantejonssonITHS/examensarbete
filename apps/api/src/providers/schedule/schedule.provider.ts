@@ -27,14 +27,15 @@ export class ScheduleProvider {
 				const station = await this.databaseProvider.upsertStation({
 					vasttrafikId: stopArea.gid,
 					name: stopArea.name,
-					shortName: stopArea.shortName,
-					abbreviation: stopArea.abbreviation
+					shortName: stopArea.shortName || null,
+					abbreviation: stopArea.abbreviation || null
 				});
 
 				await this.databaseProvider.upsertGeometry({
 					longitude: stopArea.geometry.eastingCoordinate,
 					latitude: stopArea.geometry.northingCoordinate,
-					stationId: station.id
+					stationId: station.id,
+					srid: stopArea.geometry.srid
 				});
 
 				for (const stopPoint of stopArea.stopPoints) {
@@ -43,8 +44,8 @@ export class ScheduleProvider {
 					const position = await this.databaseProvider.upsertPosition({
 						vasttrafikId: stopPoint.gid,
 						name: stopPoint.name,
-						shortName: stopPoint.shortName,
-						abbreviation: stopPoint.abbreviation,
+						shortName: stopPoint.shortName || null,
+						abbreviation: stopPoint.abbreviation || null,
 						designation: stopPoint.designation,
 						stationId: station.id
 					});
@@ -52,7 +53,8 @@ export class ScheduleProvider {
 					await this.databaseProvider.upsertGeometry({
 						longitude: stopPoint.geometry.eastingCoordinate,
 						latitude: stopPoint.geometry.northingCoordinate,
-						positionId: position.id
+						positionId: position.id,
+						srid: stopPoint.geometry.srid
 					});
 				}
 			}

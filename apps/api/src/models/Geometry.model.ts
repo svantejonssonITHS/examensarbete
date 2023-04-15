@@ -1,13 +1,14 @@
 // External dependencies
-import { InferAttributes, Optional } from 'sequelize';
 import { BelongsTo, Column, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
-import { Position } from './Position.model';
-import { Station } from './Station.model';
+import { Geometry, Position, Station } from '_packages/shared/types/models';
+import { PositionModel } from './Position.model';
+import { StationModel } from './Station.model';
+import { TableName } from '$src/enums/tableName.enum';
 
-@Table({ timestamps: false })
-export class Geometry extends Model {
+@Table({ timestamps: false, tableName: TableName.GEOMETRIES })
+export class GeometryModel extends Model implements Geometry {
 	@Column({ primaryKey: true, autoIncrement: true })
 	id: number;
 
@@ -20,23 +21,9 @@ export class Geometry extends Model {
 	@Column({ defaultValue: 4326 })
 	srid: number;
 
-	@BelongsTo(() => Position, { foreignKey: 'positionId' })
+	@BelongsTo(() => PositionModel, { foreignKey: 'positionId' })
 	position: Position | number;
 
-	@BelongsTo(() => Station, { foreignKey: 'stationId' })
+	@BelongsTo(() => StationModel, { foreignKey: 'stationId' })
 	station: Station | number;
 }
-
-export type GeometryAttributes = InferAttributes<Geometry>;
-
-type GeometryCreationAttributesBase = Optional<
-	GeometryAttributes & { positionId: number; stationId: number },
-	'id' | 'srid' | 'position' | 'station'
->;
-
-/**
- * @description Either a positionId or a stationId is required.
- */
-export type GeometryCreationAttributes =
-	| Optional<GeometryCreationAttributesBase, 'positionId'>
-	| Optional<GeometryCreationAttributesBase, 'stationId'>;
