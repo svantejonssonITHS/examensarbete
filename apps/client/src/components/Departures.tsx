@@ -5,8 +5,9 @@ import clsx from 'clsx';
 // Internal dependencies
 import Container from './Container';
 import Select from './Select';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
 import Button from './Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface DeparturesProps {
 	className?: string;
@@ -26,7 +27,10 @@ function Departures({ className, onClose }: DeparturesProps) {
 				{t('show-departures')}
 			</Button>
 			<div>
-				<h2 className="title_base">Stationens namn</h2>
+				<h2 className="title_base">
+					<FontAwesomeIcon icon={faLocationDot} className="text-blue-500 dark:text-blue-400" /> Stationens
+					namn
+				</h2>
 			</div>
 		</Container>
 	);

@@ -40,7 +40,8 @@ function JourneyPlanner({ className, onClose }: JourneyPlannerProps) {
 			</div>
 			<div>
 				<h2 className="title_base">
-					<FontAwesomeIcon icon={faStar} className="text-yellow-500" /> {t('favorites-label')}
+					<FontAwesomeIcon icon={faStar} className="text-yellow-500 dark:text-yellow-400" />
+					{t('favorites-label')}
 				</h2>
 			</div>
 		</Container>

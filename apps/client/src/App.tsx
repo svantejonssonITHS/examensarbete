@@ -6,7 +6,6 @@ import Layout from './components/Layout';
 import IconButton from './components/IconButton';
 import { faDirections, faList, faUser } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import Container from './components/Container';
 import Settings from './components/Settings';
 import JourneyPlanner from './components/JourneyPlanner';
 import Departures from './components/Departures';
