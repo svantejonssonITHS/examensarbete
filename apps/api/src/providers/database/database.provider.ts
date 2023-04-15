@@ -1,6 +1,7 @@
 // External dependencies
 import { Injectable, Logger } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
+import { Op } from 'sequelize';
 
 // Internal dependencies
 import { GeometryAttributes, GeometryCreationAttributes } from '$src/models/Geometry.model';
@@ -121,6 +122,32 @@ export class DatabaseProvider {
 			await transaction.rollback();
 
 			this.logger.error('An error occurred while trying to delete station(s)', error.stack);
+		}
+	};
+
+	// TODO: Add pagination, option to include relations
+	/**
+	 * @description Limited to 5 results
+	 */
+	public getStationsByName = async (name: string): Promise<StationAttributes[]> => {
+		try {
+			const queryResult = await this.sequelize.models.Station.findAll({
+				attributes: ['id', 'name', 'shortName', 'abbreviation'],
+				where: {
+					name: {
+						[Op.like]: '%' + name + '%'
+					}
+				},
+				limit: 5
+			});
+
+			const stations = queryResult.map((station) => station.dataValues);
+
+			return stations;
+		} catch (error) {
+			this.logger.error('An error occurred while trying to get stations', error.stack);
+
+			return null;
 		}
 	};
 }

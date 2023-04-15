@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from './providers/database/database.module';
 import { ScheduleModule } from './providers/schedule/schedule.module';
 import { HealthModule } from './routes/health/health.module';
+import { StationsModule } from './routes/stations/stations.module';
 
 @Module({
 	imports: [
@@ -13,7 +14,8 @@ import { HealthModule } from './routes/health/health.module';
 		// Scheduling
 		ScheduleModule,
 		// Routes
-		HealthModule
+		HealthModule,
+		StationsModule
 	],
 	providers: []
 })

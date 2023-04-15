@@ -25,23 +25,20 @@ export class Station extends Model {
 	abbreviation: string;
 
 	@HasOne(() => Geometry, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
-	geometry: InferAttributes<Geometry>;
+	geometry?: InferAttributes<Geometry>;
 
 	@HasMany(() => Position, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
-	positions: InferAttributes<Position>[];
+	positions?: InferAttributes<Position>[];
 
 	@HasMany(() => Route, { foreignKey: 'originStationId', onDelete: 'CASCADE', hooks: true })
-	routesWhereOrigin: InferAttributes<Route>[];
+	routesWhereOrigin?: InferAttributes<Route>[];
 
 	@HasMany(() => Route, { foreignKey: 'destinationStationId', onDelete: 'CASCADE', hooks: true })
-	routesWhereDestination: InferAttributes<Route>[];
-
-	@HasMany(() => Route, { foreignKey: 'viaStationId', onDelete: 'CASCADE', hooks: true })
-	routesWhereVia: InferAttributes<Route>[];
+	routesWhereDestination?: InferAttributes<Route>[];
 }
 
 export type StationAttributes = InferAttributes<Station>;
 export type StationCreationAttributes = Optional<
 	StationAttributes,
-	'id' | 'geometry' | 'positions' | 'routesWhereOrigin' | 'routesWhereDestination' | 'routesWhereVia'
+	'id' | 'geometry' | 'positions' | 'routesWhereOrigin' | 'routesWhereDestination'
 >;

@@ -1,16 +1,16 @@
 // External dependencies
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 
 // Internal dependencies
 import { StationsService } from './stations.service';
 import { StationsResponse } from '_packages/shared/types';
 
-@Controller('Stations')
+@Controller('stations')
 export class StationsController {
-	constructor(private readonly StationsService: StationsService) {}
+	constructor(private readonly stationsService: StationsService) {}
 
 	@Get()
-	getStations(): Promise<StationsResponse> {
-		return this.StationsService.getStations();
+	getStations(@Query('name') name: string): Promise<StationsResponse> {
+		return this.stationsService.getStations(name);
 	}
 }
