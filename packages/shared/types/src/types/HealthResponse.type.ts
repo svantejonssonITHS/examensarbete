@@ -1,6 +1,4 @@
-import { HTTPResponse } from './Response.type';
-
-export type Health = {
+export type HealthResponse = {
 	uptime: number;
 	timestamp: number;
 	database: {
@@ -13,5 +11,3 @@ export type Health = {
 		trafficSituations: { connected: boolean };
 	};
 };
-
-export type HealthResponse = HTTPResponse & Health;
