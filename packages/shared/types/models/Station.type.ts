@@ -1,6 +1,6 @@
+import { FavoriteRoute } from './FavoriteRoute.type';
 import { Geometry } from './Geometry.type';
 import { Position } from './Position.type';
-import { Route } from './Route.type';
 
 export type Station = {
 	id: number;
@@ -10,11 +10,11 @@ export type Station = {
 	abbreviation: string;
 	geometry: Geometry;
 	positions: Position[];
-	routesWhereOrigin: Route[];
-	routesWhereDestination: Route[];
+	favoriteRoutesWhereOrigin: FavoriteRoute[];
+	favoriteRoutesWhereDestination: FavoriteRoute[];
 };
 
 export type StationCreationAttributes = Omit<
 	Station,
-	'id' | 'geometry' | 'positions' | 'routesWhereOrigin' | 'routesWhereDestination'
+	'id' | 'geometry' | 'positions' | 'favoriteRoutesWhereOrigin' | 'favoriteRoutesWhereDestination'
 >;

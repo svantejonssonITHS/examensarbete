@@ -1,14 +1,17 @@
 import { Station } from './Station.type';
 import { User } from './User.type';
 
-export type Route = {
+export type FavoriteRoute = {
 	id: number;
 	user: User | number;
 	originStation: Station | number;
 	destinationStation: Station | number;
 };
 
-export type RouteCreationAttributes = Omit<Route, 'id' | 'user' | 'originStation' | 'destinationStation'> & {
+export type FavoriteRouteCreationAttributes = Omit<
+	FavoriteRoute,
+	'id' | 'user' | 'originStation' | 'destinationStation'
+> & {
 	userId: number;
 	originStationId: number;
 	destinationStationId: number;

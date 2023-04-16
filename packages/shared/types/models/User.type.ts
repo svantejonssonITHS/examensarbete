@@ -1,9 +1,9 @@
-import { Route } from './Route.type';
+import { FavoriteRoute } from './FavoriteRoute.type';
 
 export type User = {
 	id: number;
 	auth0Id: string;
-	routes: Route[];
+	favoriteRoutes: FavoriteRoute[];
 };
 
-export type UserCreationAttributes = Omit<User, 'id' | 'routes'>;
+export type UserCreationAttributes = Omit<User, 'id' | 'favoriteRoutes'>;

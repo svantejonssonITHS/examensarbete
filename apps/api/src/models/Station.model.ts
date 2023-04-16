@@ -2,10 +2,10 @@
 import { HasOne, Column, HasMany, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
-import { Geometry, Position, Route, Station } from '_packages/shared/types/models';
+import { Geometry, Position, FavoriteRoute, Station } from '_packages/shared/types/models';
+import { FavoriteRouteModel } from './FavoriteRoute.model';
 import { GeometryModel } from './Geometry.model';
 import { PositionModel } from './Position.model';
-import { RouteModel } from './Route.model';
 import { TableName } from '$src/enums/tableName.enum';
 
 @Table({ timestamps: false, tableName: TableName.STATIONS })
@@ -31,9 +31,9 @@ export class StationModel extends Model implements Station {
 	@HasMany(() => PositionModel, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
 	positions: Position[];
 
-	@HasMany(() => RouteModel, { foreignKey: 'originStationId', onDelete: 'CASCADE', hooks: true })
-	routesWhereOrigin: Route[];
+	@HasMany(() => FavoriteRouteModel, { foreignKey: 'originStationId', onDelete: 'CASCADE', hooks: true })
+	favoriteRoutesWhereOrigin: FavoriteRoute[];
 
-	@HasMany(() => RouteModel, { foreignKey: 'destinationStationId', onDelete: 'CASCADE', hooks: true })
-	routesWhereDestination: Route[];
+	@HasMany(() => FavoriteRouteModel, { foreignKey: 'destinationStationId', onDelete: 'CASCADE', hooks: true })
+	favoriteRoutesWhereDestination: FavoriteRoute[];
 }
