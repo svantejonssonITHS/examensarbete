@@ -2,7 +2,7 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 
 // Internal dependencies
-import { HttpResponse, StationsResponse } from '_packages/shared/types/http';
+import { HttpResponse, StationsRequest, StationsResponse } from '_packages/shared/types/http';
 import { DatabaseProvider } from '$src/providers/database/database.provider';
 
 @Injectable()
@@ -11,9 +11,9 @@ export class StationsService {
 
 	private readonly logger = new Logger(StationsService.name);
 
-	async getStations(name: string): Promise<HttpResponse<StationsResponse>> {
+	async getStations(queries: StationsRequest): Promise<HttpResponse<StationsResponse>> {
 		try {
-			const stations = await this.databaseProvider.getStationsByName(name);
+			const stations = await this.databaseProvider.getStationsByName(queries.name);
 
 			return {
 				success: true,

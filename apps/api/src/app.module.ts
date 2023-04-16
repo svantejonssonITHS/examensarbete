@@ -1,5 +1,5 @@
 // External dependencies
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 
 // Internal dependencies
 import { DatabaseModule } from './providers/database/database.module';
@@ -17,6 +17,11 @@ import { StationsModule } from './endpoints/stations/stations.module';
 		HealthModule,
 		StationsModule
 	],
-	providers: []
+	providers: [
+		{
+			provide: 'APP_PIPE',
+			useValue: new ValidationPipe()
+		}
+	]
 })
 export class AppModule {}
