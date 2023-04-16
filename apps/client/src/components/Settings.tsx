@@ -2,16 +2,18 @@
 import { t } from 'i18next';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useState } from 'react';
 
 // Internal dependencies
 import Container from './Container';
 import Select from './Select';
-import { useState } from 'react';
 import { Resource } from '$src/types/resource.type';
 import i18n from '$src/i18n';
 import RadioButton from './RadioButton';
 import { useTheme } from '$src/providers/theme.provider';
 import { Theme } from '$src/types/theme.type';
+import Button from './Button';
 
 interface SettingsProps {
 	className?: string;
@@ -19,6 +21,7 @@ interface SettingsProps {
 }
 
 function Settings({ className, onClose }: SettingsProps) {
+	const { isAuthenticated, logout, loginWithRedirect, user } = useAuth0();
 	const [theme, setTheme] = useTheme();
 	const [language, setLanguage] = useState(i18n.language);
 
@@ -60,6 +63,16 @@ function Settings({ className, onClose }: SettingsProps) {
 					{t('theme-dark')}
 				</RadioButton>
 			</label>
+			<div className="mt-auto flex flex-col gap-2">
+				{isAuthenticated && user && (
+					<p className="text-gray-500 text-sm">
+						{t('authenticated-as')}: {user.name}
+					</p>
+				)}
+				<Button onClick={() => (isAuthenticated ? logout({ openUrl: false }) : loginWithRedirect())}>
+					{isAuthenticated ? t('logout-label') : t('login-label')}
+				</Button>
+			</div>
 		</Container>
 	);
 }

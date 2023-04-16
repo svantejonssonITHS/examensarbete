@@ -15,7 +15,10 @@ const en: Resource = {
 		'from-label': 'From',
 		'to-label': 'To',
 		'favorites-label': 'Favorites',
-		'show-departures': 'Show departures'
+		'show-departures': 'Show departures',
+		'login-label': 'Login',
+		'logout-label': 'Logout',
+		'authenticated-as': 'Authenticated as'
 	}
 };
 

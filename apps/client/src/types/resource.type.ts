@@ -14,5 +14,8 @@ export type Resource = {
 		'to-label': string;
 		'favorites-label': string;
 		'show-departures': string;
+		'login-label': string;
+		'logout-label': string;
+		'authenticated-as': string;
 	};
 };

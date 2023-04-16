@@ -15,7 +15,10 @@ const sv: Resource = {
 		'from-label': 'Från',
 		'to-label': 'Till',
 		'favorites-label': 'Favoriter',
-		'show-departures': 'Visa avgångar'
+		'show-departures': 'Visa avgångar',
+		'login-label': 'Logga in',
+		'logout-label': 'Logga ut',
+		'authenticated-as': 'Inloggad som'
 	}
 };
 
