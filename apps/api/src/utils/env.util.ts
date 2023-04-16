@@ -4,6 +4,7 @@ config({
 });
 
 export default {
+	AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
 	DATABASE_HOST: process.env.DATABASE_HOST || 'localhost',
 	DATABASE_PORT: Number(process.env.DATABASE_PORT) || 3306,
 	DATABASE_NAME: process.env.DATABASE_NAME,
