@@ -1,7 +1,8 @@
 export enum TableName {
+	FAVORITE_ROUTES = 'favorite_routes',
+	FAVORITE_STATIONS = 'favorite_stations',
 	GEOMETRIES = 'geometries',
 	POSITIONS = 'positions',
-	ROUTES = 'routes',
 	STATIONS = 'stations',
 	USERS = 'users'
 }

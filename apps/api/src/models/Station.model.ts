@@ -2,8 +2,9 @@
 import { HasOne, Column, HasMany, Model, Table } from 'sequelize-typescript';
 
 // Internal dependencies
-import { Geometry, Position, FavoriteRoute, Station } from '_packages/shared/types/models';
+import { FavoriteRoute, FavoriteStation, Geometry, Position, Station } from '_packages/shared/types/models';
 import { FavoriteRouteModel } from './FavoriteRoute.model';
+import { FavoriteStationModel } from './FavoriteStation.model';
 import { GeometryModel } from './Geometry.model';
 import { PositionModel } from './Position.model';
 import { TableName } from '$src/enums/tableName.enum';
@@ -36,4 +37,7 @@ export class StationModel extends Model implements Station {
 
 	@HasMany(() => FavoriteRouteModel, { foreignKey: 'destinationStationId', onDelete: 'CASCADE', hooks: true })
 	favoriteRoutesWhereDestination: FavoriteRoute[];
+
+	@HasMany(() => FavoriteStationModel, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
+	favoriteStationsWhereStation: FavoriteStation[];
 }

@@ -1,4 +1,5 @@
 import { FavoriteRoute } from './FavoriteRoute.type';
+import { FavoriteStation } from './FavoriteStation.type';
 import { Geometry } from './Geometry.type';
 import { Position } from './Position.type';
 
@@ -12,9 +13,15 @@ export type Station = {
 	positions: Position[];
 	favoriteRoutesWhereOrigin: FavoriteRoute[];
 	favoriteRoutesWhereDestination: FavoriteRoute[];
+	favoriteStationsWhereStation: FavoriteStation[];
 };
 
 export type StationCreationAttributes = Omit<
 	Station,
-	'id' | 'geometry' | 'positions' | 'favoriteRoutesWhereOrigin' | 'favoriteRoutesWhereDestination'
+	| 'id'
+	| 'geometry'
+	| 'positions'
+	| 'favoriteRoutesWhereOrigin'
+	| 'favoriteRoutesWhereDestination'
+	| 'favoriteStationsWhereStation'
 >;

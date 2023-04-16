@@ -1,4 +1,5 @@
 export { FavoriteRoute, FavoriteRouteCreationAttributes } from './FavoriteRoute.type';
+export { FavoriteStation, FavoriteStationCreationAttributes } from './FavoriteStation.type';
 export { Geometry, GeometryCreationAttributes } from './Geometry.type';
 export { Position, PositionCreationAttributes } from './Position.type';
 export { Station, StationCreationAttributes } from './Station.type';

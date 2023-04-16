@@ -7,7 +7,7 @@ import { StationModel } from './Station.model';
 import { UserModel } from './User.model';
 import { TableName } from '$src/enums/tableName.enum';
 
-@Table({ timestamps: false, tableName: TableName.ROUTES })
+@Table({ timestamps: false, tableName: TableName.FAVORITE_ROUTES })
 export class FavoriteRouteModel extends Model implements FavoriteRoute {
 	@Column({ primaryKey: true, autoIncrement: true })
 	id: number;
