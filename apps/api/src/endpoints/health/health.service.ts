@@ -1,5 +1,5 @@
 // External dependencies
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 
 // Internal dependencies
 import { HttpResponse, HealthResponse } from '_packages/shared/types/http';
@@ -35,21 +35,10 @@ export class HealthService {
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get health of services', error.stack);
 
-			return {
+			throw new InternalServerErrorException({
 				success: false,
-				message: 'An error occurred while trying to get health of services',
-				uptime: process.uptime(),
-				timestamp: Date.now(),
-				database: {
-					connected: false
-				},
-				vasttrafik: {
-					connected: false,
-					journeyPlanner: { connected: false },
-					geography: { connected: false },
-					trafficSituations: { connected: false }
-				}
-			};
+				message: 'An error occurred while trying to get health of services'
+			});
 		}
 	}
 }

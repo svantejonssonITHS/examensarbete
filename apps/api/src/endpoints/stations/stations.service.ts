@@ -1,5 +1,5 @@
 // External dependencies
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 
 // Internal dependencies
 import { HttpResponse, StationsResponse } from '_packages/shared/types/http';
@@ -17,17 +17,16 @@ export class StationsService {
 
 			return {
 				success: true,
-				message: 'Successfully fetched Stations of services',
+				message: 'Successfully fetched stations',
 				stations: stations
 			};
 		} catch (error) {
 			this.logger.error(error.message);
 
-			return {
+			throw new InternalServerErrorException({
 				success: false,
-				message: error.message,
-				stations: []
-			};
+				message: 'An error occurred while trying to get stations'
+			});
 		}
 	}
 }
