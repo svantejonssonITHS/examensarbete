@@ -22,7 +22,7 @@ import { DatabaseProvider } from './database.provider';
 			password: env.DATABASE_PASSWORD,
 			database: env.DATABASE_NAME,
 			synchronize: env.DATABASE_SYNCHRONIZE,
-			sync: { force: true },
+			sync: { force: false },
 			autoLoadModels: true,
 			models: [FavoriteRouteModel, FavoriteStationModel, GeometryModel, PositionModel, StationModel, UserModel],
 			logging: false

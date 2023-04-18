@@ -1,0 +1,27 @@
+version: '3.7'
+name: exarb
+services:
+    db:
+        build:
+            context: ./
+            dockerfile: apps/db/Dockerfile
+    api:
+        env_file: ./apps/api/.env
+        environment:
+            - NODE_ENV=production
+        build:
+            context: ./
+            dockerfile: apps/api/Dockerfile
+        ports:
+            - '3000:3000'
+        depends_on:
+            - db
+    client:
+        env_file: ./apps/client/.env
+        environment:
+            - NODE_ENV=production
+        build:
+            context: ./
+            dockerfile: apps/client/Dockerfile
+        ports:
+            - '80:80'
