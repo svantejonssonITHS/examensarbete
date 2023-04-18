@@ -25,7 +25,7 @@ export class VasttrafikProvider {
 	private readonly logger = new Logger(VasttrafikProvider.name);
 
 	async getAccessToken(): Promise<void> {
-		let cachedAccessToken: string | null = (await this.cacheManager.get<string>('vasttrafikAccessToken')) || null;
+		let cachedAccessToken: string | undefined = await this.cacheManager.get<string>('vasttrafikAccessToken');
 
 		if (!cachedAccessToken) {
 			this.logger.log('No cached access token found, getting new one from Västtrafik auth API');
