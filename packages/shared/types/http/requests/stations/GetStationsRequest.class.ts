@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class StationsRequest {
+export class GetStationsRequest {
 	@IsString()
 	readonly name?: string;
 }

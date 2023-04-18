@@ -1,7 +1,9 @@
 // Response types
 export type { HttpResponse } from './responses/HttpResponse.type';
-export type { HealthResponse } from './responses/HealthResponse.type';
-export type { StationsResponse } from './responses/StationsResponse.type';
+export type { GetFavoriteRoutesResponse } from './responses/favoriteRoutes/GetFavoriteRoutesResponse.type';
+export type { GetHealthResponse } from './responses/health/GetHealthResponse.type';
+export type { GetStationsResponse } from './responses/stations/GetStationsResponse.type';
 
 // Request types
-export { StationsRequest } from './requests/StationsRequest.class';
+export { GetFavoriteRoutesRequest } from './requests/favoriteRoutes/GetFavoriteRoutesRequest.class';
+export { GetStationsRequest } from './requests/stations/GetStationsRequest.class';

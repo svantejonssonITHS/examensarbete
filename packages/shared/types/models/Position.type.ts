@@ -8,7 +8,7 @@ export type Position = {
 	shortName: string | null;
 	abbreviation: string | null;
 	designation: string;
-	geometry: Geometry;
+	geometry: Geometry | null;
 	station: Station | number;
 };
 

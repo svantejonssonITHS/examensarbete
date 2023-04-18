@@ -1,4 +1,4 @@
-export type HealthResponse = {
+export type GetHealthResponse = {
 	uptime: number;
 	timestamp: number;
 	database: {

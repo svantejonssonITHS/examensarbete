@@ -9,11 +9,11 @@ export type Station = {
 	name: string;
 	shortName: string;
 	abbreviation: string;
-	geometry: Geometry;
-	positions: Position[];
-	favoriteRoutesWhereOrigin: FavoriteRoute[];
-	favoriteRoutesWhereDestination: FavoriteRoute[];
-	favoriteStationsWhereStation: FavoriteStation[];
+	geometry: Geometry | null;
+	positions: Position[] | null;
+	favoriteRoutesWhereOrigin: FavoriteRoute[] | null;
+	favoriteRoutesWhereDestination: FavoriteRoute[] | null;
+	favoriteStationsWhereStation: FavoriteStation[] | null;
 };
 
 export type StationCreationAttributes = Omit<

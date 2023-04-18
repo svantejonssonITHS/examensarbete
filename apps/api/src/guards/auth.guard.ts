@@ -10,7 +10,9 @@ import env from '../utils/env.util';
 export class AuthGuard implements CanActivate {
 	async canActivate(context: ExecutionContext): Promise<boolean> {
 		try {
-			const token = context.switchToHttp().getRequest().headers['authorization']?.split(' ')[1];
+			const request = context.switchToHttp().getRequest();
+
+			const token = request.headers['authorization']?.split(' ')[1];
 
 			if (!token) throw new Error();
 
@@ -20,7 +22,10 @@ export class AuthGuard implements CanActivate {
 
 			const decoded = decode(token, { complete: true });
 
-			if (!decoded) throw new Error();
+			if (!decoded?.payload?.sub) throw new Error();
+
+			// Save the user object to the request
+			request.user = decoded.payload;
 
 			const key = await client.getSigningKey(decoded.header.kid);
 
