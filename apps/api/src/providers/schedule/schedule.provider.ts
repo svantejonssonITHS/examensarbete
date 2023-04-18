@@ -13,7 +13,6 @@ export class ScheduleProvider {
 	private readonly logger = new Logger(ScheduleProvider.name);
 
 	async updateDatabase() {
-		return true;
 		this.logger.log('Scheduled update of database started');
 
 		try {

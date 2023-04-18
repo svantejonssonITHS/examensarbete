@@ -2,25 +2,25 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 
 // Internal dependencies
-import { HttpResponse, GetFavoriteRoutesRequest, GetFavoriteRoutesResponse } from '_packages/shared/types/http';
+import { HttpResponse, GetFavoriteStationsRequest, GetFavoriteStationsResponse } from '_packages/shared/types/http';
 import { DatabaseProvider } from '$src/providers/database/database.provider';
 
 @Injectable()
-export class FavoriteRoutesService {
+export class FavoriteStationsService {
 	constructor(private databaseProvider: DatabaseProvider) {}
 
-	private readonly logger = new Logger(FavoriteRoutesService.name);
+	private readonly logger = new Logger(FavoriteStationsService.name);
 
-	async getFavoriteRoutes(queries: GetFavoriteRoutesRequest): Promise<HttpResponse<GetFavoriteRoutesResponse>> {
+	async getFavoriteStations(queries: GetFavoriteStationsRequest): Promise<HttpResponse<GetFavoriteStationsResponse>> {
 		try {
-			const favoriteRoutes = await this.databaseProvider.getFavoriteRoutesByAuth0Id(queries.auth0Id);
+			const favoriteStations = await this.databaseProvider.getFavoriteStationsByAuth0Id(queries.auth0Id);
 
-			if (!favoriteRoutes) throw new InternalServerErrorException();
+			if (!favoriteStations) throw new InternalServerErrorException();
 
 			return {
 				success: true,
 				message: 'Successfully fetched stations',
-				favoriteRoutes: favoriteRoutes
+				favoriteStations: favoriteStations
 			};
 		} catch (error) {
 			this.logger.error(error.message);

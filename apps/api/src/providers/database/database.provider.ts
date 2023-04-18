@@ -6,6 +6,7 @@ import { Op } from 'sequelize';
 // Internal dependencies
 import {
 	FavoriteRoute,
+	FavoriteStation,
 	Geometry,
 	GeometryCreationAttributes,
 	Position,
@@ -189,6 +190,35 @@ export class DatabaseProvider {
 			return favoriteRoutes;
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get favorite routes', error.stack);
+
+			return null;
+		}
+	};
+
+	public getFavoriteStationsByAuth0Id = async (auth0Id: string): Promise<FavoriteStation[]> => {
+		try {
+			const queryResult = await this.sequelize.models.FavoriteStationModel.findAll({
+				attributes: ['id'],
+				include: [
+					{
+						model: this.sequelize.models.UserModel,
+						as: 'user',
+						where: {
+							auth0Id
+						}
+					},
+					{
+						model: this.sequelize.models.StationModel,
+						as: 'station'
+					}
+				]
+			});
+
+			const favoriteStations = queryResult.map((favoriteStation) => favoriteStation.dataValues);
+
+			return favoriteStations;
+		} catch (error) {
+			this.logger.error('An error occurred while trying to get favorite stations', error.stack);
 
 			return null;
 		}
