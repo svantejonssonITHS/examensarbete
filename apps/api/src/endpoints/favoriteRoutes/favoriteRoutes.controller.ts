@@ -1,5 +1,5 @@
 // External dependencies
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query, Request, UseGuards } from '@nestjs/common';
 
 // Internal dependencies
 import { FavoriteRoutesService } from './favoriteRoutes.service';
@@ -7,7 +7,8 @@ import {
 	HttpResponse,
 	GetFavoriteRoutesResponse,
 	PostFavoriteRoutesResponse,
-	PostFavoriteRoutesRequest
+	PostFavoriteRoutesRequest,
+	DeleteFavoriteRoutesRequest
 } from '_packages/shared/types/http';
 import { AuthGuard } from '$src/guards/auth.guard';
 
@@ -27,5 +28,10 @@ export class FavoriteRoutesController {
 		@Body() body: PostFavoriteRoutesRequest
 	): Promise<HttpResponse<PostFavoriteRoutesResponse>> {
 		return this.favoriteRoutesService.createFavoriteRoute({ auth0Id: req.user.sub, ...body });
+	}
+
+	@Delete()
+	deleteFavoriteRoute(@Request() req, @Query() queries: DeleteFavoriteRoutesRequest): Promise<HttpResponse> {
+		return this.favoriteRoutesService.deleteFavoriteRoute({ auth0Id: req.user.sub, ...queries });
 	}
 }

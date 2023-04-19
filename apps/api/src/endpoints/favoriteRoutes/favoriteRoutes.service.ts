@@ -7,7 +7,8 @@ import {
 	GetFavoriteRoutesRequest,
 	GetFavoriteRoutesResponse,
 	PostFavoriteRoutesRequest,
-	PostFavoriteRoutesResponse
+	PostFavoriteRoutesResponse,
+	DeleteFavoriteRoutesRequest
 } from '_packages/shared/types/http';
 import { DatabaseProvider } from '$src/providers/database/database.provider';
 
@@ -63,6 +64,24 @@ export class FavoriteRoutesService {
 			throw new InternalServerErrorException({
 				success: false,
 				message: 'An error occurred while trying to create favorite route'
+			});
+		}
+	}
+
+	async deleteFavoriteRoute(queries: DeleteFavoriteRoutesRequest): Promise<HttpResponse> {
+		try {
+			await this.databaseProvider.deleteFavoriteRoute(queries.id);
+
+			return {
+				success: true,
+				message: 'Successfully deleted favorite route'
+			};
+		} catch (error) {
+			this.logger.error(error.message);
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: 'An error occurred while trying to delete favorite route'
 			});
 		}
 	}

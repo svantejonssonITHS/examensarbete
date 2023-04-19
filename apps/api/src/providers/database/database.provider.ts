@@ -254,6 +254,23 @@ export class DatabaseProvider {
 		}
 	};
 
+	public deleteFavoriteRoute = async (id: number): Promise<void> => {
+		const transaction = await this.sequelize.transaction();
+
+		try {
+			await this.sequelize.models.FavoriteRouteModel.destroy({
+				where: { id },
+				transaction
+			});
+
+			await transaction.commit();
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to delete favorite route', error.stack);
+		}
+	};
+
 	public getFavoriteStationsByAuth0Id = async (auth0Id: string): Promise<FavoriteStation[]> => {
 		try {
 			const queryResult = await this.sequelize.models.FavoriteStationModel.findAll({

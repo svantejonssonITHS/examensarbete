@@ -10,6 +10,7 @@ export type { GetStationsResponse } from './responses/stations/GetStationsRespon
 // Request types
 export { GetFavoriteRoutesRequest } from './requests/favoriteRoutes/GetFavoriteRoutesRequest.class';
 export { PostFavoriteRoutesRequest } from './requests/favoriteRoutes/PostFavoriteRoutesRequest.class';
+export { DeleteFavoriteRoutesRequest } from './requests/favoriteRoutes/DeleteFavoriteRoutesRequest.class';
 export { GetFavoriteStationsRequest } from './requests/favoriteStations/GetFavoriteStationsRequest.class';
 export { PostFavoriteStationsRequest } from './requests/favoriteStations/PostFavoriteStationsRequest.class';
 export { GetStationsRequest } from './requests/stations/GetStationsRequest.class';

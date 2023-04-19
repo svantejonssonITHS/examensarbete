@@ -1,4 +1,4 @@
-export type HttpResponse<T> = {
+export type HttpResponse<T = object> = {
 	success: boolean;
 	message: string;
 } & T;
