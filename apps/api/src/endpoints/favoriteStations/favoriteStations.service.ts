@@ -2,7 +2,13 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 
 // Internal dependencies
-import { HttpResponse, GetFavoriteStationsRequest, GetFavoriteStationsResponse } from '_packages/shared/types/http';
+import {
+	HttpResponse,
+	GetFavoriteStationsRequest,
+	GetFavoriteStationsResponse,
+	PostFavoriteStationsRequest,
+	PostFavoriteStationsResponse
+} from '_packages/shared/types/http';
 import { DatabaseProvider } from '$src/providers/database/database.provider';
 
 @Injectable()
@@ -28,6 +34,36 @@ export class FavoriteStationsService {
 			throw new InternalServerErrorException({
 				success: false,
 				message: 'An error occurred while trying to get stations'
+			});
+		}
+	}
+
+	async createFavoriteStation(
+		body: PostFavoriteStationsRequest
+	): Promise<HttpResponse<PostFavoriteStationsResponse>> {
+		try {
+			const user = await this.databaseProvider.upsertUser({ auth0Id: body.auth0Id });
+
+			if (!user?.id) throw new InternalServerErrorException();
+
+			const favoriteStation = await this.databaseProvider.createFavoriteStation({
+				userId: user.id,
+				stationId: body.stationId
+			});
+
+			if (!favoriteStation) throw new InternalServerErrorException();
+
+			return {
+				success: true,
+				message: 'Successfully created favorite station',
+				favoriteStation: favoriteStation
+			};
+		} catch (error) {
+			this.logger.error(error.message);
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: 'An error occurred while trying to create favorite station'
 			});
 		}
 	}

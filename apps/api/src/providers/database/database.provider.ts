@@ -8,6 +8,7 @@ import {
 	FavoriteRoute,
 	FavoriteRouteCreationAttributes,
 	FavoriteStation,
+	FavoriteStationCreationAttributes,
 	Geometry,
 	GeometryCreationAttributes,
 	Position,
@@ -277,6 +278,28 @@ export class DatabaseProvider {
 			return favoriteStations;
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get favorite stations', error.stack);
+
+			return null;
+		}
+	};
+
+	public createFavoriteStation = async (
+		favoriteStation: FavoriteStationCreationAttributes
+	): Promise<FavoriteStation> => {
+		const transaction = await this.sequelize.transaction();
+
+		try {
+			const queryResult = await this.sequelize.models.FavoriteStationModel.create(favoriteStation, {
+				transaction
+			});
+
+			await transaction.commit();
+
+			return queryResult.dataValues;
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to create favorite station', error.stack);
 
 			return null;
 		}
