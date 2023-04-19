@@ -12,9 +12,13 @@ export class FavoriteStationModel extends Model implements FavoriteStation {
 	@Column({ primaryKey: true, autoIncrement: true })
 	id: number;
 
-	@BelongsTo(() => UserModel, { foreignKey: 'userId' })
+	@BelongsTo(() => UserModel, { foreignKey: { name: 'userId', allowNull: false }, onDelete: 'CASCADE', hooks: true })
 	user: User | number;
 
-	@BelongsTo(() => StationModel, { foreignKey: 'stationId' })
+	@BelongsTo(() => StationModel, {
+		foreignKey: { name: 'stationId', allowNull: false },
+		onDelete: 'CASCADE',
+		hooks: true
+	})
 	station: Station | number;
 }

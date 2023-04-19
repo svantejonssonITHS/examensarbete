@@ -21,9 +21,11 @@ export class GeometryModel extends Model implements Geometry {
 	@Column({ defaultValue: 4326 })
 	srid: number;
 
-	@BelongsTo(() => PositionModel, { foreignKey: 'positionId' })
+	@BelongsTo(() => PositionModel, { foreignKey: 'positionId', onDelete: 'CASCADE', hooks: true })
 	position: Position | number;
 
-	@BelongsTo(() => StationModel, { foreignKey: 'stationId' })
+	@BelongsTo(() => StationModel, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
 	station: Station | number;
 }
+
+// TODO: Add a hook to verify that either positionId or stationId is set but not both

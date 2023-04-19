@@ -6,13 +6,16 @@ import { Op } from 'sequelize';
 // Internal dependencies
 import {
 	FavoriteRoute,
+	FavoriteRouteCreationAttributes,
 	FavoriteStation,
 	Geometry,
 	GeometryCreationAttributes,
 	Position,
 	PositionCreationAttributes,
 	Station,
-	StationCreationAttributes
+	StationCreationAttributes,
+	User,
+	UserCreationAttributes
 } from '_packages/shared/types/models';
 import { TableName } from '$src/enums/tableName.enum';
 
@@ -195,6 +198,26 @@ export class DatabaseProvider {
 		}
 	};
 
+	public createFavoriteRoute = async (favoriteRoute: FavoriteRouteCreationAttributes): Promise<FavoriteRoute> => {
+		const transaction = await this.sequelize.transaction();
+
+		try {
+			const queryResult = await this.sequelize.models.FavoriteRouteModel.create(favoriteRoute, {
+				transaction
+			});
+
+			await transaction.commit();
+
+			return queryResult.dataValues;
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to create favorite route', error.stack);
+
+			return null;
+		}
+	};
+
 	public getFavoriteStationsByAuth0Id = async (auth0Id: string): Promise<FavoriteStation[]> => {
 		try {
 			const queryResult = await this.sequelize.models.FavoriteStationModel.findAll({
@@ -219,6 +242,33 @@ export class DatabaseProvider {
 			return favoriteStations;
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get favorite stations', error.stack);
+
+			return null;
+		}
+	};
+
+	public upsertUser = async (user: UserCreationAttributes): Promise<User> => {
+		const transaction = await this.sequelize.transaction();
+
+		try {
+			await this.sequelize.models.UserModel.create(user, {
+				updateOnDuplicate: ['auth0Id'],
+				transaction
+			});
+
+			await transaction.commit();
+
+			const createdUser = await this.sequelize.models.UserModel.findOne({
+				where: {
+					auth0Id: user.auth0Id
+				}
+			});
+
+			return createdUser.dataValues;
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to create user', error.stack);
 
 			return null;
 		}

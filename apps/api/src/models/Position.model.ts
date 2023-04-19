@@ -27,9 +27,13 @@ export class PositionModel extends Model implements Position {
 	@Column
 	designation: string;
 
-	@HasOne(() => GeometryModel, { foreignKey: 'positionId', onDelete: 'CASCADE', hooks: true })
+	@HasOne(() => GeometryModel, { foreignKey: 'positionId' })
 	geometry: Geometry;
 
-	@BelongsTo(() => StationModel, { foreignKey: 'stationId' })
+	@BelongsTo(() => StationModel, {
+		foreignKey: { name: 'stationId', allowNull: false },
+		onDelete: 'CASCADE',
+		hooks: true
+	})
 	station: Station | number;
 }

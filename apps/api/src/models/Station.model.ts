@@ -26,18 +26,18 @@ export class StationModel extends Model implements Station {
 	@Column({ allowNull: true })
 	abbreviation: string;
 
-	@HasOne(() => GeometryModel, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
+	@HasOne(() => GeometryModel, { foreignKey: 'stationId' })
 	geometry: Geometry;
 
-	@HasMany(() => PositionModel, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
+	@HasMany(() => PositionModel, { foreignKey: 'stationId' })
 	positions: Position[];
 
-	@HasMany(() => FavoriteRouteModel, { foreignKey: 'originStationId', onDelete: 'CASCADE', hooks: true })
+	@HasMany(() => FavoriteRouteModel, { foreignKey: 'originStationId' })
 	favoriteRoutesWhereOrigin: FavoriteRoute[];
 
-	@HasMany(() => FavoriteRouteModel, { foreignKey: 'destinationStationId', onDelete: 'CASCADE', hooks: true })
+	@HasMany(() => FavoriteRouteModel, { foreignKey: 'destinationStationId' })
 	favoriteRoutesWhereDestination: FavoriteRoute[];
 
-	@HasMany(() => FavoriteStationModel, { foreignKey: 'stationId', onDelete: 'CASCADE', hooks: true })
+	@HasMany(() => FavoriteStationModel, { foreignKey: 'stationId' })
 	favoriteStationsWhereStation: FavoriteStation[];
 }

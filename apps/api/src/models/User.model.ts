@@ -15,9 +15,9 @@ export class UserModel extends Model implements User {
 	@Column({ unique: true })
 	auth0Id: string;
 
-	@HasMany(() => FavoriteRouteModel, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
+	@HasMany(() => FavoriteRouteModel, { foreignKey: 'userId' })
 	favoriteRoutes: FavoriteRoute[];
 
-	@HasMany(() => FavoriteStationModel, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
+	@HasMany(() => FavoriteStationModel, { foreignKey: 'userId' })
 	favoriteStations: FavoriteStation[];
 }

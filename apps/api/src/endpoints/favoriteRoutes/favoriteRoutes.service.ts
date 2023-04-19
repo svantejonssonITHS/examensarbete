@@ -2,7 +2,13 @@
 import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 
 // Internal dependencies
-import { HttpResponse, GetFavoriteRoutesRequest, GetFavoriteRoutesResponse } from '_packages/shared/types/http';
+import {
+	HttpResponse,
+	GetFavoriteRoutesRequest,
+	GetFavoriteRoutesResponse,
+	PostFavoriteRoutesRequest,
+	PostFavoriteRoutesResponse
+} from '_packages/shared/types/http';
 import { DatabaseProvider } from '$src/providers/database/database.provider';
 
 @Injectable()
@@ -28,6 +34,35 @@ export class FavoriteRoutesService {
 			throw new InternalServerErrorException({
 				success: false,
 				message: 'An error occurred while trying to get stations'
+			});
+		}
+	}
+
+	async createFavoriteRoute(body: PostFavoriteRoutesRequest): Promise<HttpResponse<PostFavoriteRoutesResponse>> {
+		try {
+			const user = await this.databaseProvider.upsertUser({ auth0Id: body.auth0Id });
+
+			if (!user?.id) throw new InternalServerErrorException();
+
+			const favoriteRoute = await this.databaseProvider.createFavoriteRoute({
+				userId: user.id,
+				originStationId: body.originStationId,
+				destinationStationId: body.destinationStationId
+			});
+
+			if (!favoriteRoute) throw new InternalServerErrorException();
+
+			return {
+				success: true,
+				message: 'Successfully created favorite route',
+				favoriteRoute: favoriteRoute
+			};
+		} catch (error) {
+			this.logger.error(error.message);
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: 'An error occurred while trying to create favorite route'
 			});
 		}
 	}
