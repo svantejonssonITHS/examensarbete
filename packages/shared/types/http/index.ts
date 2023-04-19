@@ -13,4 +13,5 @@ export { PostFavoriteRoutesRequest } from './requests/favoriteRoutes/PostFavorit
 export { DeleteFavoriteRoutesRequest } from './requests/favoriteRoutes/DeleteFavoriteRoutesRequest.class';
 export { GetFavoriteStationsRequest } from './requests/favoriteStations/GetFavoriteStationsRequest.class';
 export { PostFavoriteStationsRequest } from './requests/favoriteStations/PostFavoriteStationsRequest.class';
+export { DeleteFavoriteStationsRequest } from './requests/favoriteStations/DeleteFavoriteStationsRequest.class';
 export { GetStationsRequest } from './requests/stations/GetStationsRequest.class';

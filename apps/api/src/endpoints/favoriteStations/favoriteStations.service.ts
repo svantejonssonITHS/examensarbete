@@ -7,7 +7,8 @@ import {
 	GetFavoriteStationsRequest,
 	GetFavoriteStationsResponse,
 	PostFavoriteStationsRequest,
-	PostFavoriteStationsResponse
+	PostFavoriteStationsResponse,
+	DeleteFavoriteStationsRequest
 } from '_packages/shared/types/http';
 import { DatabaseProvider } from '$src/providers/database/database.provider';
 
@@ -64,6 +65,24 @@ export class FavoriteStationsService {
 			throw new InternalServerErrorException({
 				success: false,
 				message: 'An error occurred while trying to create favorite station'
+			});
+		}
+	}
+
+	async deleteFavoriteStation(queries: DeleteFavoriteStationsRequest): Promise<HttpResponse> {
+		try {
+			await this.databaseProvider.deleteFavoriteStation(queries.id);
+
+			return {
+				success: true,
+				message: 'Successfully deleted favorite station'
+			};
+		} catch (error) {
+			this.logger.error(error.message);
+
+			throw new InternalServerErrorException({
+				success: false,
+				message: 'An error occurred while trying to delete favorite station'
 			});
 		}
 	}

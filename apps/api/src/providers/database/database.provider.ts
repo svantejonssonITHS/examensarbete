@@ -322,6 +322,23 @@ export class DatabaseProvider {
 		}
 	};
 
+	public deleteFavoriteStation = async (id: number): Promise<void> => {
+		const transaction = await this.sequelize.transaction();
+
+		try {
+			await this.sequelize.models.FavoriteStationModel.destroy({
+				where: { id },
+				transaction
+			});
+
+			await transaction.commit();
+		} catch (error) {
+			await transaction.rollback();
+
+			this.logger.error('An error occurred while trying to delete favorite station', error.stack);
+		}
+	};
+
 	public upsertUser = async (user: UserCreationAttributes): Promise<User> => {
 		const transaction = await this.sequelize.transaction();
 
