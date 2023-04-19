@@ -48,9 +48,22 @@ export class DatabaseProvider {
 				transaction
 			});
 
+			if (queryResult.isNewRecord) {
+				await transaction.commit();
+
+				return queryResult.dataValues;
+			}
+
+			const existingGeometry = await this.sequelize.models.GeometryModel.findOne({
+				where: {
+					[Op.or]: [{ positionId: geometry.positionId ?? null }, { stationId: geometry.stationId ?? null }]
+				},
+				transaction
+			});
+
 			await transaction.commit();
 
-			return queryResult.dataValues;
+			return existingGeometry.dataValues;
 		} catch (error) {
 			await transaction.rollback();
 
@@ -69,9 +82,20 @@ export class DatabaseProvider {
 				transaction
 			});
 
+			if (queryResult.isNewRecord) {
+				await transaction.commit();
+
+				return queryResult.dataValues;
+			}
+
+			const existingPosition = await this.sequelize.models.PositionModel.findOne({
+				where: { vasttrafikId: position.vasttrafikId },
+				transaction
+			});
+
 			await transaction.commit();
 
-			return queryResult.dataValues;
+			return existingPosition.dataValues;
 		} catch (error) {
 			await transaction.rollback();
 
@@ -110,9 +134,20 @@ export class DatabaseProvider {
 				transaction
 			});
 
+			if (queryResult.isNewRecord) {
+				await transaction.commit();
+
+				return queryResult.dataValues;
+			}
+
+			const existingStation = await this.sequelize.models.StationModel.findOne({
+				where: { vasttrafikId: station.vasttrafikId },
+				transaction
+			});
+
 			await transaction.commit();
 
-			return queryResult.dataValues;
+			return existingStation.dataValues;
 		} catch (error) {
 			await transaction.rollback();
 
@@ -251,20 +286,25 @@ export class DatabaseProvider {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			await this.sequelize.models.UserModel.create(user, {
+			const queryResult = await this.sequelize.models.UserModel.create(user, {
 				updateOnDuplicate: ['auth0Id'],
+				transaction
+			});
+
+			if (queryResult.isNewRecord) {
+				await transaction.commit();
+
+				return queryResult.dataValues;
+			}
+
+			const existingUser = await this.sequelize.models.UserModel.findOne({
+				where: { auth0Id: user.auth0Id },
 				transaction
 			});
 
 			await transaction.commit();
 
-			const createdUser = await this.sequelize.models.UserModel.findOne({
-				where: {
-					auth0Id: user.auth0Id
-				}
-			});
-
-			return createdUser.dataValues;
+			return existingUser.dataValues;
 		} catch (error) {
 			await transaction.rollback();
 

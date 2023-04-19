@@ -31,6 +31,8 @@ export class ScheduleProvider {
 					abbreviation: stopArea.abbreviation || null
 				});
 
+				if (!station?.id) continue;
+
 				await this.databaseProvider.upsertGeometry({
 					longitude: stopArea.geometry.eastingCoordinate,
 					latitude: stopArea.geometry.northingCoordinate,
@@ -49,6 +51,8 @@ export class ScheduleProvider {
 						designation: stopPoint.designation,
 						stationId: station.id
 					});
+
+					if (!position?.id) continue;
 
 					await this.databaseProvider.upsertGeometry({
 						longitude: stopPoint.geometry.eastingCoordinate,
