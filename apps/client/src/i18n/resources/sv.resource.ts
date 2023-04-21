@@ -14,7 +14,7 @@ const sv: Resource = {
 		'theme-dark': 'Mörkt',
 		'from-label': 'Från',
 		'to-label': 'Till',
-		'favorites-label': 'Favoriter',
+		'favorites-and-recents-label': 'Favoriter och senaste',
 		'show-departures': 'Visa avgångar',
 		'login-label': 'Logga in',
 		'logout-label': 'Logga ut',

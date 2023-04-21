@@ -12,7 +12,7 @@ export type Resource = {
 		'theme-dark': string;
 		'from-label': string;
 		'to-label': string;
-		'favorites-label': string;
+		'favorites-and-recents-label': string;
 		'show-departures': string;
 		'login-label': string;
 		'logout-label': string;

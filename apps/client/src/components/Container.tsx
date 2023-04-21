@@ -1,5 +1,8 @@
+// External dependencies
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
+
+// Internal dependencies
 import IconButton from './IconButton';
 
 const containerStyles = {

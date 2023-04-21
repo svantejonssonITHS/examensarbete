@@ -14,7 +14,7 @@ const en: Resource = {
 		'theme-dark': 'Dark',
 		'from-label': 'From',
 		'to-label': 'To',
-		'favorites-label': 'Favorites',
+		'favorites-and-recents-label': 'Favorites and recents',
 		'show-departures': 'Show departures',
 		'login-label': 'Login',
 		'logout-label': 'Logout',

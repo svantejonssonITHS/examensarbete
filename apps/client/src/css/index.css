@@ -15,4 +15,7 @@
 	.title_base {
 		@apply font-semibold text-base text-black dark:text-white;
 	}
+	.title_sm {
+		@apply font-semibold text-sm text-black dark:text-white;
+	}
 }

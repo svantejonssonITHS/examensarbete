@@ -5,9 +5,10 @@ import clsx from 'clsx';
 // Internal dependencies
 import Container from './Container';
 import Select from './Select';
-import { faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faSearch, faStar } from '@fortawesome/free-solid-svg-icons';
 import Button from './Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import RecentDeparture from './RecentDeparture';
 
 interface DeparturesProps {
 	className?: string;
@@ -26,11 +27,27 @@ function Departures({ className, onClose }: DeparturesProps) {
 			<Button variant="contained" className="self-end">
 				{t('show-departures')}
 			</Button>
-			<div>
+			<div className="flex flex-col gap-2">
 				<h2 className="title_base">
-					<FontAwesomeIcon icon={faLocationDot} className="text-blue-500 dark:text-blue-400" /> Stationens
-					namn
+					<FontAwesomeIcon icon={faStar} className="text-yellow-500 dark:text-yellow-400" />{' '}
+					{t('favorites-and-recents-label')}
 				</h2>
+				<div className="rounded-md overflow-hidden">
+					<RecentDeparture
+						station={{
+							name: 'Brunnsparken',
+							id: 1
+						}}
+						isFavorite={true}
+					/>
+					<RecentDeparture
+						station={{
+							name: 'Brunnsparken',
+							id: 1
+						}}
+						isFavorite={false}
+					/>
+				</div>
 			</div>
 		</Container>
 	);

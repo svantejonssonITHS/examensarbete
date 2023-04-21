@@ -38,11 +38,12 @@ function JourneyPlanner({ className, onClose }: JourneyPlannerProps) {
 				</div>
 				<IconButton icon={faExchange} rotation={90} />
 			</div>
-			<div>
+			<div className="flex flex-col gap-2">
 				<h2 className="title_base">
-					<FontAwesomeIcon icon={faStar} className="text-yellow-500 dark:text-yellow-400" />
-					{t('favorites-label')}
+					<FontAwesomeIcon icon={faStar} className="text-yellow-500 dark:text-yellow-400" />{' '}
+					{t('favorites-and-recents-label')}
 				</h2>
+				<div className="rounded-md overflow-hidden"></div>
 			</div>
 		</Container>
 	);
