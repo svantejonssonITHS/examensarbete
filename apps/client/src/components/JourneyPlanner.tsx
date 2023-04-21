@@ -8,6 +8,7 @@ import Select from './Select';
 import IconButton from './IconButton';
 import { faExchange, faSearch, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import RecentJourney from './RecentJourney';
 
 interface JourneyPlannerProps {
 	className?: string;
@@ -43,7 +44,32 @@ function JourneyPlanner({ className, onClose }: JourneyPlannerProps) {
 					<FontAwesomeIcon icon={faStar} className="text-yellow-500 dark:text-yellow-400" />{' '}
 					{t('favorites-and-recents-label')}
 				</h2>
-				<div className="rounded-md overflow-hidden"></div>
+				<div className="rounded-md overflow-hidden">
+					<RecentJourney
+						journey={{
+							id: 1,
+							originStation: {
+								name: 'Brunnsparkendfdsfdsfdsfsdfdsfsfdsfsdfdsfsfsfsddsfsdffsdfsdfsdf'
+							},
+							destinationStation: {
+								name: 'Marklandsgatan'
+							}
+						}}
+						isFavorite={true}
+					/>
+					<RecentJourney
+						journey={{
+							id: 1,
+							originStation: {
+								name: 'Brunnsparken'
+							},
+							destinationStation: {
+								name: 'Marklandsgatan'
+							}
+						}}
+						isFavorite={false}
+					/>
+				</div>
 			</div>
 		</Container>
 	);

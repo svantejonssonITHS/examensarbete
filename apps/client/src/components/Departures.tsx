@@ -34,16 +34,20 @@ function Departures({ className, onClose }: DeparturesProps) {
 				</h2>
 				<div className="rounded-md overflow-hidden">
 					<RecentDeparture
-						station={{
-							name: 'Brunnsparken',
-							id: 1
+						departure={{
+							id: 1,
+							station: {
+								name: 'Brunnsparken'
+							}
 						}}
 						isFavorite={true}
 					/>
 					<RecentDeparture
-						station={{
-							name: 'Brunnsparken',
-							id: 1
+						departure={{
+							id: 1,
+							station: {
+								name: 'Marklandsgatan'
+							}
 						}}
 						isFavorite={false}
 					/>

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 // Internal dependencies
 import IconButton from './IconButton';
-import { FavoriteStation, Station } from '_packages/shared/types/models';
+import { FavoriteRoute, Station } from '_packages/shared/types/models';
 import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 
@@ -11,20 +11,25 @@ const containerStyles = {
 	base: 'w-full flex items-center justify-between p-2 hover:bg-gray-100 dark:hover:bg-neutral-700 cursor-pointer'
 };
 
-interface RecentDepartureProps {
+interface RecentJourneyProps {
 	className?: string;
-	departure: Omit<FavoriteStation, 'user'>;
+	journey: Omit<FavoriteRoute, 'user'>;
 	isFavorite: boolean;
 }
 
-function RecentDeparture({ departure, isFavorite, className }: RecentDepartureProps) {
+function RecentJourney({ journey, isFavorite, className }: RecentJourneyProps) {
 	const containerClasses = clsx(className, containerStyles.base);
 
 	return (
 		<button className={containerClasses} onClick={() => console.log('button')}>
-			<h3 className="title_sm text-left truncate w-3/4" title={(departure.station as Station).name}>
-				{(departure.station as Station).name}
-			</h3>
+			<div className="flex flex-col w-3/4">
+				<h3 className="title_sm text-left truncate" title={(journey.originStation as Station).name}>
+					{(journey.originStation as Station).name}
+				</h3>
+				<h3 className="title_sm text-left truncate" title={(journey.destinationStation as Station).name}>
+					{(journey.destinationStation as Station).name}
+				</h3>
+			</div>
 			<IconButton
 				icon={isFavorite ? faStarSolid : faStarRegular}
 				size="small"
@@ -37,4 +42,4 @@ function RecentDeparture({ departure, isFavorite, className }: RecentDeparturePr
 	);
 }
 
-export default RecentDeparture;
+export default RecentJourney;
