@@ -19,7 +19,11 @@ export class ScheduleProvider {
 			const sites = await this.slProvider.getSites();
 			const stopAreas = await this.slProvider.getStopAreas();
 
+			const stationSLIds = [];
+
 			for (const site of sites) {
+				stationSLIds.push(site.SiteId);
+
 				const coordinatesOfSite = stopAreas.find((stopArea) => stopArea.StopAreaNumber === site.StopAreaNumber);
 
 				if (!coordinatesOfSite) continue;
@@ -32,51 +36,7 @@ export class ScheduleProvider {
 				});
 			}
 
-			/* 
-			for (const stopArea of stopAreas) {
-				stationSLIds.push(stopArea.gid);
-
-				const station = await this.databaseProvider.upsertStation({
-					slId: stopArea.gid,
-					name: stopArea.name,
-					shortName: stopArea.shortName || null,
-					abbreviation: stopArea.abbreviation || null
-				});
-
-				if (!station?.id) continue;
-
-				await this.databaseProvider.upsertGeometry({
-					longitude: stopArea.geometry.eastingCoordinate,
-					latitude: stopArea.geometry.northingCoordinate,
-					stationId: station.id,
-					srid: stopArea.geometry.srid
-				});
-
-				for (const stopPoint of stopArea.stopPoints) {
-					positionSLIds.push(stopPoint.gid);
-
-					const position = await this.databaseProvider.upsertPosition({
-						slId: stopPoint.gid,
-						name: stopPoint.name,
-						shortName: stopPoint.shortName || null,
-						abbreviation: stopPoint.abbreviation || null,
-						designation: stopPoint.designation,
-						stationId: station.id
-					});
-
-					if (!position?.id) continue;
-
-					await this.databaseProvider.upsertGeometry({
-						longitude: stopPoint.geometry.eastingCoordinate,
-						latitude: stopPoint.geometry.northingCoordinate,
-						positionId: position.id,
-						srid: stopPoint.geometry.srid
-					});
-				}
-			}
-
 			await this.databaseProvider.deleteStationsNotInSL(stationSLIds);
-			await this.databaseProvider.deletePositionsNotInSL(positionSLIds); */
 		} catch (error) {
 			this.logger.error('Scheduled database update failed', error);
 		} finally {
