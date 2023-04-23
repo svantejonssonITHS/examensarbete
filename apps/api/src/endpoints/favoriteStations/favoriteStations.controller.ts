@@ -23,7 +23,7 @@ export class FavoriteStationsController {
 	}
 
 	@Post()
-	createFavoriteRoute(
+	createFavoriteStation(
 		@Request() req,
 		@Body() body: PostFavoriteStationsRequest
 	): Promise<HttpResponse<PostFavoriteStationsResponse>> {
@@ -31,7 +31,7 @@ export class FavoriteStationsController {
 	}
 
 	@Delete()
-	deleteFavoriteRoute(@Request() req, @Query() queries: DeleteFavoriteStationsRequest): Promise<HttpResponse> {
+	deleteFavoriteStation(@Request() req, @Query() queries: DeleteFavoriteStationsRequest): Promise<HttpResponse> {
 		return this.favoriteStationsService.deleteFavoriteStation({ auth0Id: req.user.sub, ...queries });
 	}
 }
