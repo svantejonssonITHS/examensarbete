@@ -3,12 +3,12 @@ import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common
 
 // Internal dependencies
 import { HttpResponse, GetHealthResponse } from '_packages/shared/types/http';
-import { VasttrafikProvider } from '$src/providers/vasttrafik/vasttrafik.provider';
+import { SLProvider } from '$src/providers/sl/sl.provider';
 import { DatabaseProvider } from '$src/providers/database/database.provider';
 
 @Injectable()
 export class HealthService {
-	constructor(private vasttrafik: VasttrafikProvider, private databaseProvider: DatabaseProvider) {}
+	constructor(private sl: SLProvider, private databaseProvider: DatabaseProvider) {}
 
 	private readonly logger = new Logger(HealthService.name);
 
@@ -17,8 +17,8 @@ export class HealthService {
 			// Check health of database
 			const databaseHealth = await this.databaseProvider.checkConnection();
 
-			// Check health of Västtrafik APIs
-			const vasttrafikHealth = await this.vasttrafik.getHealth();
+			// Check health of SL APIs
+			const slHealth = await this.sl.getHealth();
 
 			this.logger.log('Sending health of services');
 
@@ -30,7 +30,7 @@ export class HealthService {
 				database: {
 					connected: databaseHealth
 				},
-				vasttrafik: vasttrafikHealth
+				sl: slHealth
 			};
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get health of services', error.stack);

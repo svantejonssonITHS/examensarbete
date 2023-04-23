@@ -4,10 +4,10 @@ export type GetHealthResponse = {
 	database: {
 		connected: boolean;
 	};
-	vasttrafik: {
+	sl: {
 		connected: boolean;
-		journeyPlanner: { connected: boolean };
-		geography: { connected: boolean };
-		trafficSituations: { connected: boolean };
+		station: { connected: boolean };
+		departure: { connected: boolean };
+		journey: { connected: boolean };
 	};
 };

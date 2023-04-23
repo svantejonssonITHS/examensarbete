@@ -5,10 +5,10 @@ import { ScheduleModule as NestScheduleModule } from '@nestjs/schedule';
 // Internal dependencies
 import { ScheduleProvider } from './schedule.provider';
 import { DatabaseModule } from '../database/database.module';
-import { VasttrafikModule } from '../vasttrafik/vasttrafik.module';
+import { SLModule } from '../sl/sl.module';
 
 @Module({
-	imports: [NestScheduleModule.forRoot(), DatabaseModule, VasttrafikModule],
+	imports: [NestScheduleModule.forRoot(), DatabaseModule, SLModule],
 	providers: [ScheduleProvider],
 	exports: [ScheduleProvider]
 })

@@ -1,6 +1,4 @@
-export { FavoriteRoute, FavoriteRouteCreationAttributes } from './FavoriteRoute.type';
-export { FavoriteStation, FavoriteStationCreationAttributes } from './FavoriteStation.type';
-export { Geometry, GeometryCreationAttributes } from './Geometry.type';
-export { Position, PositionCreationAttributes } from './Position.type';
-export { Station, StationCreationAttributes } from './Station.type';
-export { User, UserCreationAttributes } from './User.type';
+export type { FavoriteRoute, FavoriteRouteCreationAttributes } from './FavoriteRoute.type';
+export type { FavoriteStation, FavoriteStationCreationAttributes } from './FavoriteStation.type';
+export type { Station, StationCreationAttributes } from './Station.type';
+export type { User, UserCreationAttributes } from './User.type';

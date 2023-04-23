@@ -6,8 +6,6 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import env from '$src/utils/env.util';
 import { FavoriteRouteModel } from '$src/models/FavoriteRoute.model';
 import { FavoriteStationModel } from '$src/models/FavoriteStation.model';
-import { GeometryModel } from '$src/models/Geometry.model';
-import { PositionModel } from '$src/models/Position.model';
 import { StationModel } from '$src/models/Station.model';
 import { UserModel } from '$src/models/User.model';
 import { DatabaseProvider } from './database.provider';
@@ -24,17 +22,10 @@ import { DatabaseProvider } from './database.provider';
 			synchronize: env.DATABASE_SYNCHRONIZE,
 			sync: { force: false },
 			autoLoadModels: true,
-			models: [FavoriteRouteModel, FavoriteStationModel, GeometryModel, PositionModel, StationModel, UserModel],
+			models: [FavoriteRouteModel, FavoriteStationModel, StationModel, UserModel],
 			logging: false
 		}),
-		SequelizeModule.forFeature([
-			FavoriteRouteModel,
-			FavoriteStationModel,
-			GeometryModel,
-			PositionModel,
-			StationModel,
-			UserModel
-		])
+		SequelizeModule.forFeature([FavoriteRouteModel, FavoriteStationModel, StationModel, UserModel])
 	],
 	providers: [DatabaseProvider],
 	exports: [DatabaseProvider]

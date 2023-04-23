@@ -4,11 +4,11 @@ import { Module } from '@nestjs/common';
 // Internal dependencies
 import { HealthService } from './health.service';
 import { HealthController } from './health.controller';
-import { VasttrafikModule } from '$src/providers/vasttrafik/vasttrafik.module';
+import { SLModule } from '$src/providers/sl/sl.module';
 import { DatabaseModule } from '$src/providers/database/database.module';
 
 @Module({
-	imports: [VasttrafikModule, DatabaseModule],
+	imports: [SLModule, DatabaseModule],
 	controllers: [HealthController],
 	providers: [HealthService]
 })

@@ -9,10 +9,6 @@ import {
 	FavoriteRouteCreationAttributes,
 	FavoriteStation,
 	FavoriteStationCreationAttributes,
-	Geometry,
-	GeometryCreationAttributes,
-	Position,
-	PositionCreationAttributes,
 	Station,
 	StationCreationAttributes,
 	User,
@@ -40,98 +36,12 @@ export class DatabaseProvider {
 		}
 	};
 
-	public upsertGeometry = async (geometry: GeometryCreationAttributes): Promise<Geometry> => {
-		const transaction = await this.sequelize.transaction();
-
-		try {
-			const queryResult = await this.sequelize.models.GeometryModel.create(geometry, {
-				updateOnDuplicate: ['longitude', 'latitude', 'positionId', 'stationId'],
-				transaction
-			});
-
-			if (queryResult.isNewRecord) {
-				await transaction.commit();
-
-				return queryResult.dataValues;
-			}
-
-			const existingGeometry = await this.sequelize.models.GeometryModel.findOne({
-				where: {
-					[Op.or]: [{ positionId: geometry.positionId ?? null }, { stationId: geometry.stationId ?? null }]
-				},
-				transaction
-			});
-
-			await transaction.commit();
-
-			return existingGeometry.dataValues;
-		} catch (error) {
-			await transaction.rollback();
-
-			this.logger.error('An error occurred while trying to create geometry', error.stack);
-
-			return null;
-		}
-	};
-
-	public upsertPosition = async (position: PositionCreationAttributes): Promise<Position> => {
-		const transaction = await this.sequelize.transaction();
-
-		try {
-			const queryResult = await this.sequelize.models.PositionModel.create(position, {
-				updateOnDuplicate: ['name', 'shortName', 'abbreviation', 'designation', 'stationId'],
-				transaction
-			});
-
-			if (queryResult.isNewRecord) {
-				await transaction.commit();
-
-				return queryResult.dataValues;
-			}
-
-			const existingPosition = await this.sequelize.models.PositionModel.findOne({
-				where: { vasttrafikId: position.vasttrafikId },
-				transaction
-			});
-
-			await transaction.commit();
-
-			return existingPosition.dataValues;
-		} catch (error) {
-			await transaction.rollback();
-
-			this.logger.error('An error occurred while trying to create position', error.stack);
-
-			return null;
-		}
-	};
-
-	public deletePositionsNotInVasttrafik = async (vasttrafikIds: string[]): Promise<void> => {
-		const transaction = await this.sequelize.transaction();
-
-		try {
-			await this.sequelize.query(
-				`DELETE FROM ${TableName.POSITIONS} WHERE vasttrafikId NOT IN (:vasttrafikIds)`,
-				{
-					replacements: { vasttrafikIds },
-					transaction
-				}
-			);
-
-			await transaction.commit();
-		} catch (error) {
-			await transaction.rollback();
-
-			this.logger.error('An error occurred while trying to delete position(s)', error.stack);
-		}
-	};
-
 	public upsertStation = async (station: StationCreationAttributes): Promise<Station> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {
 			const queryResult = await this.sequelize.models.StationModel.create(station, {
-				updateOnDuplicate: ['name', 'shortName', 'abbreviation'],
+				updateOnDuplicate: ['name'],
 				transaction
 			});
 
@@ -142,7 +52,7 @@ export class DatabaseProvider {
 			}
 
 			const existingStation = await this.sequelize.models.StationModel.findOne({
-				where: { vasttrafikId: station.vasttrafikId },
+				where: { slId: station.slId },
 				transaction
 			});
 
@@ -158,12 +68,12 @@ export class DatabaseProvider {
 		}
 	};
 
-	public deleteStationsNotInVasttrafik = async (vasttrafikIds: string[]): Promise<void> => {
+	public deleteStationsNotInSL = async (slIds: string[]): Promise<void> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {
-			await this.sequelize.query(`DELETE FROM ${TableName.STATIONS} WHERE vasttrafikId NOT IN (:vasttrafikIds)`, {
-				replacements: { vasttrafikIds },
+			await this.sequelize.query(`DELETE FROM ${TableName.STATIONS} WHERE slId NOT IN (:slIds)`, {
+				replacements: { slIds },
 				transaction
 			});
 
@@ -182,7 +92,6 @@ export class DatabaseProvider {
 	public getStationsByName = async (name: string): Promise<Station[]> => {
 		try {
 			const queryResult = await this.sequelize.models.StationModel.findAll({
-				attributes: ['id', 'name', 'shortName', 'abbreviation'],
 				where: {
 					name: {
 						[Op.like]: '%' + name + '%'

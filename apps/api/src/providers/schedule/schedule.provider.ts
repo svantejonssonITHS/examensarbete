@@ -4,11 +4,11 @@ import { Cron, Timeout } from '@nestjs/schedule';
 
 // Internal dependencies
 import { DatabaseProvider } from '../database/database.provider';
-import { VasttrafikProvider } from '../vasttrafik/vasttrafik.provider';
+import { SLProvider } from '../sl/sl.provider';
 
 @Injectable()
 export class ScheduleProvider {
-	constructor(private databaseProvider: DatabaseProvider, private vasttrafikProvider: VasttrafikProvider) {}
+	constructor(private databaseProvider: DatabaseProvider, private slProvider: SLProvider) {}
 
 	private readonly logger = new Logger(ScheduleProvider.name);
 
@@ -16,16 +16,28 @@ export class ScheduleProvider {
 		this.logger.log('Scheduled update of database started');
 
 		try {
-			const stopAreas = await this.vasttrafikProvider.getStopAreas();
+			const sites = await this.slProvider.getSites();
+			const stopAreas = await this.slProvider.getStopAreas();
 
-			const stationVasttrafikIds = [];
-			const positionVasttrafikIds = [];
+			for (const site of sites) {
+				const coordinatesOfSite = stopAreas.find((stopArea) => stopArea.StopAreaNumber === site.StopAreaNumber);
 
+				if (!coordinatesOfSite) continue;
+
+				this.databaseProvider.upsertStation({
+					slId: site.SiteId,
+					name: site.SiteName,
+					northingCoordinate: coordinatesOfSite.CentroidNorthingCoordinate,
+					eastingCoordinate: coordinatesOfSite.CentroidEastingCoordinate
+				});
+			}
+
+			/* 
 			for (const stopArea of stopAreas) {
-				stationVasttrafikIds.push(stopArea.gid);
+				stationSLIds.push(stopArea.gid);
 
 				const station = await this.databaseProvider.upsertStation({
-					vasttrafikId: stopArea.gid,
+					slId: stopArea.gid,
 					name: stopArea.name,
 					shortName: stopArea.shortName || null,
 					abbreviation: stopArea.abbreviation || null
@@ -41,10 +53,10 @@ export class ScheduleProvider {
 				});
 
 				for (const stopPoint of stopArea.stopPoints) {
-					positionVasttrafikIds.push(stopPoint.gid);
+					positionSLIds.push(stopPoint.gid);
 
 					const position = await this.databaseProvider.upsertPosition({
-						vasttrafikId: stopPoint.gid,
+						slId: stopPoint.gid,
 						name: stopPoint.name,
 						shortName: stopPoint.shortName || null,
 						abbreviation: stopPoint.abbreviation || null,
@@ -63,8 +75,8 @@ export class ScheduleProvider {
 				}
 			}
 
-			await this.databaseProvider.deleteStationsNotInVasttrafik(stationVasttrafikIds);
-			await this.databaseProvider.deletePositionsNotInVasttrafik(positionVasttrafikIds);
+			await this.databaseProvider.deleteStationsNotInSL(stationSLIds);
+			await this.databaseProvider.deletePositionsNotInSL(positionSLIds); */
 		} catch (error) {
 			this.logger.error('Scheduled database update failed', error);
 		} finally {
