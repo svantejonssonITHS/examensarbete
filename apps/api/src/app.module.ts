@@ -4,6 +4,7 @@ import { Module, ValidationPipe } from '@nestjs/common';
 // Internal dependencies
 import { DatabaseModule } from './providers/database/database.module';
 import { ScheduleModule } from './providers/schedule/schedule.module';
+import { DeparturesModule } from './endpoints/departures/departures.module';
 import { FavoriteRoutesModule } from './endpoints/favoriteRoutes/favoriteRoutes.module';
 import { FavoriteStationsModule } from './endpoints/favoriteStations/favoriteStations.module';
 import { HealthModule } from './endpoints/health/health.module';
@@ -16,6 +17,7 @@ import { StationsModule } from './endpoints/stations/stations.module';
 		// Scheduling
 		ScheduleModule,
 		// Endpoints
+		DeparturesModule,
 		FavoriteRoutesModule,
 		FavoriteStationsModule,
 		HealthModule,

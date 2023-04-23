@@ -3,8 +3,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 
 // Internal dependencies
-import { SLHealth, SLSite, SLStopArea } from '$src/types/sl.type';
+import { SLHealth, SLLineGroup, SLSite, SLStopArea } from '$src/types/sl.type';
 import env from '$src/utils/env.util';
+import { Departure } from '_packages/shared/types/other';
+import { LineHue, TransportType } from '_packages/shared/enums';
 
 const stationApi = axios.create({
 	baseURL: `https://api.sl.se/api2/LineData.json?key=${env.SL_STATIONS_API_KEY}`,
@@ -85,6 +87,101 @@ export class SLProvider {
 			return stopAreas.data.ResponseData.Result;
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get stop areas from SL API', error.stack);
+		}
+	}
+
+	async getDepartures(siteId: string): Promise<Departure[]> {
+		try {
+			const departures = await departureApi.get('', {
+				params: {
+					SiteId: siteId,
+					TimeWindow: 60
+				}
+			});
+
+			if (departures.status !== 200) {
+				throw new Error(`Failed to fetch departures from SL. Status code: ${departures.status}`);
+			}
+
+			if (departures.data.StatusCode === 4001) {
+				throw new Error('No departures found');
+			}
+
+			const formattedDepartures: Departure[] = [];
+
+			departures.data.ResponseData.Buses.forEach((bus) => {
+				formattedDepartures.push({
+					transportType: TransportType.BUS,
+					lineHue: bus.LineGroup === SLLineGroup.BUS_BLUE ? LineHue.BLUE : LineHue.RED,
+					lineNumber: bus.LineNumber,
+					destination: bus.Destination,
+					timeTabledDateTime: bus.TimeTabledDateTime,
+					expectedDateTime: bus.ExpectedDateTime
+				});
+			});
+
+			departures.data.ResponseData.Metros.forEach((metro) => {
+				formattedDepartures.push({
+					transportType: TransportType.METRO,
+					lineHue:
+						metro.LineGroup === SLLineGroup.METRO_BLUE
+							? LineHue.BLUE
+							: metro.LineGroup === SLLineGroup.METRO_GREEN
+							? LineHue.GREEN
+							: LineHue.RED,
+					lineNumber: metro.LineNumber,
+					destination: metro.Destination,
+					timeTabledDateTime: metro.TimeTabledDateTime,
+					expectedDateTime: metro.ExpectedDateTime
+				});
+			});
+
+			departures.data.ResponseData.Ships.forEach((ship) => {
+				formattedDepartures.push({
+					transportType: TransportType.SHIP,
+					lineHue: LineHue.BLUE,
+					lineNumber: ship.LineNumber,
+					destination: ship.Destination,
+					timeTabledDateTime: ship.TimeTabledDateTime,
+					expectedDateTime: ship.ExpectedDateTime
+				});
+			});
+
+			departures.data.ResponseData.Trains.forEach((train) => {
+				formattedDepartures.push({
+					transportType: TransportType.TRAIN,
+					lineHue: LineHue.PINK,
+					lineNumber: train.LineNumber,
+					destination: train.Destination,
+					timeTabledDateTime: train.TimeTabledDateTime,
+					expectedDateTime: train.ExpectedDateTime
+				});
+			});
+
+			departures.data.ResponseData.Trams.forEach((tram) => {
+				formattedDepartures.push({
+					transportType: TransportType.TRAM,
+					lineHue: [SLLineGroup.TRAM_CITY, SLLineGroup.TRAM_DJURGARDEN].includes(tram.LineGroup)
+						? LineHue.GRAY
+						: tram.LineGroup === SLLineGroup.TRAM_NOCKEBY
+						? LineHue.TURQUOISE
+						: tram.LineGroup === SLLineGroup.TRAM_LIDINGO
+						? LineHue.BROWN
+						: tram.LineGroup === SLLineGroup.TRAM_TVAR
+						? LineHue.ORANGE
+						: null,
+					lineNumber: tram.LineNumber,
+					destination: tram.Destination,
+					timeTabledDateTime: tram.TimeTabledDateTime,
+					expectedDateTime: tram.ExpectedDateTime
+				});
+			});
+
+			this.logger.log('Sending departures from SL API');
+
+			return formattedDepartures;
+		} catch (error) {
+			this.logger.error('An error occurred while trying to get departures from SL API', error.stack);
 		}
 	}
 }
