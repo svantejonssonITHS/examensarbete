@@ -1,8 +1,8 @@
-import { TransportType } from '../../enums/TransportType.enum';
+import { LineHue, TransportType } from '../../enums';
 
 export type Departure = {
 	transportType: TransportType;
-	lineHue: string | null;
+	lineHue: LineHue | null;
 	lineNumber: string;
 	destination: string;
 	timeTabledDateTime: string; // ISO 8601

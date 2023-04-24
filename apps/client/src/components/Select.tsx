@@ -38,7 +38,7 @@ interface SelectProps {
 	className?: string;
 	options?: Option[] | undefined;
 	searchedOptions?: ((queryString: string, callback: (options: Option[]) => void) => Promise<void>) | undefined;
-	selectedValue?: Option;
+	selectedValue?: Option | undefined;
 	onSelect: (selectedValue: Option | undefined) => void;
 	placeholder?: string | undefined;
 	inputIcon?: IconDefinition | undefined;

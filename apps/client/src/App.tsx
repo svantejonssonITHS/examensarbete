@@ -6,9 +6,9 @@ import Layout from './components/Layout';
 import IconButton from './components/IconButton';
 import { faDirections, faList, faUser } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import Settings from './components/Settings';
-import JourneyPlanner from './components/JourneyPlanner';
-import Departures from './components/Departures';
+import Settings from './views/Settings';
+import Journeys from './views/Journeys';
+import Departures from './views/Departures';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -28,14 +28,14 @@ const containerStyles = {
 };
 
 function App() {
-	const [showJourneyPlanner, setShowJourneyPlanner] = useState(false);
+	const [showJourneys, setShowJourneys] = useState(false);
 	const [showDepartures, setShowDepartures] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const [containerShowing, setContainerShowing] = useState(false);
 
 	useEffect(() => {
-		setContainerShowing(showJourneyPlanner || showDepartures || showSettings);
-	}, [showJourneyPlanner, showDepartures, showSettings]);
+		setContainerShowing(showJourneys || showDepartures || showSettings);
+	}, [showJourneys, showDepartures, showSettings]);
 
 	return (
 		<Layout>
@@ -50,7 +50,7 @@ function App() {
 				<IconButton
 					icon={faDirections}
 					variant="contained"
-					onClick={() => setShowJourneyPlanner(true)}
+					onClick={() => setShowJourneys(true)}
 					disabled={containerShowing}
 				/>
 				<IconButton
@@ -60,12 +60,12 @@ function App() {
 					disabled={containerShowing}
 				/>
 			</div>
-			<JourneyPlanner
-				onClose={() => setShowJourneyPlanner(false)}
+			<Journeys
+				onClose={() => setShowJourneys(false)}
 				className={clsx(
 					containerStyles.base,
 					containerStyles.left,
-					showJourneyPlanner ? containerStyles.show.left : ''
+					showJourneys ? containerStyles.show.left : ''
 				)}
 			/>
 			<Departures

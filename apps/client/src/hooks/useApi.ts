@@ -54,7 +54,7 @@ function useApi<Req, Res>(method: RequestInit['method'], path: string, body?: Re
 		})();
 
 		return () => controller.abort();
-	}, [getAccessTokenSilently, path]);
+	}, [getAccessTokenSilently, method, path, body, queries]);
 
 	return { error, loading, ...data };
 }

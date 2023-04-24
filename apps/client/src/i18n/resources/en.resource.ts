@@ -18,7 +18,10 @@ const en: Resource = {
 		'show-departures': 'Show departures',
 		'login-label': 'Login',
 		'logout-label': 'Logout',
-		'authenticated-as': 'Authenticated as'
+		'authenticated-as': 'Authenticated as',
+		'clear-label': 'Clear',
+		'minutes-label': 'Min',
+		'now-label': 'Now'
 	}
 };
 

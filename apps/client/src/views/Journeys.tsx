@@ -3,19 +3,19 @@ import { t } from 'i18next';
 import clsx from 'clsx';
 
 // Internal dependencies
-import Container from './Container';
-import Select from './Select';
-import IconButton from './IconButton';
+import Container from '../components/Container';
+import Select from '../components/Select';
+import IconButton from '../components/IconButton';
 import { faExchange, faSearch, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import RecentJourney from './RecentJourney';
+import RecentJourney from '../components/RecentJourney';
 
-interface JourneyPlannerProps {
+interface JourneysProps {
 	className?: string;
 	onClose?: () => void;
 }
 
-function JourneyPlanner({ className, onClose }: JourneyPlannerProps) {
+function Journeys({ className, onClose }: JourneysProps) {
 	return (
 		<Container
 			className={clsx(className, 'flex flex-col gap-2')}
@@ -75,4 +75,4 @@ function JourneyPlanner({ className, onClose }: JourneyPlannerProps) {
 	);
 }
 
-export default JourneyPlanner;
+export default Journeys;

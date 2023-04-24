@@ -17,5 +17,8 @@ export type Resource = {
 		'login-label': string;
 		'logout-label': string;
 		'authenticated-as': string;
+		'clear-label': string;
+		'minutes-label': string;
+		'now-label': string;
 	};
 };

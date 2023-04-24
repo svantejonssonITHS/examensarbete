@@ -95,7 +95,8 @@ export class SLProvider {
 			const departures = await departureApi.get('', {
 				params: {
 					SiteId: siteId,
-					TimeWindow: 60
+					TimeWindow: 60,
+					Metro: true
 				}
 			});
 

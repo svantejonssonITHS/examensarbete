@@ -1,14 +1,12 @@
 // External dependencies
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 
 // Internal dependencies
 import { StationsService } from './stations.service';
 import { HttpResponse, GetStationsRequest, GetStationsResponse } from '_packages/shared/types/http';
-import { AuthGuard } from '$src/guards/auth.guard';
 import { Endpoint } from '_packages/shared/enums';
 
 @Controller(Endpoint.STATIONS)
-@UseGuards(AuthGuard)
 export class StationsController {
 	constructor(private readonly stationsService: StationsService) {}
 

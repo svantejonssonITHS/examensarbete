@@ -18,7 +18,10 @@ const sv: Resource = {
 		'show-departures': 'Visa avgångar',
 		'login-label': 'Logga in',
 		'logout-label': 'Logga ut',
-		'authenticated-as': 'Inloggad som'
+		'authenticated-as': 'Inloggad som',
+		'clear-label': 'Rensa',
+		'minutes-label': 'Min',
+		'now-label': 'Nu'
 	}
 };
 

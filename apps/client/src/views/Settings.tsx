@@ -3,17 +3,17 @@ import { t } from 'i18next';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Internal dependencies
-import Container from './Container';
-import Select from './Select';
+import Container from '../components/Container';
+import Select from '../components/Select';
 import { Resource } from '$src/types/resource.type';
 import i18n from '$src/i18n';
-import RadioButton from './RadioButton';
+import RadioButton from '../components/RadioButton';
 import { useTheme } from '$src/providers/theme.provider';
 import { Theme } from '$src/types/theme.type';
-import Button from './Button';
+import Button from '../components/Button';
 
 interface SettingsProps {
 	className?: string;
@@ -21,15 +21,9 @@ interface SettingsProps {
 }
 
 function Settings({ className, onClose }: SettingsProps) {
-	const { isAuthenticated, logout, loginWithRedirect, user, getIdTokenClaims } = useAuth0();
+	const { isAuthenticated, logout, loginWithRedirect, user } = useAuth0();
 	const [theme, setTheme] = useTheme();
 	const [language, setLanguage] = useState(i18n.language);
-
-	useEffect(() => {
-		getIdTokenClaims().then((claims) => {
-			console.log(claims);
-		});
-	}, [getIdTokenClaims]);
 
 	return (
 		<Container className={clsx(className, 'flex flex-col gap-2')} title={t('settings-title')} onClose={onClose}>
