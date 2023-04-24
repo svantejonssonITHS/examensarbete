@@ -11,8 +11,9 @@ import {
 	DeleteFavoriteRoutesRequest
 } from '_packages/shared/types/http';
 import { AuthGuard } from '$src/guards/auth.guard';
+import { Endpoint } from '_packages/shared/enums';
 
-@Controller('favorite-routes')
+@Controller(Endpoint.FAVORITE_ROUTES)
 @UseGuards(AuthGuard)
 export class FavoriteRoutesController {
 	constructor(private readonly favoriteRoutesService: FavoriteRoutesService) {}

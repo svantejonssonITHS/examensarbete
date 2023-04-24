@@ -4,8 +4,9 @@ import { Controller, Get, Query } from '@nestjs/common';
 // Internal dependencies
 import { DeparturesService } from './departures.service';
 import { GetDeparturesRequest, GetDeparturesResponse, HttpResponse } from '_packages/shared/types/http';
+import { Endpoint } from '_packages/shared/enums';
 
-@Controller('departures')
+@Controller(Endpoint.DEPARTURES)
 export class DeparturesController {
 	constructor(private readonly departuresService: DeparturesService) {}
 

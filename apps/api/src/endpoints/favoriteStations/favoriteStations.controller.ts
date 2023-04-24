@@ -11,8 +11,9 @@ import {
 	DeleteFavoriteStationsRequest
 } from '_packages/shared/types/http';
 import { AuthGuard } from '$src/guards/auth.guard';
+import { Endpoint } from '_packages/shared/enums';
 
-@Controller('favorite-stations')
+@Controller(Endpoint.FAVORITE_STATIONS)
 @UseGuards(AuthGuard)
 export class FavoriteStationsController {
 	constructor(private readonly favoriteStationsService: FavoriteStationsService) {}
