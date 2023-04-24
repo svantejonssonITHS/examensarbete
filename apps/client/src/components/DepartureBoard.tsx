@@ -2,12 +2,11 @@
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { t } from 'i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Internal dependencies
 import { Departure } from '_packages/shared/types/other';
-import i18n from '$src/i18n';
 import lineColor from '$src/utils/lineColor.util';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import lineTransportType from '$src/utils/lineTransportType.util';
 
 const containerStyles = {
@@ -27,7 +26,10 @@ function DepartureBoard({ stationName, departures, className, ...props }: Contai
 		<div className={containerClasses} {...props}>
 			<h2 className="title_base">{stationName}</h2>
 			{departures.map((departure) => (
-				<div key={departure.lineNumber + departure.destination} className="flex gap-2">
+				<div
+					key={departure.lineNumber + departure.destination}
+					className="flex gap-2 p-2 rounded-md bg-gray-100 dark:bg-neutral-700"
+				>
 					<div className="w-6 grid place-items-center" title={departure.transportType}>
 						<FontAwesomeIcon icon={lineTransportType(departure.transportType)} />
 					</div>
