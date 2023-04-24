@@ -48,9 +48,14 @@ function DepartureBoard({ stationName, departures, className, ...props }: Contai
 							)
 								? t('now-label')
 								: // else show the minutes left
-								  dayjs(departure.expectedDateTime ?? departure.timeTabledDateTime)
-										.locale(i18n.language)
-										.format('m') +
+								  Math.floor(
+										(dayjs().diff(
+											departure.expectedDateTime ?? departure.timeTabledDateTime,
+											'second'
+										) /
+											60) *
+											-1
+								  ) +
 								  ' ' +
 								  t('minutes-label')
 						}

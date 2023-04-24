@@ -119,7 +119,7 @@ export class SLProvider {
 				// Check if the duplicates time (TimeTabledDateTime & ExpectedDateTime) is earlier than the current one
 				if (duplicate) {
 					if (
-						dayjs(duplicate.expectedDateTime ?? duplicate.timeTabledDateTime).isAfter(
+						dayjs(duplicate.expectedDateTime ?? duplicate.timeTabledDateTime).isBefore(
 							bus.ExpectedDateTime ?? bus.TimeTabledDateTime
 						)
 					) {
@@ -279,7 +279,23 @@ export class SLProvider {
 
 			this.logger.log('Sending departures from SL API');
 
-			return [...formattedBuses, ...formattedMetros, ...formattedShips, ...formattedTrains, ...formattedTrams];
+			return [
+				...formattedBuses,
+				...formattedMetros,
+				...formattedShips,
+				...formattedTrains,
+				...formattedTrams
+				// Sort the departures by time
+			].sort((a, b) => {
+				const aTime = a.expectedDateTime ?? a.timeTabledDateTime;
+				const bTime = b.expectedDateTime ?? b.timeTabledDateTime;
+
+				if (aTime && bTime) {
+					return dayjs(aTime).isBefore(bTime) ? -1 : 1;
+				}
+
+				return 0;
+			});
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get departures from SL API', error.stack);
 		}
