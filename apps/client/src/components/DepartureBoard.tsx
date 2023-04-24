@@ -26,50 +26,37 @@ function DepartureBoard({ stationName, departures, className, ...props }: Contai
 	return (
 		<div className={containerClasses} {...props}>
 			<h2 className="title_base">{stationName}</h2>
-			{departures
-				.filter(
-					// Only save the first of every (line number and destination) group
-					(departure, index, self) =>
-						index ===
-							self.findIndex(
-								(d) => d.lineNumber === departure.lineNumber && d.destination === departure.destination
-							) &&
-						// The earliest departure time is the one that should be shown
-						dayjs(departure.expectedDateTime ?? departure.timeTabledDateTime).isBefore(
-							dayjs(self[index + 1]?.expectedDateTime ?? self[index + 1]?.timeTabledDateTime)
-						)
-				)
-				.map((departure) => (
-					<div key={departure.lineNumber + departure.destination} className="flex gap-2">
-						<div className="w-6 grid place-items-center" title={departure.transportType}>
-							<FontAwesomeIcon icon={lineTransportType(departure.transportType)} />
-						</div>
-						<p
-							className={clsx(
-								'w-10 h-6 grid place-items-center rounded-sm text-sm font-bold',
-								lineColor(departure.lineHue)
-							)}
-						>
-							{departure.lineNumber}
-						</p>
-						<p className="text-md truncate flex-grow">{departure.destination}</p>
-						<p className="lowercase whitespace-nowrap">
-							{
-								// if the time is less than one minute, show "now"
-								dayjs(departure.expectedDateTime ?? departure.timeTabledDateTime).isBefore(
-									dayjs().add(1, 'minute')
-								)
-									? t('now-label')
-									: // else show the minutes left
-									  dayjs(departure.expectedDateTime ?? departure.timeTabledDateTime)
-											.locale(i18n.language)
-											.format('m') +
-									  ' ' +
-									  t('minutes-label')
-							}
-						</p>
+			{departures.map((departure) => (
+				<div key={departure.lineNumber + departure.destination} className="flex gap-2">
+					<div className="w-6 grid place-items-center" title={departure.transportType}>
+						<FontAwesomeIcon icon={lineTransportType(departure.transportType)} />
 					</div>
-				))}
+					<p
+						className={clsx(
+							'w-10 h-6 grid place-items-center rounded-sm text-sm font-bold',
+							lineColor(departure.lineHue).toString()
+						)}
+					>
+						{departure.lineNumber}
+					</p>
+					<p className="text-md truncate flex-grow">{departure.destination}</p>
+					<p className="lowercase whitespace-nowrap">
+						{
+							// if the time is less than one minute, show "now"
+							dayjs(departure.expectedDateTime ?? departure.timeTabledDateTime).isBefore(
+								dayjs().add(1, 'minute')
+							)
+								? t('now-label')
+								: // else show the minutes left
+								  dayjs(departure.expectedDateTime ?? departure.timeTabledDateTime)
+										.locale(i18n.language)
+										.format('m') +
+								  ' ' +
+								  t('minutes-label')
+						}
+					</p>
+				</div>
+			))}
 		</div>
 	);
 }

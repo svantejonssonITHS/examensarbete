@@ -2,7 +2,7 @@ export enum LineHue {
 	RED = 'red',
 	BLUE = 'blue',
 	GREEN = 'green',
-	TURQUOISE = 'turquoise',
+	TEAL = 'teal',
 	BROWN = 'brown',
 	ORANGE = 'orange',
 	PINK = 'pink',

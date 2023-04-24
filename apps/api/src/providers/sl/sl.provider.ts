@@ -1,6 +1,7 @@
 // External dependencies
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
+import * as dayjs from 'dayjs';
 
 // Internal dependencies
 import { SLHealth, SLLineGroup, SLSite, SLStopArea } from '$src/types/sl.type';
@@ -108,12 +109,30 @@ export class SLProvider {
 				throw new Error('No departures found');
 			}
 
-			const formattedDepartures: Departure[] = [];
+			const formattedBuses: Departure[] = [];
 
 			departures.data.ResponseData.Buses.forEach((bus) => {
-				formattedDepartures.push({
+				const duplicate = formattedBuses.find(
+					(b) => b.lineNumber === bus.LineNumber && b.destination === bus.Destination
+				);
+
+				// Check if the duplicates time (TimeTabledDateTime & ExpectedDateTime) is earlier than the current one
+				if (duplicate) {
+					if (
+						dayjs(duplicate.expectedDateTime ?? duplicate.timeTabledDateTime).isAfter(
+							bus.ExpectedDateTime ?? bus.TimeTabledDateTime
+						)
+					) {
+						duplicate.expectedDateTime = bus.ExpectedDateTime;
+						duplicate.timeTabledDateTime = bus.TimeTabledDateTime;
+					}
+
+					return;
+				}
+
+				formattedBuses.push({
 					transportType: TransportType.BUS,
-					lineHue: bus.LineGroup === SLLineGroup.BUS_BLUE ? LineHue.BLUE : LineHue.RED,
+					lineHue: bus.GroupOfLine === SLLineGroup.BUS_BLUE ? LineHue.BLUE : LineHue.RED,
 					lineNumber: bus.LineNumber,
 					destination: bus.Destination,
 					timeTabledDateTime: bus.TimeTabledDateTime,
@@ -121,13 +140,33 @@ export class SLProvider {
 				});
 			});
 
+			const formattedMetros: Departure[] = [];
+
 			departures.data.ResponseData.Metros.forEach((metro) => {
-				formattedDepartures.push({
+				const duplicate = formattedMetros.find(
+					(b) => b.lineNumber === metro.LineNumber && b.destination === metro.Destination
+				);
+
+				// Check if the duplicates time (TimeTabledDateTime & ExpectedDateTime) is earlier than the current one
+				if (duplicate) {
+					if (
+						dayjs(duplicate.expectedDateTime ?? duplicate.timeTabledDateTime).isAfter(
+							metro.ExpectedDateTime ?? metro.TimeTabledDateTime
+						)
+					) {
+						duplicate.expectedDateTime = metro.ExpectedDateTime;
+						duplicate.timeTabledDateTime = metro.TimeTabledDateTime;
+					}
+
+					return;
+				}
+
+				formattedMetros.push({
 					transportType: TransportType.METRO,
 					lineHue:
-						metro.LineGroup === SLLineGroup.METRO_BLUE
+						metro.GroupOfLine === SLLineGroup.METRO_BLUE
 							? LineHue.BLUE
-							: metro.LineGroup === SLLineGroup.METRO_GREEN
+							: metro.GroupOfLine === SLLineGroup.METRO_GREEN
 							? LineHue.GREEN
 							: LineHue.RED,
 					lineNumber: metro.LineNumber,
@@ -137,8 +176,28 @@ export class SLProvider {
 				});
 			});
 
+			const formattedShips: Departure[] = [];
+
 			departures.data.ResponseData.Ships.forEach((ship) => {
-				formattedDepartures.push({
+				const duplicate = formattedShips.find(
+					(b) => b.lineNumber === ship.LineNumber && b.destination === ship.Destination
+				);
+
+				// Check if the duplicates time (TimeTabledDateTime & ExpectedDateTime) is earlier than the current one
+				if (duplicate) {
+					if (
+						dayjs(duplicate.expectedDateTime ?? duplicate.timeTabledDateTime).isAfter(
+							ship.ExpectedDateTime ?? ship.TimeTabledDateTime
+						)
+					) {
+						duplicate.expectedDateTime = ship.ExpectedDateTime;
+						duplicate.timeTabledDateTime = ship.TimeTabledDateTime;
+					}
+
+					return;
+				}
+
+				formattedShips.push({
 					transportType: TransportType.SHIP,
 					lineHue: LineHue.BLUE,
 					lineNumber: ship.LineNumber,
@@ -148,8 +207,28 @@ export class SLProvider {
 				});
 			});
 
+			const formattedTrains: Departure[] = [];
+
 			departures.data.ResponseData.Trains.forEach((train) => {
-				formattedDepartures.push({
+				const duplicate = formattedTrains.find(
+					(b) => b.lineNumber === train.LineNumber && b.destination === train.Destination
+				);
+
+				// Check if the duplicates time (TimeTabledDateTime & ExpectedDateTime) is earlier than the current one
+				if (duplicate) {
+					if (
+						dayjs(duplicate.expectedDateTime ?? duplicate.timeTabledDateTime).isAfter(
+							train.ExpectedDateTime ?? train.TimeTabledDateTime
+						)
+					) {
+						duplicate.expectedDateTime = train.ExpectedDateTime;
+						duplicate.timeTabledDateTime = train.TimeTabledDateTime;
+					}
+
+					return;
+				}
+
+				formattedTrains.push({
 					transportType: TransportType.TRAIN,
 					lineHue: LineHue.PINK,
 					lineNumber: train.LineNumber,
@@ -159,16 +238,36 @@ export class SLProvider {
 				});
 			});
 
-			departures.data.ResponseData.Trams.forEach((tram) => {
-				formattedDepartures.push({
+			const formattedTrams: Departure[] = [];
+
+			departures.data.ResponseData.Trams.forEach((tram, _, array) => {
+				const duplicate = formattedTrams.find(
+					(b) => b.lineNumber === tram.LineNumber && b.destination === tram.Destination
+				);
+
+				// Check if the duplicates time (TimeTabledDateTime & ExpectedDateTime) is earlier than the current one
+				if (duplicate) {
+					if (
+						dayjs(duplicate.expectedDateTime ?? duplicate.timeTabledDateTime).isAfter(
+							tram.ExpectedDateTime ?? tram.TimeTabledDateTime
+						)
+					) {
+						duplicate.expectedDateTime = tram.ExpectedDateTime;
+						duplicate.timeTabledDateTime = tram.TimeTabledDateTime;
+					}
+
+					return;
+				}
+
+				formattedTrams.push({
 					transportType: TransportType.TRAM,
-					lineHue: [SLLineGroup.TRAM_CITY, SLLineGroup.TRAM_DJURGARDEN].includes(tram.LineGroup)
+					lineHue: [SLLineGroup.TRAM_CITY, SLLineGroup.TRAM_DJURGARDEN].includes(tram.GroupOfLine)
 						? LineHue.GRAY
-						: tram.LineGroup === SLLineGroup.TRAM_NOCKEBY
-						? LineHue.TURQUOISE
-						: tram.LineGroup === SLLineGroup.TRAM_LIDINGO
+						: tram.GroupOfLine === SLLineGroup.TRAM_NOCKEBY
+						? LineHue.TEAL
+						: tram.GroupOfLine === SLLineGroup.TRAM_LIDINGO
 						? LineHue.BROWN
-						: tram.LineGroup === SLLineGroup.TRAM_TVAR
+						: tram.GroupOfLine === SLLineGroup.TRAM_TVAR
 						? LineHue.ORANGE
 						: null,
 					lineNumber: tram.LineNumber,
@@ -180,7 +279,7 @@ export class SLProvider {
 
 			this.logger.log('Sending departures from SL API');
 
-			return formattedDepartures;
+			return [...formattedBuses, ...formattedMetros, ...formattedShips, ...formattedTrains, ...formattedTrams];
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get departures from SL API', error.stack);
 		}
