@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 // Internal dependencies
 import Container from '../components/Container';
 import Select from '../components/Select';
-import { faSearch, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSpinner, faStar } from '@fortawesome/free-solid-svg-icons';
 import Button from '../components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RecentDeparture from '../components/RecentDeparture';
@@ -119,6 +119,11 @@ function Departures({ className, onClose }: DeparturesProps) {
 			<div className="flex flex-col gap-2">
 				{selectedValue && selectedValue === shownStation && departures ? (
 					<DepartureBoard stationName={selectedValue.label} departures={departures} />
+				) : departuresRequest.loading ? (
+					<div className="text-gray-500 dark:text-gray-400 flex gap-2 items-center justify-center">
+						<FontAwesomeIcon icon={faSpinner} spin />
+						{t('loading')}
+					</div>
 				) : (
 					<>
 						<h2 className="title_base">

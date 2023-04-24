@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconDefinition, faClose } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faClose, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { t } from 'i18next';
 
 // Internal dependencies
@@ -199,7 +199,13 @@ function Select({
 							(e.target as HTMLElement).blur();
 						}}
 					>
-						{loading ? t('loading') : t('no-options')}
+						{loading ? (
+							<>
+								<FontAwesomeIcon icon={faSpinner} spin /> {t('loading')}
+							</>
+						) : (
+							t('no-options')
+						)}
 					</button>
 				)}
 			</div>
