@@ -11,22 +11,26 @@ function useApi<Req, Res>(method: RequestInit['method'], path: string, body?: Re
 	const [error, setError] = useState<Error | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const { getAccessTokenSilently } = useAuth0();
+	const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
 	const controller = new AbortController();
 
 	useEffect(() => {
 		(async () => {
-			const token = await getAccessTokenSilently();
-
 			const config: RequestInit = {
 				method,
 				signal: controller.signal,
 				headers: {
-					'content-type': 'application/json',
-					'Authorization': `Bearer ${token}`
+					'content-type': 'application/json'
 				}
 			};
+
+			if (isAuthenticated) {
+				const token = await getAccessTokenSilently();
+				config.headers = {
+					Authorization: `Bearer ${token}`
+				};
+			}
 
 			if (body) {
 				config.body = JSON.stringify(body);
