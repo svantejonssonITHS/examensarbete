@@ -240,7 +240,7 @@ export class SLProvider {
 
 			const formattedTrams: Departure[] = [];
 
-			departures.data.ResponseData.Trams.forEach((tram, _, array) => {
+			departures.data.ResponseData.Trams.forEach((tram) => {
 				const duplicate = formattedTrams.find(
 					(b) => b.lineNumber === tram.LineNumber && b.destination === tram.Destination
 				);
