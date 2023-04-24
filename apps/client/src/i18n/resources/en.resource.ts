@@ -21,7 +21,8 @@ const en: Resource = {
 		'authenticated-as': 'Authenticated as',
 		'clear-label': 'Clear',
 		'minutes-label': 'Min',
-		'now-label': 'Now'
+		'now-label': 'Now',
+		'no-departures-label': 'No departures found'
 	}
 };
 

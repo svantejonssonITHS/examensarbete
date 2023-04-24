@@ -25,45 +25,49 @@ function DepartureBoard({ stationName, departures, className, ...props }: Contai
 	return (
 		<div className={containerClasses} {...props}>
 			<h2 className="title_base">{stationName}</h2>
-			{departures.map((departure) => (
-				<div
-					key={departure.lineNumber + departure.destination}
-					className="flex gap-2 p-2 rounded-md bg-gray-100 dark:bg-neutral-700"
-				>
-					<div className="w-6 grid place-items-center" title={departure.transportType}>
-						<FontAwesomeIcon icon={lineTransportType(departure.transportType)} />
-					</div>
-					<p
-						className={clsx(
-							'w-10 h-6 grid place-items-center rounded-sm text-sm font-bold',
-							lineColor(departure.lineHue).toString()
-						)}
+			{departures.length ? (
+				departures.map((departure) => (
+					<div
+						key={departure.lineNumber + departure.destination}
+						className="flex gap-2 p-2 rounded-md bg-gray-100 dark:bg-neutral-700"
 					>
-						{departure.lineNumber}
-					</p>
-					<p className="text-md truncate flex-grow">{departure.destination}</p>
-					<p className="lowercase whitespace-nowrap">
-						{
-							// if the time is less than one minute, show "now"
-							dayjs(departure.expectedDateTime ?? departure.timeTabledDateTime).isBefore(
-								dayjs().add(1, 'minute')
-							)
-								? t('now-label')
-								: // else show the minutes left
-								  Math.floor(
-										(dayjs().diff(
-											departure.expectedDateTime ?? departure.timeTabledDateTime,
-											'second'
-										) /
-											60) *
-											-1
-								  ) +
-								  ' ' +
-								  t('minutes-label')
-						}
-					</p>
-				</div>
-			))}
+						<div className="w-6 grid place-items-center" title={departure.transportType}>
+							<FontAwesomeIcon icon={lineTransportType(departure.transportType)} />
+						</div>
+						<p
+							className={clsx(
+								'w-10 h-6 grid place-items-center rounded-sm text-sm font-bold',
+								lineColor(departure.lineHue).toString()
+							)}
+						>
+							{departure.lineNumber}
+						</p>
+						<p className="text-md truncate flex-grow">{departure.destination}</p>
+						<p className="lowercase whitespace-nowrap">
+							{
+								// if the time is less than one minute, show "now"
+								dayjs(departure.expectedDateTime ?? departure.timeTabledDateTime).isBefore(
+									dayjs().add(1, 'minute')
+								)
+									? t('now-label')
+									: // else show the minutes left
+									  Math.floor(
+											(dayjs().diff(
+												departure.expectedDateTime ?? departure.timeTabledDateTime,
+												'second'
+											) /
+												60) *
+												-1
+									  ) +
+									  ' ' +
+									  t('minutes-label')
+							}
+						</p>
+					</div>
+				))
+			) : (
+				<p className="text-center">{t('no-departures-label')}</p>
+			)}
 		</div>
 	);
 }

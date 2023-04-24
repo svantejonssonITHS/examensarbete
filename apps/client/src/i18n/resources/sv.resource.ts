@@ -21,7 +21,8 @@ const sv: Resource = {
 		'authenticated-as': 'Inloggad som',
 		'clear-label': 'Rensa',
 		'minutes-label': 'Min',
-		'now-label': 'Nu'
+		'now-label': 'Nu',
+		'no-departures-label': 'Inga avgångar hittades'
 	}
 };
 

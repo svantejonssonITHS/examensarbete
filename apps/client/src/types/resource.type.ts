@@ -20,5 +20,6 @@ export type Resource = {
 		'clear-label': string;
 		'minutes-label': string;
 		'now-label': string;
+		'no-departures-label': string;
 	};
 };

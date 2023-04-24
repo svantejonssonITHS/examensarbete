@@ -32,7 +32,7 @@ function Departures({ className, onClose }: DeparturesProps) {
 	const [selectedValue, setSelectedValue] = useState<Option | undefined>(undefined);
 	const [stationQuery, setStationQuery] = useState<GetStationsRequest | undefined>(undefined);
 	const [departuresQuery, setDeparturesQuery] = useState<GetDeparturesRequest | undefined>(undefined);
-	const [stations, setStations] = useState<Station[] | undefined>(undefined);
+	const [shownStation, setShownStation] = useState<Option | undefined>(undefined);
 	const [departures, setDepartures] = useState<Departure[] | undefined>(undefined);
 
 	const stationsRequest = useApi<GetStationsRequest, GetStationsResponse>(
@@ -41,12 +41,6 @@ function Departures({ className, onClose }: DeparturesProps) {
 		undefined,
 		stationQuery
 	);
-
-	useEffect(() => {
-		if (stationsRequest.stations) {
-			setStations(stationsRequest.stations);
-		}
-	}, [stationsRequest.stations]);
 
 	const departuresRequest = useApi<GetDeparturesRequest, GetDeparturesResponse>(
 		'get',
@@ -58,8 +52,25 @@ function Departures({ className, onClose }: DeparturesProps) {
 	useEffect(() => {
 		if (departuresRequest.departures) {
 			setDepartures(departuresRequest.departures);
+			setShownStation(selectedValue);
 		}
 	}, [departuresRequest.departures]);
+
+	useEffect(() => {
+		let updateInterval: NodeJS.Timeout | undefined;
+
+		if (departures && selectedValue && selectedValue === shownStation) {
+			updateInterval = setInterval(() => {
+				setDeparturesQuery({ slId: selectedValue.value });
+			}, 10000);
+		}
+
+		return () => {
+			if (updateInterval) {
+				clearInterval(updateInterval);
+			}
+		};
+	}, [selectedValue, departures]);
 
 	return (
 		<Container className={clsx(className, 'flex flex-col gap-2')} title={t('departures-title')} onClose={onClose}>
@@ -106,7 +117,7 @@ function Departures({ className, onClose }: DeparturesProps) {
 				</Button>
 			</div>
 			<div className="flex flex-col gap-2">
-				{selectedValue && departures ? (
+				{selectedValue && selectedValue === shownStation && departures ? (
 					<DepartureBoard stationName={selectedValue.label} departures={departures} />
 				) : (
 					<>
