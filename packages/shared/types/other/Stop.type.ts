@@ -1,6 +1,8 @@
 export type Stop = {
 	name: string;
 	designation: string | null;
+	northingCoordinate: number;
+	eastingCoordinate: number;
 };
 
 export type OriginStop = Stop & {

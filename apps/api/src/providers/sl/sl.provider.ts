@@ -1,8 +1,7 @@
 // External dependencies
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
-import * as dayjs from 'dayjs';
-import { writeFileSync } from 'fs';
+import dayjs from 'dayjs';
 
 // Internal dependencies
 import { SLHealth, SLJourneyRequest, SLSite, SLStopArea } from '$src/types/sl.type';
@@ -317,13 +316,17 @@ export class SLProvider {
 					const originStop: OriginStop = {
 						name: leg.Origin.name,
 						designation: leg.Origin.track ?? null,
-						departureDateTime: leg.Origin.date + 'T' + leg.Origin.time
+						departureDateTime: leg.Origin.date + 'T' + leg.Origin.time,
+						northingCoordinate: leg.Origin.lat,
+						eastingCoordinate: leg.Origin.lon
 					};
 
 					const destinationStop: DestinationStop = {
 						name: leg.Destination.name,
 						designation: leg.Destination.track ?? null,
-						arrivalDateTime: leg.Destination.date + 'T' + leg.Destination.time
+						arrivalDateTime: leg.Destination.date + 'T' + leg.Destination.time,
+						northingCoordinate: leg.Destination.lat,
+						eastingCoordinate: leg.Destination.lon
 					};
 
 					const transportType = leg.Product
@@ -347,8 +350,6 @@ export class SLProvider {
 
 				formattedJourneys.push(journey);
 			});
-
-			writeFileSync('./journeys.json', JSON.stringify(journeys.data, null, 2));
 
 			return formattedJourneys;
 		} catch (error) {
