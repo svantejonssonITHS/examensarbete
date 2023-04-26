@@ -1,4 +1,12 @@
-import { faBus, faQuestionCircle, faShip, faTrain, faTrainTram, faT } from '@fortawesome/free-solid-svg-icons';
+import {
+	faBus,
+	faQuestionCircle,
+	faShip,
+	faTrain,
+	faTrainTram,
+	faT,
+	faPersonWalking
+} from '@fortawesome/free-solid-svg-icons';
 import { TransportType } from '_packages/shared/enums';
 
 export default function (transportType: TransportType) {
@@ -7,5 +15,6 @@ export default function (transportType: TransportType) {
 	else if (transportType === TransportType.TRAIN) return faTrain;
 	else if (transportType === TransportType.TRAM) return faTrainTram;
 	else if (transportType === TransportType.SHIP) return faShip;
+	else if (transportType === TransportType.WALK) return faPersonWalking;
 	else return faQuestionCircle;
 }

@@ -7,7 +7,15 @@ import { useEffect, useState } from 'react';
 import Container from '../components/Container';
 import Select from '../components/Select';
 import IconButton from '../components/IconButton';
-import { faCalendar, faCaretDown, faClock, faExchange, faSearch, faStar } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCalendar,
+	faCaretDown,
+	faClock,
+	faExchange,
+	faSearch,
+	faSpinner,
+	faStar
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RecentJourney from '../components/RecentJourney';
 import useApi from '$src/hooks/useApi';
@@ -24,6 +32,8 @@ import RadioButton from '$src/components/RadioButton';
 import { JourneyTimeBasis } from '$src/enums/journeyTimeBasis.enum';
 import dayjs from '$src/utils/dayjs.util';
 import i18n from '$src/i18n';
+import { Journey } from '_packages/shared/types/other';
+import JourneyList from '$src/components/JourneyList';
 
 interface JourneysProps {
 	className?: string;
@@ -41,6 +51,7 @@ function Journeys({ className, onClose }: JourneysProps) {
 	const [readyToSearchJourney, setReadyToSearchJourney] = useState(false);
 	const [clearable, setClearable] = useState(false);
 	const [journeyQuery, setJourneyQuery] = useState<GetJourneysRequest | undefined>(undefined);
+	const [journeys, setJourneys] = useState<Journey[] | undefined>(undefined);
 
 	useEffect(() => {
 		setReadyToSearchJourney(
@@ -73,6 +84,14 @@ function Journeys({ className, onClose }: JourneysProps) {
 		undefined,
 		journeyQuery
 	);
+
+	useEffect(() => {
+		setJourneys(journeysRequest.journeys);
+	}, [journeysRequest]);
+
+	useEffect(() => {
+		console.log('journeys', journeys);
+	}, [journeys]);
 
 	return (
 		<Container
@@ -236,6 +255,7 @@ function Journeys({ className, onClose }: JourneysProps) {
 						setJourneyTimeBasis(JourneyTimeBasis.NOW);
 						setJourneyDate(undefined);
 						setJourneyTime(undefined);
+						setJourneys(undefined);
 					}}
 				>
 					{t('clear-label')}
@@ -246,7 +266,6 @@ function Journeys({ className, onClose }: JourneysProps) {
 					disabled={!readyToSearchJourney}
 					onClick={() => {
 						const query: GetJourneysRequest = {
-							lang: i18n.language,
 							originId: selectedOrigin?.value,
 							destinationId: selectedDestination?.value
 						};
@@ -268,36 +287,47 @@ function Journeys({ className, onClose }: JourneysProps) {
 				</Button>
 			</div>
 			<div className="flex flex-col gap-2">
-				<h2 className="title_base">
-					<FontAwesomeIcon icon={faStar} className="text-yellow-500 dark:text-yellow-400" />{' '}
-					{t('favorites-and-recents-label')}
-				</h2>
-				<div className="rounded-md overflow-hidden">
-					<RecentJourney
-						journey={{
-							id: 1,
-							originStation: {
-								name: 'Brunnsparkendfdsfdsfdsfsdfdsfsfdsfsdfdsfsfsfsddsfsdffsdfsdfsdf'
-							},
-							destinationStation: {
-								name: 'Marklandsgatan'
-							}
-						}}
-						isFavorite={true}
-					/>
-					<RecentJourney
-						journey={{
-							id: 1,
-							originStation: {
-								name: 'Brunnsparken'
-							},
-							destinationStation: {
-								name: 'Marklandsgatan'
-							}
-						}}
-						isFavorite={false}
-					/>
-				</div>
+				{journeys ? (
+					<JourneyList journeys={journeys} />
+				) : journeysRequest.loading ? (
+					<div className="text-gray-500 dark:text-gray-400 flex gap-2 items-center justify-center">
+						<FontAwesomeIcon icon={faSpinner} spin />
+						{t('loading')}
+					</div>
+				) : (
+					<div>
+						<h2 className="title_base">
+							<FontAwesomeIcon icon={faStar} className="text-yellow-500 dark:text-yellow-400" />{' '}
+							{t('favorites-and-recents-label')}
+						</h2>
+						<div className="rounded-md overflow-hidden">
+							<RecentJourney
+								journey={{
+									id: 1,
+									originStation: {
+										name: 'Brunnsparkendfdsfdsfdsfsdfdsfsfdsfsdfdsfsfsfsddsfsdffsdfsdfsdf'
+									},
+									destinationStation: {
+										name: 'Marklandsgatan'
+									}
+								}}
+								isFavorite={true}
+							/>
+							<RecentJourney
+								journey={{
+									id: 1,
+									originStation: {
+										name: 'Brunnsparken'
+									},
+									destinationStation: {
+										name: 'Marklandsgatan'
+									}
+								}}
+								isFavorite={false}
+							/>
+						</div>
+					</div>
+				)}
 			</div>
 		</Container>
 	);

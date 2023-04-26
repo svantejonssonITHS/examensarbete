@@ -294,6 +294,8 @@ export class SLProvider {
 			const journeys = await journeyApi.get('', {
 				params: {
 					...queries,
+					// The values of all returned data (including data used in formatting the response, so DO NOT CHANGE)
+					Lang: 'sv',
 					// Includes the geometry of the journey
 					Poly: 1
 				}
@@ -304,6 +306,8 @@ export class SLProvider {
 			}
 
 			const formattedJourneys = [];
+
+			if (!journeys.data.Trip) return formattedJourneys;
 
 			journeys.data.Trip.forEach((trip) => {
 				const journey: Journey = {

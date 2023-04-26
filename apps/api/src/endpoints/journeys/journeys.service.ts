@@ -15,7 +15,6 @@ export class JourneysService {
 	async getJourneys(queries: GetJourneysRequest): Promise<HttpResponse<GetJourneysResponse>> {
 		try {
 			const requestParams: SLJourneyRequest = {
-				Lang: queries.lang,
 				originId: queries.originId,
 				destId: queries.destinationId
 			};

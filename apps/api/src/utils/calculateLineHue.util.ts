@@ -5,7 +5,7 @@ export default function (transportType: TransportType, groupOfLine: SLLineGroup)
 	if (transportType === TransportType.BUS) {
 		return groupOfLine.includes(SLLineGroup.BUS_BLUE) ? LineHue.BLUE : LineHue.RED;
 	} else if (transportType === TransportType.METRO) {
-		groupOfLine.includes(SLLineGroup.METRO_BLUE)
+		return groupOfLine.includes(SLLineGroup.METRO_BLUE)
 			? LineHue.BLUE
 			: groupOfLine.includes(SLLineGroup.METRO_GREEN)
 			? LineHue.GREEN

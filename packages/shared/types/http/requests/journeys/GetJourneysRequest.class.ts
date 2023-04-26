@@ -1,11 +1,7 @@
-import { IsBoolean, IsEnum, IsOptional, IsString, Matches, ValidateIf } from 'class-validator';
-import { Language } from '../../../../enums';
+import { IsBoolean, IsOptional, IsString, Matches, ValidateIf } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class GetJourneysRequest {
-	@IsEnum(Language)
-	lang?: string;
-
 	@IsString()
 	originId?: string;
 
