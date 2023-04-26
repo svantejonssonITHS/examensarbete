@@ -9,6 +9,10 @@ const styles = {
 			'text-white shadow-sm bg-blue-600 hover:bg-blue-700 hover:shadow active:bg-blue-500 active:shadow-md disabled:bg-gray-500 disabled:shadow dark:shadow-blue-500/25 dark:bg-blue-500 dark:hover:bg-blue-400 dark:hover:shadow-white/10 dark:active:bg-blue-600 dark:active:shadow-white/20 dark:disabled:bg-gray-500 dark:disabled:shadow',
 		outlined:
 			'border-2 border-blue-600/75 text-blue-600 hover:border-blue-600/100 hover:bg-blue-600/10 active:bg-blue-600/20 disabled:border-gray-500 disabled:text-gray-500 disabled:bg-transparent dark:border-blue-400/75 dark:text-blue-400 dark:hover:border-blue-400/100 dark:hover:bg-blue-400/10 dark:active:bg-blue-400/20 dark:disabled:border-gray-500 dark:disabled:text-gray-500 dark:disabled:bg-transparent'
+	},
+	size: {
+		small: 'py-1 px-2 text-xs',
+		medium: 'py-2 px-3 text-sm'
 	}
 };
 
@@ -16,10 +20,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	className?: string;
 	children: React.ReactNode;
 	variant?: keyof typeof styles.variant;
+	size?: keyof typeof styles.size;
 }
 
-function Button({ className, children, variant = 'text', ...props }: ButtonProps) {
-	const classes = clsx(className, styles.base, styles.transition, styles.variant[variant]);
+function Button({ className, children, variant = 'text', size = 'medium', ...props }: ButtonProps) {
+	const classes = clsx(className, styles.base, styles.transition, styles.variant[variant], styles.size[size]);
 
 	return (
 		<button className={classes} {...props}>
