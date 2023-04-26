@@ -1,7 +1,7 @@
 // External dependencies
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 
 // Internal dependencies
 import { SLHealth, SLJourneyRequest, SLSite, SLStopArea } from '$src/types/sl.type';
