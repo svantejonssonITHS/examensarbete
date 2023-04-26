@@ -21,5 +21,12 @@ export type Resource = {
 		'minutes-label': string;
 		'now-label': string;
 		'no-departures-label': string;
+		'config-label': string;
+		'travel-at-question': string;
+		'travel-now': string;
+		'choose-arrival-time': string;
+		'choose-departure-time': string;
+		'choose-date': string;
+		'choose-time': string;
 	};
 };

@@ -20,7 +20,7 @@ const inputIconStyles = {
 };
 
 const optionContainerStyles = {
-	base: 'absolute top-12 left-0 right-0 z-10 bg-white shadow dark:shadow-white/10 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md overflow-hidden hidden group-focus-within:block peer-focus:!hidden',
+	base: 'absolute top-12 left-0 right-0 z-10 max-h-[15rem] overflow-scroll bg-white shadow dark:shadow-white/10 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md overflow-hidden hidden group-focus-within:block peer-focus:!hidden',
 	transition: 'input_transition'
 };
 
@@ -37,7 +37,13 @@ const optionStyles = {
 interface SelectProps {
 	className?: string;
 	options?: Option[] | undefined;
-	searchedOptions?: ((queryString: string, callback: (options: Option[]) => void) => Promise<void>) | undefined;
+	searchedOptions?:
+		| ((
+				queryString: string,
+				callback: (options: Option[]) => void,
+				defaultOptions: Option[] | undefined
+		  ) => Promise<void> | void)
+		| undefined;
 	selectedValue?: Option | undefined;
 	onSelect: (selectedValue: Option | undefined) => void;
 	placeholder?: string | undefined;
@@ -98,14 +104,18 @@ function Select({
 					setAvailableOptions(undefined);
 					setLoading(true);
 
-					await searchedOptions(queryString, (options) => {
-						// If the query string has changed, don't update the available options
-						// This is necessary because the `searchedOptions` function is asynchronous
-						if (queryString !== e.target.value) return;
+					await searchedOptions(
+						queryString,
+						(options) => {
+							// If the query string has changed, don't update the available options
+							// This is necessary because the `searchedOptions` function is asynchronous
+							if (queryString !== e.target.value) return;
 
-						setAvailableOptions(options);
-						setLoading(false);
-					});
+							setAvailableOptions(options);
+							setLoading(false);
+						},
+						availableOptions
+					);
 				}}
 				onBlur={() => {
 					// If the user leaves the input field and a value is selected, set the query string to the selected value

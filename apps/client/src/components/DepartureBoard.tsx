@@ -1,6 +1,5 @@
 // External dependencies
 import clsx from 'clsx';
-import dayjs from 'dayjs';
 import { t } from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -8,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Departure } from '_packages/shared/types/other';
 import lineColor from '$src/utils/lineColor.util';
 import lineTransportType from '$src/utils/lineTransportType.util';
+import dayjs from '$src/utils/dayjs.util';
 
 const containerStyles = {
 	base: 'flex flex-col gap-2 text-black dark:text-white'

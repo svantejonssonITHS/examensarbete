@@ -17,7 +17,7 @@ export class JourneysService {
 			const requestParams: SLJourneyRequest = {
 				Lang: queries.lang,
 				originId: queries.originId,
-				destId: queries.destId
+				destId: queries.destinationId
 			};
 
 			if (queries.date && queries.time && queries.isArrivalTime) {

@@ -22,7 +22,14 @@ const en: Resource = {
 		'clear-label': 'Clear',
 		'minutes-label': 'Min',
 		'now-label': 'Now',
-		'no-departures-label': 'No departures found'
+		'no-departures-label': 'No departures found',
+		'config-label': 'Config',
+		'travel-at-question': 'When do you want to travel?',
+		'travel-now': 'Now',
+		'choose-arrival-time': 'Choose arrival time',
+		'choose-departure-time': 'Choose departure time',
+		'choose-date': 'Choose date',
+		'choose-time': 'Choose time'
 	}
 };
 

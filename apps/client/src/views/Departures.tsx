@@ -19,7 +19,6 @@ import {
 	GetStationsResponse
 } from '_packages/shared/types/http';
 import { Endpoint } from '_packages/shared/enums';
-import { Station } from '_packages/shared/types/models';
 import { Departure } from '_packages/shared/types/other';
 import DepartureBoard from '$src/components/DepartureBoard';
 

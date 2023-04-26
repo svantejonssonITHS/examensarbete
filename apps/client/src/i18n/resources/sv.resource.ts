@@ -22,7 +22,14 @@ const sv: Resource = {
 		'clear-label': 'Rensa',
 		'minutes-label': 'Min',
 		'now-label': 'Nu',
-		'no-departures-label': 'Inga avgångar hittades'
+		'no-departures-label': 'Inga avgångar hittades',
+		'config-label': 'Konfiguration',
+		'travel-at-question': 'När vill du resa?',
+		'travel-now': 'Nu',
+		'choose-arrival-time': 'Välj ankomsttid',
+		'choose-departure-time': 'Välj avgångstid',
+		'choose-date': 'Välj datum',
+		'choose-time': 'Välj tid'
 	}
 };
 

@@ -10,7 +10,7 @@ export class GetJourneysRequest {
 	originId?: string;
 
 	@IsString()
-	destId?: string;
+	destinationId?: string;
 
 	@IsOptional()
 	@Matches(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/, { message: 'date must be in the format YYYY-MM-DD' })

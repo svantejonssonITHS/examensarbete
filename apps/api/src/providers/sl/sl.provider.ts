@@ -305,9 +305,7 @@ export class SLProvider {
 
 			const formattedJourneys = [];
 
-			journeys.data.Trip.forEach((trip, index) => {
-				if (index !== 0) return;
-
+			journeys.data.Trip.forEach((trip) => {
 				const journey: Journey = {
 					legs: []
 				};

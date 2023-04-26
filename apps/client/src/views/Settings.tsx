@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Internal dependencies
 import Container from '../components/Container';
@@ -14,6 +14,8 @@ import RadioButton from '../components/RadioButton';
 import { useTheme } from '$src/providers/theme.provider';
 import { Theme } from '$src/types/theme.type';
 import Button from '../components/Button';
+import dayjs from '$src/utils/dayjs.util';
+import { Language } from '_packages/shared/enums';
 
 interface SettingsProps {
 	className?: string;
@@ -24,6 +26,16 @@ function Settings({ className, onClose }: SettingsProps) {
 	const { isAuthenticated, logout, loginWithRedirect, user } = useAuth0();
 	const [theme, setTheme] = useTheme();
 	const [language, setLanguage] = useState(i18n.language);
+
+	function updateLanguage(language: string) {
+		setLanguage(language);
+		i18n.changeLanguage(language);
+		dayjs.locale(language);
+	}
+
+	useEffect(() => {
+		updateLanguage(language);
+	}, [language]);
 
 	return (
 		<Container className={clsx(className, 'flex flex-col gap-2')} title={t('settings-title')} onClose={onClose}>
@@ -37,9 +49,7 @@ function Settings({ className, onClose }: SettingsProps) {
 					selectedValue={{ label: t('native-name', { lng: language }), value: language }}
 					onSelect={(s) => {
 						if (!s) return;
-
-						i18n.changeLanguage(s.value);
-						setLanguage(s.value);
+						updateLanguage(s.value);
 					}}
 					clearable={false}
 				/>
