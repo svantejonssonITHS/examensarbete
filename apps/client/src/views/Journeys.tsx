@@ -39,6 +39,7 @@ function Journeys({ className, onClose }: JourneysProps) {
 	const [journeyDate, setJourneyDate] = useState<Option | undefined>(undefined);
 	const [journeyTime, setJourneyTime] = useState<Option | undefined>(undefined);
 	const [readyToSearchJourney, setReadyToSearchJourney] = useState(false);
+	const [clearable, setClearable] = useState(false);
 	const [journeyQuery, setJourneyQuery] = useState<GetJourneysRequest | undefined>(undefined);
 
 	useEffect(() => {
@@ -46,6 +47,16 @@ function Journeys({ className, onClose }: JourneysProps) {
 			!!selectedOrigin &&
 				!!selectedDestination &&
 				(journeyTimeBasis === JourneyTimeBasis.NOW || (!!journeyDate && !!journeyTime))
+		);
+	}, [selectedOrigin, selectedDestination, journeyTimeBasis, journeyDate, journeyTime]);
+
+	useEffect(() => {
+		setClearable(
+			!!selectedOrigin ||
+				!!selectedDestination ||
+				journeyTimeBasis !== JourneyTimeBasis.NOW ||
+				!!journeyDate ||
+				!!journeyTime
 		);
 	}, [selectedOrigin, selectedDestination, journeyTimeBasis, journeyDate, journeyTime]);
 
@@ -218,7 +229,7 @@ function Journeys({ className, onClose }: JourneysProps) {
 				<Button
 					variant="text"
 					className="self-end"
-					disabled={!readyToSearchJourney}
+					disabled={!clearable}
 					onClick={() => {
 						setSelectedOrigin(undefined);
 						setSelectedDestination(undefined);

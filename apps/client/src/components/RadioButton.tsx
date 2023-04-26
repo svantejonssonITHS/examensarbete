@@ -35,7 +35,7 @@ function RadioButton({ children, className, checked, ...props }: RadioButtonProp
 
 	return (
 		<label className={labelClasses}>
-			<input type="radio" className="hidden peer" {...props} />
+			<input type="radio" className="hidden peer" {...props} checked={checked} />
 			<div className={radioButtonClasses}>
 				<FontAwesomeIcon icon={faCircle} className={iconClasses} />
 			</div>
