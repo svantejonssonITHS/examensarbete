@@ -4,6 +4,7 @@ import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common
 // Internal dependencies
 import { HttpResponse, GetJourneysRequest, GetJourneysResponse } from '_packages/shared/types/http';
 import { SLProvider } from '$src/providers/sl/sl.provider';
+import { SLJourneyRequest } from '$src/types/sl.type';
 
 @Injectable()
 export class JourneysService {
@@ -13,14 +14,19 @@ export class JourneysService {
 
 	async getJourneys(queries: GetJourneysRequest): Promise<HttpResponse<GetJourneysResponse>> {
 		try {
-			const journeys = await this.sl.getJourneys({
+			const requestParams: SLJourneyRequest = {
 				Lang: queries.lang,
 				originId: queries.originId,
-				destId: queries.destId,
-				Date: queries.date,
-				Time: queries.time,
-				searchForArrival: queries.isArrivalTime ? 1 : 0
-			});
+				destId: queries.destId
+			};
+
+			if (queries.date && queries.time && queries.isArrivalTime) {
+				requestParams.Date = queries.date;
+				requestParams.Time = queries.time;
+				requestParams.searchForArrival = queries.isArrivalTime ? 1 : 0;
+			}
+
+			const journeys = await this.sl.getJourneys(requestParams);
 
 			if (!journeys) throw new InternalServerErrorException();
 
