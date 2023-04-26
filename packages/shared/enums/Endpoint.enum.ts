@@ -3,5 +3,6 @@ export enum Endpoint {
 	FAVORITE_ROUTES = 'favorite-routes',
 	FAVORITE_STATIONS = 'favorite-stations',
 	HEALTH = 'health',
+	JOURNEYS = 'journeys',
 	STATIONS = 'stations'
 }

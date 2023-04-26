@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 // Internal dependencies
-import { Language } from '$src/types/language.type';
+import { Language } from '_packages/shared/enums';
 import en from './resources/en.resource';
 import sv from './resources/sv.resource';
 

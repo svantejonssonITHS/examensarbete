@@ -41,3 +41,13 @@ export enum SLLineGroup {
 	SHIP = 'Pendelbåt',
 	SHIP_WAXHOLM = 'Waxholmsbolagets'
 }
+
+// https://www.trafiklab.se/api/trafiklab-apis/sl/route-planner-31/
+export type SLJourneyRequest = {
+	Lang?: string;
+	originId: string;
+	destId: string;
+	Date?: string;
+	Time?: string;
+	searchForArrival?: 0 | 1;
+};

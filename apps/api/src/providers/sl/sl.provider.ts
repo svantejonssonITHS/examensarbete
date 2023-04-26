@@ -2,12 +2,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import * as dayjs from 'dayjs';
+import { writeFileSync } from 'fs';
 
 // Internal dependencies
-import { SLHealth, SLLineGroup, SLSite, SLStopArea } from '$src/types/sl.type';
+import { SLHealth, SLJourneyRequest, SLLineGroup, SLSite, SLStopArea } from '$src/types/sl.type';
 import env from '$src/utils/env.util';
-import { Departure } from '_packages/shared/types/other';
+import { Departure, DestinationStop, Journey, Line, OriginStop } from '_packages/shared/types/other';
 import { LineHue, TransportType } from '_packages/shared/enums';
+import calculateLineHue from '$src/utils/calculateLineHue.util';
 
 const stationApi = axios.create({
 	baseURL: `https://api.sl.se/api2/LineData.json?key=${env.SL_STATIONS_API_KEY}`,
@@ -132,7 +134,7 @@ export class SLProvider {
 
 				formattedBuses.push({
 					transportType: TransportType.BUS,
-					lineHue: bus.GroupOfLine === SLLineGroup.BUS_BLUE ? LineHue.BLUE : LineHue.RED,
+					lineHue: calculateLineHue(TransportType.BUS, bus.GroupOfLine),
 					lineNumber: bus.LineNumber,
 					destination: bus.Destination,
 					timeTabledDateTime: bus.TimeTabledDateTime,
@@ -163,12 +165,7 @@ export class SLProvider {
 
 				formattedMetros.push({
 					transportType: TransportType.METRO,
-					lineHue:
-						metro.GroupOfLine === SLLineGroup.METRO_BLUE
-							? LineHue.BLUE
-							: metro.GroupOfLine === SLLineGroup.METRO_GREEN
-							? LineHue.GREEN
-							: LineHue.RED,
+					lineHue: calculateLineHue(TransportType.METRO, metro.GroupOfLine),
 					lineNumber: metro.LineNumber,
 					destination: metro.Destination,
 					timeTabledDateTime: metro.TimeTabledDateTime,
@@ -261,15 +258,7 @@ export class SLProvider {
 
 				formattedTrams.push({
 					transportType: TransportType.TRAM,
-					lineHue: [SLLineGroup.TRAM_CITY, SLLineGroup.TRAM_DJURGARDEN].includes(tram.GroupOfLine)
-						? LineHue.GRAY
-						: tram.GroupOfLine === SLLineGroup.TRAM_NOCKEBY
-						? LineHue.TEAL
-						: tram.GroupOfLine === SLLineGroup.TRAM_LIDINGO
-						? LineHue.BROWN
-						: tram.GroupOfLine === SLLineGroup.TRAM_TVAR
-						? LineHue.ORANGE
-						: null,
+					lineHue: calculateLineHue(TransportType.TRAM, tram.GroupOfLine),
 					lineNumber: tram.LineNumber,
 					destination: tram.Destination,
 					timeTabledDateTime: tram.TimeTabledDateTime,
@@ -298,6 +287,72 @@ export class SLProvider {
 			});
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get departures from SL API', error.stack);
+		}
+	}
+
+	async getJourneys(queries: SLJourneyRequest) {
+		try {
+			const journeys = await journeyApi.get('', {
+				params: {
+					...queries,
+					// Includes the geometry of the journey
+					Poly: 1
+				}
+			});
+
+			if (journeys.status !== 200) {
+				throw new Error(`SL API returned status code ${journeys.status}`);
+			}
+
+			const formattedJourneys = [];
+
+			journeys.data.Trip.forEach((trip, index) => {
+				if (index !== 0) return;
+
+				const journey: Journey = {
+					legs: []
+				};
+
+				trip.LegList.Leg.forEach((leg) => {
+					const originStop: OriginStop = {
+						name: leg.Origin.name,
+						designation: leg.Origin.track ?? null,
+						departureDateTime: leg.Origin.date + 'T' + leg.Origin.time
+					};
+
+					const destinationStop: DestinationStop = {
+						name: leg.Destination.name,
+						designation: leg.Destination.track ?? null,
+						arrivalDateTime: leg.Destination.date + 'T' + leg.Destination.time
+					};
+
+					const transportType = leg.Product
+						? leg.Product.catOut.trim().toLowerCase()
+						: leg.type.trim().toLowerCase();
+
+					const line: Line = {
+						lineNumber: leg.Product ? leg.Product.line : null,
+						destination: leg.direction,
+						transportType: transportType,
+						lineHue: calculateLineHue(transportType, leg.name),
+						path: leg.Polyline ? leg.Polyline.crd : null
+					};
+
+					journey.legs.push({
+						originStop,
+						destinationStop,
+						line
+					});
+				});
+
+				formattedJourneys.push(journey);
+			});
+
+			writeFileSync('./journeys.json', JSON.stringify(journeys.data, null, 2));
+
+			return formattedJourneys;
+		} catch (error) {
+			this.logger.error('An error occurred while trying to get journeys from SL API', error.stack);
 		}
 	}
 }

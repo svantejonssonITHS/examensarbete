@@ -3,5 +3,6 @@ export enum TransportType {
 	METRO = 'metro',
 	TRAIN = 'train',
 	TRAM = 'tram',
-	SHIP = 'ship'
+	SHIP = 'ship',
+	WALK = 'walk'
 }

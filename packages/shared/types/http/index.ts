@@ -6,6 +6,7 @@ export type { PostFavoriteRoutesResponse } from './responses/favoriteRoutes/Post
 export type { GetFavoriteStationsResponse } from './responses/favoriteStations/GetFavoriteStationsResponse.type';
 export type { PostFavoriteStationsResponse } from './responses/favoriteStations/PostFavoriteStationsResponse.type';
 export type { GetHealthResponse } from './responses/health/GetHealthResponse.type';
+export type { GetJourneysResponse } from './responses/journeys/GetJourneysResponse.type';
 export type { GetStationsResponse } from './responses/stations/GetStationsResponse.type';
 
 // Request types
@@ -16,4 +17,5 @@ export { DeleteFavoriteRoutesRequest } from './requests/favoriteRoutes/DeleteFav
 export { GetFavoriteStationsRequest } from './requests/favoriteStations/GetFavoriteStationsRequest.class';
 export { PostFavoriteStationsRequest } from './requests/favoriteStations/PostFavoriteStationsRequest.class';
 export { DeleteFavoriteStationsRequest } from './requests/favoriteStations/DeleteFavoriteStationsRequest.class';
+export { GetJourneysRequest } from './requests/journeys/GetJourneysRequest.class';
 export { GetStationsRequest } from './requests/stations/GetStationsRequest.class';

@@ -8,6 +8,7 @@ import { DeparturesModule } from './endpoints/departures/departures.module';
 import { FavoriteRoutesModule } from './endpoints/favoriteRoutes/favoriteRoutes.module';
 import { FavoriteStationsModule } from './endpoints/favoriteStations/favoriteStations.module';
 import { HealthModule } from './endpoints/health/health.module';
+import { JourneysModule } from './endpoints/journeys/journeys.module';
 import { StationsModule } from './endpoints/stations/stations.module';
 
 @Module({
@@ -21,6 +22,7 @@ import { StationsModule } from './endpoints/stations/stations.module';
 		FavoriteRoutesModule,
 		FavoriteStationsModule,
 		HealthModule,
+		JourneysModule,
 		StationsModule
 	],
 	providers: [

@@ -6,5 +6,6 @@ export enum LineHue {
 	BROWN = 'brown',
 	ORANGE = 'orange',
 	PINK = 'pink',
-	GRAY = 'gray'
+	GRAY = 'gray',
+	BLACK = 'black'
 }

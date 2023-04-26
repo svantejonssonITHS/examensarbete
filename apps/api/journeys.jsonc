@@ -1,0 +1,687 @@
+{
+	"Trip": [
+		{
+			"ServiceDays": [
+				{
+					"planningPeriodBegin": "2023-01-25",
+					"planningPeriodEnd": "2023-06-09",
+					"sDaysR": "mån - fre",
+					"sDaysI": "utom 1., 18. maj, 6. jun",
+					"sDaysB": "E7CF9F3E7CF9F3E7CF0F3E7C79F3A7CF97"
+				}
+			],
+			"LegList": {
+				"Leg": [
+					{
+						"Origin": {
+							"name": "Slussen",
+							"type": "ST",
+							"id": "A=1@O=Slussen@X=18072237@Y=59319618@U=74@L=400101012@",
+							"extId": "400101012",
+							"lon": 18.072237,
+							"lat": 59.319618,
+							"prognosisType": "PROGNOSED",
+							"time": "08:13:00",
+							"date": "2023-04-26",
+							"track": "4",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Slussen (Stockholm)@X=18072453@Y=59320320@U=74@L=300109192@",
+							"mainMastExtId": "300109192",
+							"additional": false
+						},
+						"Destination": {
+							"name": "Skanstull",
+							"type": "ST",
+							"id": "A=1@O=Skanstull@X=18076067@Y=59308490@U=74@L=400101522@",
+							"extId": "400101522",
+							"lon": 18.076067,
+							"lat": 59.30849,
+							"prognosisType": "PROGNOSED",
+							"time": "08:16:00",
+							"date": "2023-04-26",
+							"track": "2",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Skanstull (Stockholm)@X=18076166@Y=59307941@U=74@L=300109190@",
+							"mainMastExtId": "300109190",
+							"additional": false
+						},
+						"JourneyDetailRef": {
+							"ref": "1|7461|0|74|26042023"
+						},
+						"Messages": {
+							"Message": [
+								{
+									"id": "122849189",
+									"act": true,
+									"head": "Information",
+									"text": "Trafiken återigång. Reducerad trafik mellan Råcksta och Hässelby strand pga strömavbrott. Förseningar och inställda avgångar kan förekomma.",
+									"category": "0",
+									"priority": 10,
+									"products": 65535,
+									"sTime": "07:23:32",
+									"sDate": "2023-04-26",
+									"eTime": "08:23:32",
+									"eDate": "2023-04-26"
+								},
+								{
+									"id": "122848884",
+									"act": true,
+									"head": "Information",
+									"text": "Trafiken Återigång. Förseningar och inställda avgångar pga tidigare strömavbrott.",
+									"category": "0",
+									"priority": 10,
+									"products": 65535,
+									"sTime": "07:14:06",
+									"sDate": "2023-04-26",
+									"eTime": "08:14:06",
+									"eDate": "2023-04-26"
+								}
+							]
+						},
+						"JourneyStatus": "P",
+						"Product": {
+							"name": "tunnelbanans gröna linje 18",
+							"num": "10116",
+							"line": "18",
+							"catOut": "METRO   ",
+							"catIn": "MET",
+							"catCode": "1",
+							"catOutS": "MET",
+							"catOutL": "TUNNELBANA ",
+							"operatorCode": "SL",
+							"operator": "Storstockholms Lokaltrafik",
+							"admin": "100018"
+						},
+						"Polyline": {
+							"crd": [
+								18.072237,
+								59.319618 // ...
+							],
+							"delta": true,
+							"dim": 2,
+							"type": "WGS84",
+							"crdEncS": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+						},
+						"Stops": null,
+						"idx": "0",
+						"name": "tunnelbanans gröna linje 18",
+						"number": "10116",
+						"category": "MET",
+						"type": "JNY",
+						"reachable": true,
+						"redirected": false,
+						"direction": "Hökarängen"
+					}
+				]
+			},
+			"TariffResult": {
+				"fareSetItem": [
+					{
+						"fareItem": [
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Helt pris",
+								"price": 3900,
+								"cur": "SEK"
+							},
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Reducerat pris",
+								"price": 2600,
+								"cur": "SEK"
+							}
+						],
+						"name": "ONEWAY",
+						"desc": "SL"
+					}
+				]
+			},
+			"alternative": false,
+			"valid": true,
+			"idx": 0,
+			"tripId": "C-0",
+			"ctxRecon": "T$A=1@O=Slussen@L=400101012@a=128@$A=1@O=Skanstull@L=400101522@a=128@$202304260813$202304260816$        $",
+			"duration": "PT3M",
+			"return": false,
+			"checksum": "385C2AD0_4",
+			"transferCount": 0
+		},
+		{
+			"ServiceDays": [
+				{
+					"planningPeriodBegin": "2023-01-25",
+					"planningPeriodEnd": "2023-06-09",
+					"sDaysR": "mån - fre",
+					"sDaysI": "utom 1., 18. maj, 6. jun",
+					"sDaysB": "E7CF9F3E7CF9F3E7CF0F3E7C79F3A7CF97"
+				}
+			],
+			"LegList": {
+				"Leg": [
+					{
+						"Origin": {
+							"name": "Slussen",
+							"type": "ST",
+							"id": "A=1@O=Slussen@X=18072237@Y=59319618@U=74@L=400101012@",
+							"extId": "400101012",
+							"lon": 18.072237,
+							"lat": 59.319618,
+							"prognosisType": "PROGNOSED",
+							"time": "08:15:00",
+							"date": "2023-04-26",
+							"track": "4",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Slussen (Stockholm)@X=18072453@Y=59320320@U=74@L=300109192@",
+							"mainMastExtId": "300109192",
+							"additional": false
+						},
+						"Destination": {
+							"name": "Skanstull",
+							"type": "ST",
+							"id": "A=1@O=Skanstull@X=18076067@Y=59308490@U=74@L=400101522@",
+							"extId": "400101522",
+							"lon": 18.076067,
+							"lat": 59.30849,
+							"prognosisType": "PROGNOSED",
+							"time": "08:18:00",
+							"date": "2023-04-26",
+							"track": "2",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Skanstull (Stockholm)@X=18076166@Y=59307941@U=74@L=300109190@",
+							"mainMastExtId": "300109190",
+							"additional": false
+						},
+						"JourneyDetailRef": {
+							"ref": "1|7839|1|74|26042023"
+						},
+						"Messages": {
+							"Message": [
+								{
+									"id": "122849188",
+									"act": true,
+									"head": "Information",
+									"text": "Trafiken återigång. Reducerad trafik mellan Råcksta och Hässelby strand pga strömavbrott. Förseningar och inställda avgångar kan förekomma.",
+									"category": "0",
+									"priority": 10,
+									"products": 65535,
+									"sTime": "07:23:32",
+									"sDate": "2023-04-26",
+									"eTime": "08:23:32",
+									"eDate": "2023-04-26"
+								}
+							]
+						},
+						"JourneyStatus": "P",
+						"Product": {
+							"name": "tunnelbanans gröna linje 19",
+							"num": "10682",
+							"line": "19",
+							"catOut": "METRO   ",
+							"catIn": "MET",
+							"catCode": "1",
+							"catOutS": "MET",
+							"catOutL": "TUNNELBANA ",
+							"operatorCode": "SL",
+							"operator": "Storstockholms Lokaltrafik",
+							"admin": "100019"
+						},
+						"Polyline": {
+							"crd": [
+								18.072237,
+								59.319618 // ...
+							],
+							"delta": true,
+							"dim": 2,
+							"type": "WGS84",
+							"crdEncS": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+						},
+						"Stops": null,
+						"idx": "0",
+						"name": "tunnelbanans gröna linje 19",
+						"number": "10682",
+						"category": "MET",
+						"type": "JNY",
+						"reachable": true,
+						"redirected": false,
+						"direction": "Hagsätra"
+					}
+				]
+			},
+			"TariffResult": {
+				"fareSetItem": [
+					{
+						"fareItem": [
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Helt pris",
+								"price": 3900,
+								"cur": "SEK"
+							},
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Reducerat pris",
+								"price": 2600,
+								"cur": "SEK"
+							}
+						],
+						"name": "ONEWAY",
+						"desc": "SL"
+					}
+				]
+			},
+			"alternative": false,
+			"valid": true,
+			"idx": 1,
+			"tripId": "C-1",
+			"ctxRecon": "T$A=1@O=Slussen@L=400101012@a=128@$A=1@O=Skanstull@L=400101522@a=128@$202304260815$202304260818$        $",
+			"duration": "PT3M",
+			"return": false,
+			"checksum": "3A5C2CD0_4",
+			"transferCount": 0
+		},
+		{
+			"ServiceDays": [
+				{
+					"planningPeriodBegin": "2023-01-25",
+					"planningPeriodEnd": "2023-06-09",
+					"sDaysR": "mån - fre",
+					"sDaysI": "utom 1., 18. maj, 6. jun",
+					"sDaysB": "E7CF9F3E7CF9F3E7CF0F3E7C79F3A7CF97"
+				}
+			],
+			"LegList": {
+				"Leg": [
+					{
+						"Origin": {
+							"name": "Slussen",
+							"type": "ST",
+							"id": "A=1@O=Slussen@X=18072237@Y=59319618@U=74@L=400101012@",
+							"extId": "400101012",
+							"lon": 18.072237,
+							"lat": 59.319618,
+							"prognosisType": "PROGNOSED",
+							"time": "08:18:00",
+							"date": "2023-04-26",
+							"track": "4",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Slussen (Stockholm)@X=18072453@Y=59320320@U=74@L=300109192@",
+							"mainMastExtId": "300109192",
+							"additional": false
+						},
+						"Destination": {
+							"name": "Skanstull",
+							"type": "ST",
+							"id": "A=1@O=Skanstull@X=18076067@Y=59308490@U=74@L=400101522@",
+							"extId": "400101522",
+							"lon": 18.076067,
+							"lat": 59.30849,
+							"prognosisType": "PROGNOSED",
+							"time": "08:21:00",
+							"date": "2023-04-26",
+							"track": "2",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Skanstull (Stockholm)@X=18076166@Y=59307941@U=74@L=300109190@",
+							"mainMastExtId": "300109190",
+							"additional": false
+						},
+						"JourneyDetailRef": {
+							"ref": "1|6958|0|74|26042023"
+						},
+						"Messages": {
+							"Message": [
+								{
+									"id": "122849187",
+									"act": true,
+									"head": "Information",
+									"text": "Trafiken återigång. Reducerad trafik mellan Råcksta och Hässelby strand pga strömavbrott. Förseningar och inställda avgångar kan förekomma.",
+									"category": "0",
+									"priority": 10,
+									"products": 65535,
+									"sTime": "07:23:32",
+									"sDate": "2023-04-26",
+									"eTime": "08:23:32",
+									"eDate": "2023-04-26"
+								}
+							]
+						},
+						"JourneyStatus": "P",
+						"Product": {
+							"name": "tunnelbanans gröna linje 17",
+							"num": "11253",
+							"line": "17",
+							"catOut": "METRO   ",
+							"catIn": "MET",
+							"catCode": "1",
+							"catOutS": "MET",
+							"catOutL": "TUNNELBANA ",
+							"operatorCode": "SL",
+							"operator": "Storstockholms Lokaltrafik",
+							"admin": "100017"
+						},
+						"Polyline": {
+							"crd": [
+								18.072237,
+								59.319618 // ...
+							],
+							"delta": true,
+							"dim": 2,
+							"type": "WGS84",
+							"crdEncS": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+						},
+						"Stops": null,
+						"idx": "0",
+						"name": "tunnelbanans gröna linje 17",
+						"number": "11253",
+						"category": "MET",
+						"type": "JNY",
+						"reachable": true,
+						"redirected": false,
+						"direction": "Skarpnäck"
+					}
+				]
+			},
+			"TariffResult": {
+				"fareSetItem": [
+					{
+						"fareItem": [
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Helt pris",
+								"price": 3900,
+								"cur": "SEK"
+							},
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Reducerat pris",
+								"price": 2600,
+								"cur": "SEK"
+							}
+						],
+						"name": "ONEWAY",
+						"desc": "SL"
+					}
+				]
+			},
+			"alternative": false,
+			"valid": true,
+			"idx": 2,
+			"tripId": "C-2",
+			"ctxRecon": "T$A=1@O=Slussen@L=400101012@a=128@$A=1@O=Skanstull@L=400101522@a=128@$202304260818$202304260821$        $",
+			"duration": "PT3M",
+			"return": false,
+			"checksum": "3D5C2FD0_4",
+			"transferCount": 0
+		},
+		{
+			"ServiceDays": [
+				{
+					"planningPeriodBegin": "2023-01-25",
+					"planningPeriodEnd": "2023-06-09",
+					"sDaysR": "mån - fre",
+					"sDaysI": "utom 1., 18. maj, 6. jun",
+					"sDaysB": "E7CF9F3E7CF9F3E7CF0F3E7C79F3A7CF97"
+				}
+			],
+			"LegList": {
+				"Leg": [
+					{
+						"Origin": {
+							"name": "Slussen",
+							"type": "ST",
+							"id": "A=1@O=Slussen@X=18072237@Y=59319618@U=74@L=400101012@",
+							"extId": "400101012",
+							"lon": 18.072237,
+							"lat": 59.319618,
+							"prognosisType": "PROGNOSED",
+							"time": "08:20:00",
+							"date": "2023-04-26",
+							"track": "4",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Slussen (Stockholm)@X=18072453@Y=59320320@U=74@L=300109192@",
+							"mainMastExtId": "300109192",
+							"additional": false
+						},
+						"Destination": {
+							"name": "Skanstull",
+							"type": "ST",
+							"id": "A=1@O=Skanstull@X=18076067@Y=59308490@U=74@L=400101522@",
+							"extId": "400101522",
+							"lon": 18.076067,
+							"lat": 59.30849,
+							"prognosisType": "PROGNOSED",
+							"time": "08:23:00",
+							"date": "2023-04-26",
+							"track": "2",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Skanstull (Stockholm)@X=18076166@Y=59307941@U=74@L=300109190@",
+							"mainMastExtId": "300109190",
+							"additional": false
+						},
+						"JourneyDetailRef": {
+							"ref": "1|7459|0|74|26042023"
+						},
+						"Messages": {
+							"Message": [
+								{
+									"id": "122849189",
+									"act": true,
+									"head": "Information",
+									"text": "Trafiken återigång. Reducerad trafik mellan Råcksta och Hässelby strand pga strömavbrott. Förseningar och inställda avgångar kan förekomma.",
+									"category": "0",
+									"priority": 10,
+									"products": 65535,
+									"sTime": "07:23:32",
+									"sDate": "2023-04-26",
+									"eTime": "08:23:32",
+									"eDate": "2023-04-26"
+								}
+							]
+						},
+						"JourneyStatus": "P",
+						"Product": {
+							"name": "tunnelbanans gröna linje 18",
+							"num": "10683",
+							"line": "18",
+							"catOut": "METRO   ",
+							"catIn": "MET",
+							"catCode": "1",
+							"catOutS": "MET",
+							"catOutL": "TUNNELBANA ",
+							"operatorCode": "SL",
+							"operator": "Storstockholms Lokaltrafik",
+							"admin": "101018"
+						},
+						"Polyline": {
+							"crd": [
+								18.072237,
+								59.319618 // ...
+							],
+							"delta": true,
+							"dim": 2,
+							"type": "WGS84",
+							"crdEncS": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+						},
+						"Stops": null,
+						"idx": "0",
+						"name": "tunnelbanans gröna linje 18",
+						"number": "10683",
+						"category": "MET",
+						"type": "JNY",
+						"reachable": true,
+						"redirected": false,
+						"direction": "Farsta strand"
+					}
+				]
+			},
+			"TariffResult": {
+				"fareSetItem": [
+					{
+						"fareItem": [
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Helt pris",
+								"price": 3900,
+								"cur": "SEK"
+							},
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Reducerat pris",
+								"price": 2600,
+								"cur": "SEK"
+							}
+						],
+						"name": "ONEWAY",
+						"desc": "SL"
+					}
+				]
+			},
+			"alternative": false,
+			"valid": true,
+			"idx": 3,
+			"tripId": "C-3",
+			"ctxRecon": "T$A=1@O=Slussen@L=400101012@a=128@$A=1@O=Skanstull@L=400101522@a=128@$202304260820$202304260823$        $",
+			"duration": "PT3M",
+			"return": false,
+			"checksum": "3F5C31D0_4",
+			"transferCount": 0
+		},
+		{
+			"ServiceDays": [
+				{
+					"planningPeriodBegin": "2023-01-25",
+					"planningPeriodEnd": "2023-06-09",
+					"sDaysR": "mån - fre",
+					"sDaysI": "utom 1., 18. maj, 6. jun",
+					"sDaysB": "E7CF9F3E7CF9F3E7CF0F3E7C79F3A7CF97"
+				}
+			],
+			"LegList": {
+				"Leg": [
+					{
+						"Origin": {
+							"name": "Slussen",
+							"type": "ST",
+							"id": "A=1@O=Slussen@X=18072237@Y=59319618@U=74@L=400101012@",
+							"extId": "400101012",
+							"lon": 18.072237,
+							"lat": 59.319618,
+							"prognosisType": "PROGNOSED",
+							"time": "08:22:00",
+							"date": "2023-04-26",
+							"track": "4",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Slussen (Stockholm)@X=18072453@Y=59320320@U=74@L=300109192@",
+							"mainMastExtId": "300109192",
+							"additional": false
+						},
+						"Destination": {
+							"name": "Skanstull",
+							"type": "ST",
+							"id": "A=1@O=Skanstull@X=18076067@Y=59308490@U=74@L=400101522@",
+							"extId": "400101522",
+							"lon": 18.076067,
+							"lat": 59.30849,
+							"prognosisType": "PROGNOSED",
+							"time": "08:25:00",
+							"date": "2023-04-26",
+							"track": "2",
+							"hasMainMast": true,
+							"mainMastId": "A=1@O=Skanstull (Stockholm)@X=18076166@Y=59307941@U=74@L=300109190@",
+							"mainMastExtId": "300109190",
+							"additional": false
+						},
+						"JourneyDetailRef": {
+							"ref": "1|7891|0|74|26042023"
+						},
+						"Messages": {
+							"Message": [
+								{
+									"id": "122849188",
+									"act": true,
+									"head": "Information",
+									"text": "Trafiken återigång. Reducerad trafik mellan Råcksta och Hässelby strand pga strömavbrott. Förseningar och inställda avgångar kan förekomma.",
+									"category": "0",
+									"priority": 10,
+									"products": 65535,
+									"sTime": "07:23:32",
+									"sDate": "2023-04-26",
+									"eTime": "08:23:32",
+									"eDate": "2023-04-26"
+								}
+							]
+						},
+						"JourneyStatus": "P",
+						"Product": {
+							"name": "tunnelbanans gröna linje 19",
+							"num": "10117",
+							"line": "19",
+							"catOut": "METRO   ",
+							"catIn": "MET",
+							"catCode": "1",
+							"catOutS": "MET",
+							"catOutL": "TUNNELBANA ",
+							"operatorCode": "SL",
+							"operator": "Storstockholms Lokaltrafik",
+							"admin": "100019"
+						},
+						"Polyline": {
+							"crd": [
+								18.072237,
+								59.319618 // ...
+							],
+							"delta": true,
+							"dim": 2,
+							"type": "WGS84",
+							"crdEncS": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+						},
+						"Stops": null,
+						"idx": "0",
+						"name": "tunnelbanans gröna linje 19",
+						"number": "10117",
+						"category": "MET",
+						"type": "JNY",
+						"reachable": true,
+						"redirected": false,
+						"direction": "Hagsätra"
+					}
+				]
+			},
+			"TariffResult": {
+				"fareSetItem": [
+					{
+						"fareItem": [
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Helt pris",
+								"price": 3900,
+								"cur": "SEK"
+							},
+							{
+								"name": "Enkelbiljett, 75 minuter",
+								"desc": "Reducerat pris",
+								"price": 2600,
+								"cur": "SEK"
+							}
+						],
+						"name": "ONEWAY",
+						"desc": "SL"
+					}
+				]
+			},
+			"alternative": false,
+			"valid": true,
+			"idx": 4,
+			"tripId": "C-4",
+			"ctxRecon": "T$A=1@O=Slussen@L=400101012@a=128@$A=1@O=Skanstull@L=400101522@a=128@$202304260822$202304260825$        $",
+			"duration": "PT3M",
+			"return": false,
+			"checksum": "415C33D0_4",
+			"transferCount": 0
+		}
+	],
+	"scrB": "1|OB|MTµ11µ134413µ134413µ134416µ134416µ0µ0µ5µ134413µ1µ-2147483646µ0µ1µ2|PDHµ2e6d19bef57ad96b50e8c99366fcb80b",
+	"scrF": "1|OF|MTµ11µ134422µ134422µ134425µ134425µ0µ0µ5µ134421µ5µ-2147483646µ0µ1µ2|PDHµ2e6d19bef57ad96b50e8c99366fcb80b",
+	"serverVersion": "1.4",
+	"dialectVersion": "1.23",
+	"requestId": "1682489140056"
+}
