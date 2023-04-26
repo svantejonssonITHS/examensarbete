@@ -5,7 +5,7 @@ import * as dayjs from 'dayjs';
 import { writeFileSync } from 'fs';
 
 // Internal dependencies
-import { SLHealth, SLJourneyRequest, SLLineGroup, SLSite, SLStopArea } from '$src/types/sl.type';
+import { SLHealth, SLJourneyRequest, SLSite, SLStopArea } from '$src/types/sl.type';
 import env from '$src/utils/env.util';
 import { Departure, DestinationStop, Journey, Line, OriginStop } from '_packages/shared/types/other';
 import { LineHue, TransportType } from '_packages/shared/enums';
