@@ -31,7 +31,6 @@ import Button from '$src/components/Button';
 import RadioButton from '$src/components/RadioButton';
 import { JourneyTimeBasis } from '$src/enums/journeyTimeBasis.enum';
 import dayjs from '$src/utils/dayjs.util';
-import i18n from '$src/i18n';
 import { Journey } from '_packages/shared/types/other';
 import JourneyList from '$src/components/JourneyList';
 
