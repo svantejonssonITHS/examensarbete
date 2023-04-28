@@ -60,7 +60,7 @@ function Settings({ className, onClose }: SettingsProps) {
 					name="theme"
 					value={Theme.LIGHT}
 					checked={theme === Theme.LIGHT}
-					onClick={() => setTheme(Theme.LIGHT)}
+					onChange={() => setTheme(Theme.LIGHT)}
 				>
 					{t('theme-light')}
 				</RadioButton>
@@ -68,7 +68,7 @@ function Settings({ className, onClose }: SettingsProps) {
 					name="theme"
 					value={Theme.DARK}
 					checked={theme === Theme.DARK}
-					onClick={() => setTheme(Theme.DARK)}
+					onChange={() => setTheme(Theme.DARK)}
 				>
 					{t('theme-dark')}
 				</RadioButton>
