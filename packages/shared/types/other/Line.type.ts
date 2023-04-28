@@ -5,5 +5,5 @@ export type Line = {
 	destination: string | null;
 	transportType: TransportType;
 	lineHue: LineHue | null;
-	path: number[] | null; // Array of initial coordinates and adjustments
+	path: number[][] | null; // Array of coordinates [lat, lng][]
 };

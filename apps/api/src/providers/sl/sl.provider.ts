@@ -9,6 +9,7 @@ import env from '$src/utils/env.util';
 import { Departure, DestinationStop, Journey, Line, OriginStop } from '_packages/shared/types/other';
 import { LineHue, TransportType } from '_packages/shared/enums';
 import calculateLineHue from '$src/utils/calculateLineHue.util';
+import calculatePositions from '$src/utils/calculatePositions.util';
 
 const stationApi = axios.create({
 	baseURL: `https://api.sl.se/api2/LineData.json?key=${env.SL_STATIONS_API_KEY}`,
@@ -340,7 +341,7 @@ export class SLProvider {
 						destination: leg.direction,
 						transportType: transportType,
 						lineHue: calculateLineHue(transportType, leg.name),
-						path: leg.Polyline ? leg.Polyline.crd : null
+						path: leg.Polyline ? calculatePositions(leg.Polyline.crd) : null
 					};
 
 					journey.legs.push({
