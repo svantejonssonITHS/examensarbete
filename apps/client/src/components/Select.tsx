@@ -60,19 +60,16 @@ function Select({
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [queryString, setQueryString] = useState<string>('');
-	const [availableOptions, setAvailableOptions] = useState<Option[] | undefined>(options);
 	const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
-
-	useEffect(() => {
-		setAvailableOptions(options);
-	}, [options]);
 
 	useEffect(() => {
 		setQueryString(selectedValue?.label || '');
 
 		// If the selected value is among the available options, set the highlighted index to that option
-		if (selectedValue && availableOptions) {
-			setHighlightedIndex(availableOptions.findIndex((option) => option.value === selectedValue.value));
+		if (selectedValue && options) {
+			setHighlightedIndex(options.findIndex((option) => option.value === selectedValue.value));
+		} else {
+			setHighlightedIndex(-1);
 		}
 	}, [selectedValue]);
 
@@ -109,12 +106,12 @@ function Select({
 							setHighlightedIndex(-1);
 						}
 					} else if (e.key === 'ArrowDown') {
-						if (highlightedIndex < (availableOptions || []).length - 1) {
+						if (highlightedIndex < (options || []).length - 1) {
 							setHighlightedIndex(highlightedIndex + 1);
 						}
-					} else if (e.key === 'Enter' && availableOptions) {
+					} else if (e.key === 'Enter' && options) {
 						if (highlightedIndex >= 0) {
-							onSelect(availableOptions[highlightedIndex]);
+							onSelect(options[highlightedIndex]);
 							inputRef.current?.blur();
 						}
 					}
@@ -146,13 +143,13 @@ function Select({
 
 			{/* Drop down */}
 			<div className={optionContainerClasses}>
-				{availableOptions && availableOptions.length > 0 ? (
-					availableOptions.map((option) => (
+				{!loading && options && options.length > 0 ? (
+					options.map((option) => (
 						<button
 							key={option.value}
 							className={clsx(
 								optionStyles.base,
-								highlightedIndex === availableOptions.indexOf(option) && optionStyles.highlight,
+								highlightedIndex === options.indexOf(option) && optionStyles.highlight,
 								selectedValue?.value === option.value && optionStyles.selected
 							)}
 							tabIndex={-1}
