@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import { t } from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 // Internal dependencies
 import { Journey } from '_packages/shared/types/other';
@@ -31,6 +31,7 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 			{journeys.length ? (
 				journeys.map((journey, index) => (
 					<button
+						key={Math.random()}
 						className="flex flex-col gap-2 p-2 rounded-md bg-gray-100 dark:bg-neutral-700"
 						onClick={() => setExpandedIndex(index === expandedIndex ? null : index)}
 					>
@@ -66,7 +67,7 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 
 												if (!truncate) {
 													return (
-														<>
+														<Fragment key={Math.random()}>
 															<div
 																className={
 																	'w-6 h-6 grid place-items-center rounded-sm text-sm font-bold bg-black dark:bg-gray-200 text-white dark:text-black'
@@ -91,7 +92,7 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 																	className="ml-1 mr-1"
 																/>
 															)}
-														</>
+														</Fragment>
 													);
 												} else if (truncate && !prevTrunced) {
 													return (
@@ -131,7 +132,10 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 										if (!previousLeg || !nextNonWalkLeg) return null;
 
 										return (
-											<div className="text-left p-1 border-t-2 border-gray-500 dark:border-neutral-600 grid grid-cols-[4rem_auto] gap-1">
+											<div
+												key={Math.random()}
+												className="text-left p-1 border-t-2 border-gray-500 dark:border-neutral-600 grid grid-cols-[4rem_auto] gap-1"
+											>
 												<p className="col-start-1 col-end-2">
 													{dayjs(nextNonWalkLeg.originStop.departureDateTime).diff(
 														dayjs(previousLeg.destinationStop.arrivalDateTime),
@@ -162,7 +166,10 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 										return null;
 									} else {
 										return (
-											<div className="text-left p-1 border-t-2 border-gray-500 dark:border-neutral-600 grid grid-cols-[4rem_1.5rem_auto] grid-rows-4 gap-1 place-items-center overflow-hidden">
+											<div
+												key={Math.random()}
+												className="text-left p-1 border-t-2 border-gray-500 dark:border-neutral-600 grid grid-cols-[4rem_1.5rem_auto] grid-rows-4 gap-1 place-items-center overflow-hidden"
+											>
 												<div className="col-start-1 col-end-4 row-start-1 row-end-2 flex gap-1 place-self-start">
 													<div
 														className={

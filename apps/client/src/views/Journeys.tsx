@@ -52,6 +52,7 @@ function Journeys({ className, onClose }: JourneysProps) {
 	const [clearable, setClearable] = useState(false);
 	const [journeyQuery, setJourneyQuery] = useState<GetJourneysRequest | undefined>(undefined);
 	const [journeys, setJourneys] = useState<Journey[] | undefined>(undefined);
+	const [newJourneyQuery, setNewJourneyQuery] = useState(false);
 
 	useEffect(() => {
 		setReadyToSearchJourney(
@@ -67,9 +68,10 @@ function Journeys({ className, onClose }: JourneysProps) {
 				!!selectedDestination ||
 				journeyTimeBasis !== JourneyTimeBasis.NOW ||
 				!!journeyDate ||
-				!!journeyTime
+				!!journeyTime ||
+				!!journeys
 		);
-	}, [selectedOrigin, selectedDestination, journeyTimeBasis, journeyDate, journeyTime]);
+	}, [selectedOrigin, selectedDestination, journeyTimeBasis, journeyDate, journeyTime, journeys]);
 
 	const stationsRequest = useApi<GetStationsRequest, GetStationsResponse>(
 		'get',
@@ -86,12 +88,11 @@ function Journeys({ className, onClose }: JourneysProps) {
 	);
 
 	useEffect(() => {
-		setJourneys(journeysRequest.journeys);
-	}, [journeysRequest]);
+		if (!newJourneyQuery) return;
 
-	useEffect(() => {
-		console.log('journeys', journeys);
-	}, [journeys]);
+		setJourneys(journeysRequest.journeys);
+		setNewJourneyQuery(false);
+	}, [journeysRequest.journeys]);
 
 	return (
 		<Container
@@ -281,6 +282,7 @@ function Journeys({ className, onClose }: JourneysProps) {
 						}
 
 						setJourneyQuery(query);
+						setNewJourneyQuery(true);
 					}}
 				>
 					{t('show-departures')}
