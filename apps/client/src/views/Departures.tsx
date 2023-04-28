@@ -78,21 +78,12 @@ function Departures({ className, onClose }: DeparturesProps) {
 				inputIcon={faSearch}
 				selectedValue={selectedValue}
 				onSelect={(selectedOption) => setSelectedValue(selectedOption)}
-				searchedOptions={async (queryString, callback) => {
-					setStationQuery({ name: queryString });
-
-					// Wait for the API to return the stations
-					while (stationsRequest.loading) {
-						await new Promise((resolve) => setTimeout(resolve, 100));
-					}
-
-					callback(
-						(stationsRequest.stations ?? []).map((station) => ({
-							value: station.slId,
-							label: station.name
-						}))
-					);
-				}}
+				options={(stationsRequest.stations ?? []).map((station) => ({
+					label: station.name,
+					value: station.slId
+				}))}
+				loading={stationsRequest.loading}
+				onSearch={(searchQuery) => setStationQuery({ name: searchQuery })}
 			/>
 			<div className="flex gap-2 justify-end">
 				<Button

@@ -52,6 +52,8 @@ function Journeys({ className, onClose }: JourneysProps) {
 	const [journeyQuery, setJourneyQuery] = useState<GetJourneysRequest | undefined>(undefined);
 	const [journeys, setJourneys] = useState<Journey[] | undefined>(undefined);
 	const [newJourneyQuery, setNewJourneyQuery] = useState(false);
+	const [dateQuery, setDateQuery] = useState<string | undefined>(undefined);
+	const [timeQuery, setTimeQuery] = useState<string | undefined>(undefined);
 
 	useEffect(() => {
 		setReadyToSearchJourney(
@@ -106,42 +108,24 @@ function Journeys({ className, onClose }: JourneysProps) {
 						inputIcon={faSearch}
 						selectedValue={selectedOrigin}
 						onSelect={(selectedOption) => setSelectedOrigin(selectedOption)}
-						searchedOptions={async (queryString, callback) => {
-							setStationQuery({ name: queryString });
-
-							// Wait for the API to return the stations
-							while (stationsRequest.loading) {
-								await new Promise((resolve) => setTimeout(resolve, 100));
-							}
-
-							callback(
-								(stationsRequest.stations ?? []).map((station) => ({
-									value: station.slId,
-									label: station.name
-								}))
-							);
-						}}
+						options={(stationsRequest.stations ?? []).map((station) => ({
+							value: station.slId,
+							label: station.name
+						}))}
+						loading={stationsRequest.loading}
+						onSearch={(queryString) => setStationQuery({ name: queryString })}
 					/>
 					<Select
 						placeholder={t('to-label').toString()}
 						inputIcon={faSearch}
 						selectedValue={selectedDestination}
 						onSelect={(selectedOption) => setSelectedDestination(selectedOption)}
-						searchedOptions={async (queryString, callback) => {
-							setStationQuery({ name: queryString });
-
-							// Wait for the API to return the stations
-							while (stationsRequest.loading) {
-								await new Promise((resolve) => setTimeout(resolve, 100));
-							}
-
-							callback(
-								(stationsRequest.stations ?? []).map((station) => ({
-									value: station.slId,
-									label: station.name
-								}))
-							);
-						}}
+						options={(stationsRequest.stations ?? []).map((station) => ({
+							value: station.slId,
+							label: station.name
+						}))}
+						loading={stationsRequest.loading}
+						onSearch={(queryString) => setStationQuery({ name: queryString })}
 					/>
 				</div>
 				<IconButton
@@ -194,50 +178,42 @@ function Journeys({ className, onClose }: JourneysProps) {
 									inputIcon={faCalendar}
 									selectedValue={journeyDate}
 									onSelect={(selectedOption) => setJourneyDate(selectedOption)}
-									options={Array.from({ length: 7 }).map((_, i) => {
-										const date = dayjs().add(i, 'day');
-										const label = dayjs(date).format('dddd, D MMMM');
+									options={Array.from({ length: 7 })
+										.map((_, i) => {
+											const date = dayjs().add(i, 'day');
+											const label = dayjs(date).format('dddd, D MMMM');
 
-										return {
-											value: date.format('YYYY-MM-DD'),
-											label: label.charAt(0).toUpperCase() + label.slice(1)
-										};
-									})}
-									searchedOptions={(queryString, callback, defaultOptions) => {
-										if (defaultOptions === undefined) callback([]);
-
-										const options = (defaultOptions as Option[]).filter((option) =>
-											option.label.toLowerCase().includes(queryString.toLowerCase())
-										);
-
-										callback(options);
-									}}
+											return {
+												value: date.format('YYYY-MM-DD'),
+												label: label.charAt(0).toUpperCase() + label.slice(1)
+											};
+										})
+										.filter((option) =>
+											option.label.toLowerCase().includes(dateQuery?.toLocaleLowerCase() ?? '')
+										)}
+									onSearch={(queryString) => setDateQuery(queryString)}
 								/>
 								<Select
 									placeholder={t('choose-time').toString()}
 									inputIcon={faClock}
 									selectedValue={journeyTime}
 									onSelect={(selectedOption) => setJourneyTime(selectedOption)}
-									options={Array.from({ length: 24 * 12 }).map((_, i) => {
-										const date = dayjs()
-											.startOf('day')
-											.add(i * 5, 'minute');
-										const label = dayjs(date).format('HH:mm');
+									options={Array.from({ length: 24 * 12 })
+										.map((_, i) => {
+											const date = dayjs()
+												.startOf('day')
+												.add(i * 5, 'minute');
+											const label = dayjs(date).format('HH:mm');
 
-										return {
-											value: date.format('HH:mm'),
-											label: label
-										};
-									})}
-									searchedOptions={(queryString, callback, defaultOptions) => {
-										if (defaultOptions === undefined) callback([]);
-
-										const options = (defaultOptions as Option[]).filter((option) =>
-											option.label.toLowerCase().includes(queryString.toLowerCase())
-										);
-
-										callback(options);
-									}}
+											return {
+												value: date.format('HH:mm'),
+												label: label
+											};
+										})
+										.filter((option) =>
+											option.label.toLowerCase().includes(timeQuery?.toLocaleLowerCase() ?? '')
+										)}
+									onSearch={(queryString) => setTimeQuery(queryString)}
 								/>
 							</div>
 						)}

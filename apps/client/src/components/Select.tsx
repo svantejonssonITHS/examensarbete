@@ -31,19 +31,11 @@ const optionStyles = {
 		'!text-white !bg-blue-600 hover:!bg-blue-700 active:!bg-blue-500 dark:bg-blue-500 dark:hover:!bg-blue-400 dark:active:!bg-blue-600'
 };
 
-/**
- * @description If `searchedOptions` is provided, the `options` prop will just be used as the default options to show when the query string is empty.
- */
 interface SelectProps {
 	className?: string;
 	options?: Option[] | undefined;
-	searchedOptions?:
-		| ((
-				queryString: string,
-				callback: (options: Option[]) => void,
-				defaultOptions: Option[] | undefined
-		  ) => Promise<void> | void)
-		| undefined;
+	loading?: boolean;
+	onSearch?: (queryString: string) => void;
 	selectedValue?: Option | undefined;
 	onSelect: (selectedValue: Option | undefined) => void;
 	placeholder?: string | undefined;
@@ -54,7 +46,8 @@ interface SelectProps {
 function Select({
 	className,
 	options,
-	searchedOptions,
+	loading,
+	onSearch,
 	onSelect,
 	selectedValue,
 	placeholder,
@@ -68,7 +61,6 @@ function Select({
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [queryString, setQueryString] = useState<string>('');
 	const [availableOptions, setAvailableOptions] = useState<Option[] | undefined>(options);
-	const [loading, setLoading] = useState<boolean>(false);
 	const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
 
 	useEffect(() => {
@@ -88,34 +80,15 @@ function Select({
 		<div className={wrapperClasses}>
 			<input
 				type="text"
-				className={clsx(inputStyles.base, inputStyles.transition, !searchedOptions && inputStyles.disabled)}
+				className={clsx(inputStyles.base, inputStyles.transition, !onSearch && inputStyles.disabled)}
 				ref={inputRef}
 				placeholder={placeholder}
 				value={queryString}
 				onChange={async (e) => {
-					if (!searchedOptions) return setQueryString('');
+					const query = e.target.value;
+					setQueryString(query);
 
-					const queryString = e.target.value;
-					setQueryString(queryString);
-
-					// If the query string is empty, show all the default options
-					if (queryString.length === 0) return setAvailableOptions(options);
-
-					setAvailableOptions(undefined);
-					setLoading(true);
-
-					await searchedOptions(
-						queryString,
-						(options) => {
-							// If the query string has changed, don't update the available options
-							// This is necessary because the `searchedOptions` function is asynchronous
-							if (queryString !== e.target.value) return;
-
-							setAvailableOptions(options);
-							setLoading(false);
-						},
-						availableOptions
-					);
+					onSearch && onSearch(query);
 				}}
 				onBlur={() => {
 					// If the user leaves the input field and a value is selected, set the query string to the selected value
