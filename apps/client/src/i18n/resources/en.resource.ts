@@ -29,7 +29,11 @@ const en: Resource = {
 		'choose-arrival-time': 'Choose arrival time',
 		'choose-departure-time': 'Choose departure time',
 		'choose-date': 'Choose date',
-		'choose-time': 'Choose time'
+		'choose-time': 'Choose time',
+		'track-designation-label': 'Track',
+		'position-designation-label': 'Position',
+		'transfer': 'Transfer',
+		'walk-to': 'Walk to'
 	}
 };
 

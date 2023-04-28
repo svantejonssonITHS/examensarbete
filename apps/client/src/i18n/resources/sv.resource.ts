@@ -29,7 +29,11 @@ const sv: Resource = {
 		'choose-arrival-time': 'Välj ankomsttid',
 		'choose-departure-time': 'Välj avgångstid',
 		'choose-date': 'Välj datum',
-		'choose-time': 'Välj tid'
+		'choose-time': 'Välj tid',
+		'track-designation-label': 'Spår',
+		'position-designation-label': 'Läge',
+		'transfer': 'Byte',
+		'walk-to': 'Gå till'
 	}
 };
 

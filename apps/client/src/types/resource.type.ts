@@ -28,5 +28,9 @@ export type Resource = {
 		'choose-departure-time': string;
 		'choose-date': string;
 		'choose-time': string;
+		'track-designation-label': string;
+		'position-designation-label': string;
+		'transfer': string;
+		'walk-to': string;
 	};
 };

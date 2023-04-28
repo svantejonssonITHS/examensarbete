@@ -117,10 +117,115 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 							</div>
 						</header>
 						{expandedIndex === index && (
-							<div className="flex flex-col gap-2">
-								{journey.legs.map((leg, index) => (
-									<div className="flex gap-2 items-center justify-between">pucko</div>
-								))}
+							<div className="flex flex-col">
+								{journey.legs.map((leg, index, array) => {
+									const isWalk = leg.line.transportType === TransportType.WALK;
+									const wasPreviousWalk = array[index - 1]?.line.transportType === TransportType.WALK;
+
+									if (isWalk && !wasPreviousWalk) {
+										const previousLeg = array[index - 1];
+										const nextNonWalkLeg = array.find(
+											(leg, i) => i > index && leg.line.transportType !== TransportType.WALK
+										);
+
+										if (!previousLeg || !nextNonWalkLeg) return null;
+
+										return (
+											<div className="text-left p-1 border-t-2 border-gray-500 dark:border-neutral-600 grid grid-cols-[4rem_auto] gap-1">
+												<p className="col-start-1 col-end-2">
+													{dayjs(nextNonWalkLeg.originStop.departureDateTime).diff(
+														dayjs(previousLeg.destinationStop.arrivalDateTime),
+														'minutes'
+													)}{' '}
+													{t('minutes-label')}
+												</p>
+												<p className="col-start-2 col-end-3">
+													{t('transfer')}
+													{nextNonWalkLeg.originStop.designation && (
+														<>
+															{': '}
+															{t('walk-to')}{' '}
+															{[
+																TransportType.METRO,
+																TransportType.TRAIN,
+																TransportType.TRAM
+															].includes(leg.line.transportType)
+																? t('track-designation-label')
+																: t('position-designation-label')}{' '}
+															{nextNonWalkLeg.originStop.designation}
+														</>
+													)}
+												</p>
+											</div>
+										);
+									} else if (isWalk && wasPreviousWalk) {
+										return null;
+									} else {
+										return (
+											<div className="text-left p-1 border-t-2 border-gray-500 dark:border-neutral-600 grid grid-cols-[4rem_1.5rem_auto] grid-rows-4 gap-1 place-items-center overflow-hidden">
+												<div className="col-start-1 col-end-4 row-start-1 row-end-2 flex gap-1 place-self-start">
+													<div
+														className={
+															'w-6 h-6 grid place-items-center rounded-sm text-sm font-bold bg-black dark:bg-gray-200 text-white dark:text-black'
+														}
+													>
+														<FontAwesomeIcon
+															icon={lineTransportType(leg.line.transportType)}
+														/>
+													</div>
+
+													<p
+														className={clsx(
+															'w-12 h-6 grid place-items-center rounded-sm text-sm font-bold text-white',
+															lineColor(leg.line.lineHue).toString()
+														)}
+													>
+														{leg.line.lineNumber}
+													</p>
+												</div>
+												<p className="col-start-1 col-end-2 row-start-2 row-end-3 text-sm font-bold">
+													{dayjs(leg.originStop.departureDateTime).format('HH:mm')}
+												</p>
+												<p className="col-start-1 col-end-2 row-start-3 row-end-4 text-xs">
+													{dayjs(leg.destinationStop.arrivalDateTime).diff(
+														dayjs(leg.originStop.departureDateTime),
+														'minutes'
+													) +
+														' ' +
+														t('minutes-label')}
+												</p>
+												<p className="col-start-1 col-end-2 row-start-4 row-end-5 text-sm font-bold">
+													{dayjs(leg.destinationStop.arrivalDateTime).format('HH:mm')}
+												</p>
+												<div
+													className={clsx(
+														'col-start-2 col-end-3 row-start-2 row-end-5 w-1/4 h-3/4 rounded-full m-auto',
+														lineColor(leg.line.lineHue).toString()
+													)}
+												/>
+												<h3 className="col-start-3 col-end-4 row-start-2 row-end-3 truncate place-self-start">
+													{leg.originStop.name}
+												</h3>
+												{leg.originStop.designation && (
+													<p className="px-2 py-1 text-xs bg-gray-200 dark:bg-neutral-600 rounded-md col-start-3 col-end-4 row-start-3 row-end-4 place-self-start">
+														{[
+															TransportType.METRO,
+															TransportType.TRAIN,
+															TransportType.TRAM
+														].includes(leg.line.transportType)
+															? t('track-designation-label')
+															: t('position-designation-label')}{' '}
+														{leg.originStop.designation}
+													</p>
+												)}
+
+												<h3 className="col-start-3 col-end-4 row-start-4 row-end-5 truncate place-self-start">
+													{leg.destinationStop.name}
+												</h3>
+											</div>
+										);
+									}
+								})}
 							</div>
 						)}
 					</button>
