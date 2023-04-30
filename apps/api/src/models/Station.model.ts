@@ -5,7 +5,7 @@ import { Column, HasMany, Model, Table } from 'sequelize-typescript';
 import { FavoriteRoute, FavoriteStation, Station } from '_packages/shared/types/models';
 import { FavoriteRouteModel } from './FavoriteRoute.model';
 import { FavoriteStationModel } from './FavoriteStation.model';
-import { TableName } from '$src/enums/tableName.enum';
+import { TableName } from '$src/enums/TableName.enum';
 
 @Table({ timestamps: false, tableName: TableName.STATIONS })
 export class StationModel extends Model implements Station {

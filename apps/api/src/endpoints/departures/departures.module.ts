@@ -4,10 +4,10 @@ import { Module } from '@nestjs/common';
 // Internal dependencies
 import { DeparturesService } from './departures.service';
 import { DeparturesController } from './departures.controller';
-import { SLModule } from '$src/providers/sl/sl.module';
+import { SlModule } from '$src/providers/sl/sl.module';
 
 @Module({
-	imports: [SLModule],
+	imports: [SlModule],
 	controllers: [DeparturesController],
 	providers: [DeparturesService]
 })

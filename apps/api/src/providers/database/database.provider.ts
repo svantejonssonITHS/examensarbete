@@ -14,7 +14,7 @@ import {
 	User,
 	UserCreationAttributes
 } from '_packages/shared/types/models';
-import { TableName } from '$src/enums/tableName.enum';
+import { TableName } from '$src/enums/TableName.enum';
 
 @Injectable()
 export class DatabaseProvider {
@@ -68,7 +68,7 @@ export class DatabaseProvider {
 		}
 	};
 
-	public deleteStationsNotInSL = async (slIds: string[]): Promise<void> => {
+	public deleteStationsNotInSl = async (slIds: string[]): Promise<void> => {
 		const transaction = await this.sequelize.transaction();
 
 		try {

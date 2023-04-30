@@ -4,11 +4,11 @@ import { Cron, Timeout } from '@nestjs/schedule';
 
 // Internal dependencies
 import { DatabaseProvider } from '../database/database.provider';
-import { SLProvider } from '../sl/sl.provider';
+import { SlProvider } from '../sl/sl.provider';
 
 @Injectable()
 export class ScheduleProvider {
-	constructor(private databaseProvider: DatabaseProvider, private slProvider: SLProvider) {}
+	constructor(private databaseProvider: DatabaseProvider, private slProvider: SlProvider) {}
 
 	private readonly logger = new Logger(ScheduleProvider.name);
 
@@ -19,10 +19,10 @@ export class ScheduleProvider {
 			const sites = await this.slProvider.getSites();
 			const stopAreas = await this.slProvider.getStopAreas();
 
-			const stationSLIds = [];
+			const stationSlIds = [];
 
 			for (const site of sites) {
-				stationSLIds.push(site.SiteId);
+				stationSlIds.push(site.SiteId);
 
 				const coordinatesOfSite = stopAreas.find((stopArea) => stopArea.StopAreaNumber === site.StopAreaNumber);
 
@@ -36,7 +36,7 @@ export class ScheduleProvider {
 				});
 			}
 
-			await this.databaseProvider.deleteStationsNotInSL(stationSLIds);
+			await this.databaseProvider.deleteStationsNotInSl(stationSlIds);
 		} catch (error) {
 			this.logger.error('Scheduled database update failed', error);
 		} finally {

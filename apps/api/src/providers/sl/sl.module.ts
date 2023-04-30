@@ -2,11 +2,11 @@
 import { Module, CacheModule } from '@nestjs/common';
 
 // Internal dependencies
-import { SLProvider } from './sl.provider';
+import { SlProvider } from './sl.provider';
 
 @Module({
 	imports: [CacheModule.register()],
-	providers: [SLProvider],
-	exports: [SLProvider]
+	providers: [SlProvider],
+	exports: [SlProvider]
 })
-export class SLModule {}
+export class SlModule {}

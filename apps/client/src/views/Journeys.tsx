@@ -29,7 +29,7 @@ import { Endpoint } from '_packages/shared/enums';
 import { Option } from '$src/types/Option.type';
 import Button from '$src/components/Button';
 import RadioButton from '$src/components/RadioButton';
-import { JourneyTimeBasis } from '$src/enums/journeyTimeBasis.enum';
+import { JourneyTimeBasis } from '$src/enums/JourneyTimeBasis.enum';
 import dayjs from '$src/utils/dayjs.util';
 import { Journey } from '_packages/shared/types/other';
 import JourneyList from '$src/components/JourneyList';

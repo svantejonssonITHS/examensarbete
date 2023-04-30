@@ -3,11 +3,11 @@ import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common
 
 // Internal dependencies
 import { HttpResponse, GetDeparturesRequest, GetDeparturesResponse } from '_packages/shared/types/http';
-import { SLProvider } from '$src/providers/sl/sl.provider';
+import { SlProvider } from '$src/providers/sl/sl.provider';
 
 @Injectable()
 export class DeparturesService {
-	constructor(private sl: SLProvider) {}
+	constructor(private sl: SlProvider) {}
 
 	private readonly logger = new Logger(DeparturesService.name);
 

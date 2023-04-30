@@ -3,18 +3,18 @@ import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common
 
 // Internal dependencies
 import { HttpResponse, GetJourneysRequest, GetJourneysResponse } from '_packages/shared/types/http';
-import { SLProvider } from '$src/providers/sl/sl.provider';
-import { SLJourneyRequest } from '$src/types/sl.type';
+import { SlProvider } from '$src/providers/sl/sl.provider';
+import { SlJourneyRequest } from '$src/types/Sl.type';
 
 @Injectable()
 export class JourneysService {
-	constructor(private sl: SLProvider) {}
+	constructor(private sl: SlProvider) {}
 
 	private readonly logger = new Logger(JourneysService.name);
 
 	async getJourneys(queries: GetJourneysRequest): Promise<HttpResponse<GetJourneysResponse>> {
 		try {
-			const requestParams: SLJourneyRequest = {
+			const requestParams: SlJourneyRequest = {
 				originId: queries.originId,
 				destId: queries.destinationId
 			};

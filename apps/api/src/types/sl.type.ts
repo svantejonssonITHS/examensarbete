@@ -1,4 +1,4 @@
-export type SLHealth = {
+export type SlHealth = {
 	connected: boolean;
 	station: {
 		connected: boolean;
@@ -11,14 +11,14 @@ export type SLHealth = {
 	};
 };
 
-// Additional fields exists on these types, but they are not used in this project. See the SL API (Trafiklab) documentation for more information.
-export type SLSite = {
+// Additional fields exists on these types, but they are not used in this project. See the Sl api (Trafiklab) documentation for more information.
+export type SlSite = {
 	SiteId: string;
 	SiteName: string;
 	StopAreaNumber: string;
 };
 
-export type SLStopArea = {
+export type SlStopArea = {
 	StopAreaNumber: string;
 	CentroidNorthingCoordinate: number;
 	CentroidEastingCoordinate: number;
@@ -27,7 +27,7 @@ export type SLStopArea = {
 /**
  * @description `null` values also occur
  */
-export enum SLLineGroup {
+export enum SlLineGroup {
 	BUS_BLUE = 'blåbuss',
 	METRO_BLUE = 'tunnelbanans blå linje',
 	METRO_GREEN = 'tunnelbanans gröna linje',
@@ -43,7 +43,7 @@ export enum SLLineGroup {
 }
 
 // https://www.trafiklab.se/api/trafiklab-apis/sl/route-planner-31/
-export type SLJourneyRequest = {
+export type SlJourneyRequest = {
 	Lang?: string;
 	originId: string;
 	destId: string;

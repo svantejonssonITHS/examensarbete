@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as dayjs from 'dayjs';
 
 // Internal dependencies
-import { SLHealth, SLJourneyRequest, SLSite, SLStopArea } from '$src/types/sl.type';
+import { SlHealth, SlJourneyRequest, SlSite, SlStopArea } from '$src/types/Sl.type';
 import env from '$src/utils/env.util';
 import { Departure, DestinationStop, Journey, Line, OriginStop } from '_packages/shared/types/other';
 import { LineHue, TransportType } from '_packages/shared/enums';
@@ -27,10 +27,10 @@ const journeyApi = axios.create({
 });
 
 @Injectable()
-export class SLProvider {
-	private readonly logger = new Logger(SLProvider.name);
+export class SlProvider {
+	private readonly logger = new Logger(SlProvider.name);
 
-	async getHealth(): Promise<SLHealth> {
+	async getHealth(): Promise<SlHealth> {
 		try {
 			const station = await stationApi.get('');
 			const departure = await departureApi.get('');
@@ -43,7 +43,7 @@ export class SLProvider {
 				journey: { connected: journey.status === 200 }
 			};
 		} catch (error) {
-			this.logger.error('An error occurred while trying to get health of SL APIs', error.stack);
+			this.logger.error('An error occurred while trying to get health of Sl apis', error.stack);
 			return {
 				connected: false,
 				station: { connected: false },
@@ -53,7 +53,7 @@ export class SLProvider {
 		}
 	}
 
-	async getSites(): Promise<SLSite[]> {
+	async getSites(): Promise<SlSite[]> {
 		try {
 			const sites = await stationApi.get('', {
 				params: {
@@ -62,18 +62,18 @@ export class SLProvider {
 			});
 
 			if (sites.status !== 200) {
-				throw new Error(`Failed to fetch sites from SL. Status code: ${sites.status}`);
+				throw new Error(`Failed to fetch sites from Sl. Status code: ${sites.status}`);
 			}
 
-			this.logger.log('Sending sites from SL API');
+			this.logger.log('Sending sites from Sl api');
 
 			return sites.data.ResponseData.Result;
 		} catch (error) {
-			this.logger.error('An error occurred while trying to get sites from SL API', error.stack);
+			this.logger.error('An error occurred while trying to get sites from Sl api', error.stack);
 		}
 	}
 
-	async getStopAreas(): Promise<SLStopArea[]> {
+	async getStopAreas(): Promise<SlStopArea[]> {
 		try {
 			const stopAreas = await stationApi.get('', {
 				params: {
@@ -82,14 +82,14 @@ export class SLProvider {
 			});
 
 			if (stopAreas.status !== 200) {
-				throw new Error(`Failed to fetch stop areas from SL. Status code: ${stopAreas.status}`);
+				throw new Error(`Failed to fetch stop areas from Sl. Status code: ${stopAreas.status}`);
 			}
 
-			this.logger.log('Sending stop areas from SL API');
+			this.logger.log('Sending stop areas from Sl api');
 
 			return stopAreas.data.ResponseData.Result;
 		} catch (error) {
-			this.logger.error('An error occurred while trying to get stop areas from SL API', error.stack);
+			this.logger.error('An error occurred while trying to get stop areas from Sl api', error.stack);
 		}
 	}
 
@@ -104,7 +104,7 @@ export class SLProvider {
 			});
 
 			if (departures.status !== 200) {
-				throw new Error(`Failed to fetch departures from SL. Status code: ${departures.status}`);
+				throw new Error(`Failed to fetch departures from Sl. Status code: ${departures.status}`);
 			}
 
 			if (departures.data.StatusCode === 4001) {
@@ -266,7 +266,7 @@ export class SLProvider {
 				});
 			});
 
-			this.logger.log('Sending departures from SL API');
+			this.logger.log('Sending departures from Sl api');
 
 			return [
 				...formattedBuses,
@@ -286,11 +286,11 @@ export class SLProvider {
 				return 0;
 			});
 		} catch (error) {
-			this.logger.error('An error occurred while trying to get departures from SL API', error.stack);
+			this.logger.error('An error occurred while trying to get departures from Sl api', error.stack);
 		}
 	}
 
-	async getJourneys(queries: SLJourneyRequest) {
+	async getJourneys(queries: SlJourneyRequest) {
 		try {
 			const journeys = await journeyApi.get('', {
 				params: {
@@ -303,7 +303,7 @@ export class SLProvider {
 			});
 
 			if (journeys.status !== 200) {
-				throw new Error(`SL API returned status code ${journeys.status}`);
+				throw new Error(`Sl api returned status code ${journeys.status}`);
 			}
 
 			const formattedJourneys = [];
@@ -356,7 +356,7 @@ export class SLProvider {
 
 			return formattedJourneys;
 		} catch (error) {
-			this.logger.error('An error occurred while trying to get journeys from SL API', error.stack);
+			this.logger.error('An error occurred while trying to get journeys from Sl api', error.stack);
 		}
 	}
 }

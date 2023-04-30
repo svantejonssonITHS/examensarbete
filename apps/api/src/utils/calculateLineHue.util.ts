@@ -1,14 +1,14 @@
-import { SLLineGroup } from '$src/types/sl.type';
+import { SlLineGroup } from '$src/types/Sl.type';
 import { LineHue, TransportType } from '_packages/shared/enums';
 
-export default function (transportType: TransportType, groupOfLine: SLLineGroup) {
+export default function (transportType: TransportType, groupOfLine: SlLineGroup) {
 	if (transportType === TransportType.BUS) {
-		return groupOfLine ? (groupOfLine.includes(SLLineGroup.BUS_BLUE) ? LineHue.BLUE : LineHue.RED) : LineHue.RED;
+		return groupOfLine ? (groupOfLine.includes(SlLineGroup.BUS_BLUE) ? LineHue.BLUE : LineHue.RED) : LineHue.RED;
 	} else if (transportType === TransportType.METRO) {
 		return groupOfLine
-			? groupOfLine.includes(SLLineGroup.METRO_BLUE)
+			? groupOfLine.includes(SlLineGroup.METRO_BLUE)
 				? LineHue.BLUE
-				: groupOfLine.includes(SLLineGroup.METRO_GREEN)
+				: groupOfLine.includes(SlLineGroup.METRO_GREEN)
 				? LineHue.GREEN
 				: LineHue.RED
 			: LineHue.RED;
@@ -18,13 +18,13 @@ export default function (transportType: TransportType, groupOfLine: SLLineGroup)
 		return LineHue.PINK;
 	} else if (transportType === TransportType.TRAM) {
 		return groupOfLine
-			? groupOfLine.includes(SLLineGroup.TRAM_CITY) || groupOfLine.includes(SLLineGroup.TRAM_DJURGARDEN)
+			? groupOfLine.includes(SlLineGroup.TRAM_CITY) || groupOfLine.includes(SlLineGroup.TRAM_DJURGARDEN)
 				? LineHue.GRAY
-				: groupOfLine.includes(SLLineGroup.TRAM_NOCKEBY)
+				: groupOfLine.includes(SlLineGroup.TRAM_NOCKEBY)
 				? LineHue.TEAL
-				: groupOfLine.includes(SLLineGroup.TRAM_LIDINGO)
+				: groupOfLine.includes(SlLineGroup.TRAM_LIDINGO)
 				? LineHue.BROWN
-				: groupOfLine.includes(SLLineGroup.TRAM_TVAR)
+				: groupOfLine.includes(SlLineGroup.TRAM_TVAR)
 				? LineHue.ORANGE
 				: null
 			: null;
