@@ -63,7 +63,7 @@ function App() {
 					/>
 					<ZoomControl position="bottomright" />
 					<Polyline
-						pathOptions={{ color: '#f30f55' }}
+						pathOptions={{ color: '#f30f55', dashArray: '10' }}
 						positions={[
 							[59.319636, 18.072219],
 							[59.319618000000006, 18.072228],
