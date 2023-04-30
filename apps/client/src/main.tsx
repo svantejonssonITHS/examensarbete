@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './css/index.css';
-import { ThemeProvider } from './providers/theme.provider';
+import { ThemeProvider } from './providers/Theme.provider';
 import '$src/i18n/index';
 import { Auth0Provider } from '@auth0/auth0-react';
 import env from './utils/env.util';

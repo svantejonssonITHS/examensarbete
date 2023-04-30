@@ -12,8 +12,8 @@ import Departures from './views/Departures';
 import env from './utils/env.util';
 import { MapContainer, Marker, Polyline, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useTheme } from './providers/theme.provider';
-import { Theme } from './types/theme.type';
+import { useTheme } from './providers/Theme.provider';
+import { Theme } from './types/Theme.type';
 import i18n from './i18n';
 
 const buttonContainerStyles = {

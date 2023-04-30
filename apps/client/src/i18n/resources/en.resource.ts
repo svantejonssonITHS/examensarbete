@@ -1,4 +1,4 @@
-import { Resource } from '$src/types/resource.type';
+import { Resource } from '$src/types/Resource.type';
 
 const en: Resource = {
 	translation: {

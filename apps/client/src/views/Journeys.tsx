@@ -26,7 +26,7 @@ import {
 	GetStationsResponse
 } from '_packages/shared/types/http';
 import { Endpoint } from '_packages/shared/enums';
-import { Option } from '$src/types/option.type';
+import { Option } from '$src/types/Option.type';
 import Button from '$src/components/Button';
 import RadioButton from '$src/components/RadioButton';
 import { JourneyTimeBasis } from '$src/enums/journeyTimeBasis.enum';

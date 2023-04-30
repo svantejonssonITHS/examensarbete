@@ -10,7 +10,7 @@ import { faSearch, faSpinner, faStar } from '@fortawesome/free-solid-svg-icons';
 import Button from '../components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RecentDeparture from '../components/RecentDeparture';
-import { Option } from '$src/types/option.type';
+import { Option } from '$src/types/Option.type';
 import useApi from '$src/hooks/useApi';
 import {
 	GetDeparturesRequest,

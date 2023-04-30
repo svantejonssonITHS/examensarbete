@@ -6,7 +6,7 @@ import { IconDefinition, faClose, faSpinner } from '@fortawesome/free-solid-svg-
 import { t } from 'i18next';
 
 // Internal dependencies
-import { Option } from '$src/types/option.type';
+import { Option } from '$src/types/Option.type';
 
 const inputStyles = {
 	base: 'font-normal text-black dark:!text-white rounded-md py-2 px-3 w-full text-sm cursor-pointer disabled:cursor-not-allowed focus:input_focus bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700',

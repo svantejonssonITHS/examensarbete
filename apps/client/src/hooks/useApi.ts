@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 
 // Internal dependencies
-import { ApiResponse } from '$src/types/apiResponse.type';
+import { ApiResponse } from '$src/types/ApiResponse.type';
 import env from '$src/utils/env.util';
 
 function useApi<Req, Res>(method: RequestInit['method'], path: string, body?: Req, queries?: Req): ApiResponse<Res> {

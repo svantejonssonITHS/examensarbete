@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 // Internal dependencies
-import { Theme } from '$src/types/theme.type';
+import { Theme } from '$src/types/Theme.type';
 
 const ThemeContext = createContext({} as [Theme | undefined, React.Dispatch<React.SetStateAction<Theme | undefined>>]);
 

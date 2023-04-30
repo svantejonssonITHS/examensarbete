@@ -8,11 +8,11 @@ import { useEffect, useState } from 'react';
 // Internal dependencies
 import Container from '../components/Container';
 import Select from '../components/Select';
-import { Resource } from '$src/types/resource.type';
+import { Resource } from '$src/types/Resource.type';
 import i18n from '$src/i18n';
 import RadioButton from '../components/RadioButton';
-import { useTheme } from '$src/providers/theme.provider';
-import { Theme } from '$src/types/theme.type';
+import { useTheme } from '$src/providers/Theme.provider';
+import { Theme } from '$src/types/Theme.type';
 import Button from '../components/Button';
 import dayjs from '$src/utils/dayjs.util';
 import { Language } from '_packages/shared/enums';
