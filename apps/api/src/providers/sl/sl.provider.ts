@@ -61,7 +61,7 @@ export class SlProvider {
 				}
 			});
 
-			if (sites.status !== 200) {
+			if (sites.status !== 200 || !sites.data.ResponseData) {
 				throw new Error(`Failed to fetch sites from Sl. Status code: ${sites.status}`);
 			}
 
@@ -70,6 +70,8 @@ export class SlProvider {
 			return sites.data.ResponseData.Result;
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get sites from Sl api', error.stack);
+
+			throw new Error('Failed to fetch sites from Sl');
 		}
 	}
 
@@ -81,7 +83,7 @@ export class SlProvider {
 				}
 			});
 
-			if (stopAreas.status !== 200) {
+			if (stopAreas.status !== 200 || !stopAreas.data.ResponseData) {
 				throw new Error(`Failed to fetch stop areas from Sl. Status code: ${stopAreas.status}`);
 			}
 
@@ -90,6 +92,8 @@ export class SlProvider {
 			return stopAreas.data.ResponseData.Result;
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get stop areas from Sl api', error.stack);
+
+			throw new Error('Failed to fetch stop areas from Sl');
 		}
 	}
 
@@ -287,6 +291,8 @@ export class SlProvider {
 			});
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get departures from Sl api', error.stack);
+
+			throw new Error('An error occurred while trying to get departures from Sl api');
 		}
 	}
 
@@ -357,6 +363,8 @@ export class SlProvider {
 			return formattedJourneys;
 		} catch (error) {
 			this.logger.error('An error occurred while trying to get journeys from Sl api', error.stack);
+
+			throw new Error('An error occurred while trying to get journeys from Sl api');
 		}
 	}
 }
