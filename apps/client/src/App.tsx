@@ -10,11 +10,14 @@ import Settings from './views/Settings';
 import Journeys from './views/Journeys';
 import Departures from './views/Departures';
 import env from './utils/env.util';
-import { MapContainer, Marker, Polyline, Popup, TileLayer, ZoomControl } from 'react-leaflet';
+import { MapContainer, Marker, Polyline, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useTheme } from './providers/Theme.provider';
 import { Theme } from './types/Theme.type';
 import i18n from './i18n';
+import { useMapMarker } from './providers/MapMarker.provider';
+import { MapMarkerType } from './enums/MapMarkerType.enum';
+import { LatLngExpression } from 'leaflet';
 
 const buttonContainerStyles = {
 	base: 'absolute top-0 flex gap-2 transition-[top] duration-300 delay-300 linear',
@@ -39,6 +42,7 @@ function App() {
 	const [showSettings, setShowSettings] = useState(false);
 	const [containerShowing, setContainerShowing] = useState(false);
 	const [theme] = useTheme();
+	const [mapMarkers] = useMapMarker();
 
 	useEffect(() => {
 		setContainerShowing(showJourneys || showDepartures || showSettings);
@@ -62,6 +66,32 @@ function App() {
 						}/{z}/{x}/{y}{r}.png?access-token=${env.JAWG_ACCESS_TOKEN}&lang=${i18n.language}`}
 					/>
 					<ZoomControl position="bottomright" />
+
+					{mapMarkers &&
+						mapMarkers.map((marker) => {
+							if (marker.type === MapMarkerType.POINT) {
+								return (
+									<Marker key={Math.random()} position={marker.positions[0] as LatLngExpression} />
+								);
+							} else if (
+								marker.type === MapMarkerType.SOLID_LINE ||
+								marker.type === MapMarkerType.DASHED_LINE
+							) {
+								return (
+									<Polyline
+										key={Math.random()}
+										pathOptions={{
+											color: marker.color,
+											dashArray: marker.type === MapMarkerType.DASHED_LINE ? '10' : '0'
+										}}
+										positions={marker.positions as LatLngExpression[]}
+									/>
+								);
+							} else {
+								return null;
+							}
+						})}
+
 					<Polyline
 						pathOptions={{ color: '#f30f55', dashArray: '10' }}
 						positions={[

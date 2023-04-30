@@ -7,9 +7,9 @@ import { MapMarker } from '$src/types/MapMarker.type';
 const MapMarkerContext = createContext({} as [MapMarker[], React.Dispatch<React.SetStateAction<MapMarker[]>>]);
 
 export const MapMarkerProvider = ({ children }: { children: React.ReactNode }) => {
-	const [mapMarker, setMapMarker] = useState<MapMarker[]>([]);
+	const [mapMarkers, setMapMarkers] = useState<MapMarker[]>([]);
 
-	return <MapMarkerContext.Provider value={[mapMarker, setMapMarker]}>{children}</MapMarkerContext.Provider>;
+	return <MapMarkerContext.Provider value={[mapMarkers, setMapMarkers]}>{children}</MapMarkerContext.Provider>;
 };
 
 export const useMapMarker = () => {
