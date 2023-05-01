@@ -1,5 +1,5 @@
 // External dependencies
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Internal dependencies
 import Layout from './components/Layout';
@@ -11,6 +11,7 @@ import Journeys from './views/Journeys';
 import Departures from './views/Departures';
 import env from './utils/env.util';
 import { MapContainer, Marker, Polyline, TileLayer, ZoomControl } from 'react-leaflet';
+import { Map, latLngBounds } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useTheme } from './providers/Theme.provider';
 import { Theme } from './types/Theme.type';
@@ -42,11 +43,31 @@ function App() {
 	const [showSettings, setShowSettings] = useState(false);
 	const [containerShowing, setContainerShowing] = useState(false);
 	const [theme] = useTheme();
+	const [mapRef, setMapRef] = useState<Map | undefined>();
 	const [mapMarkers] = useMapMarker();
 
 	useEffect(() => {
 		setContainerShowing(showJourneys || showDepartures || showSettings);
 	}, [showJourneys, showDepartures, showSettings]);
+
+	useEffect(() => {
+		if (mapRef && mapMarkers.length) {
+			const bounds = latLngBounds([]);
+
+			mapMarkers.forEach((marker) => {
+				// find the bounds of each marker (position is number[])
+				if (marker.type === MapMarkerType.POINT) {
+					bounds.extend(marker.positions[0] as LatLngExpression);
+				} else if (marker.type === MapMarkerType.SOLID_LINE || marker.type === MapMarkerType.DASHED_LINE) {
+					marker.positions.forEach((position) => {
+						bounds.extend(position as LatLngExpression);
+					});
+				}
+			});
+
+			mapRef.fitBounds(bounds, { padding: [50, 50] });
+		}
+	}, [mapRef, mapMarkers]);
 
 	return (
 		<Layout
@@ -58,6 +79,7 @@ function App() {
 					minZoom={8}
 					zoomControl={false}
 					className="h-screen w-screen"
+					ref={setMapRef}
 				>
 					<TileLayer
 						attribution='<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
