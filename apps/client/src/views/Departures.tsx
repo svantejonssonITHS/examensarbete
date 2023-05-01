@@ -33,6 +33,7 @@ function Departures({ className, onClose }: DeparturesProps) {
 	const [stationQuery, setStationQuery] = useState<GetStationsRequest | undefined>(undefined);
 	const [departuresQuery, setDeparturesQuery] = useState<GetDeparturesRequest | undefined>(undefined);
 	const [shownStation, setShownStation] = useState<Station | undefined>(undefined);
+	const [shownStationPosition, setShownStationPosition] = useState<number[][] | undefined>(undefined);
 	const [departures, setDepartures] = useState<Departure[] | undefined>(undefined);
 
 	const stationsRequest = useApi<GetStationsRequest, GetStationsResponse>(
@@ -52,7 +53,13 @@ function Departures({ className, onClose }: DeparturesProps) {
 	useEffect(() => {
 		if (departuresRequest.departures) {
 			setDepartures(departuresRequest.departures);
-			setShownStation(stationsRequest.stations?.find((station) => station.slId === selectedValue?.value));
+
+			const selectedStation = stationsRequest.stations?.find((station) => station.slId === selectedValue?.value);
+
+			setShownStation(selectedStation);
+			setShownStationPosition([
+				[selectedStation?.northingCoordinate ?? 0, selectedStation?.eastingCoordinate ?? 0]
+			]);
 		}
 	}, [departuresRequest.departures]);
 
@@ -108,10 +115,10 @@ function Departures({ className, onClose }: DeparturesProps) {
 				</Button>
 			</div>
 			<div className="flex flex-col gap-2">
-				{selectedValue && selectedValue.value === shownStation?.slId && departures ? (
+				{selectedValue && selectedValue.value === shownStation?.slId && shownStationPosition && departures ? (
 					<DepartureBoard
 						stationName={selectedValue.label}
-						stationPosition={[[shownStation.northingCoordinate, shownStation.eastingCoordinate]]}
+						stationPosition={shownStationPosition}
 						departures={departures}
 					/>
 				) : departuresRequest.loading ? (
