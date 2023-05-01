@@ -2,12 +2,15 @@
 import clsx from 'clsx';
 import { t } from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect } from 'react';
 
 // Internal dependencies
 import { Departure } from '_packages/shared/types/other';
 import lineColor from '$src/utils/lineColor.util';
 import lineTransportType from '$src/utils/lineTransportType.util';
 import dayjs from '$src/utils/dayjs.util';
+import { useMapMarker } from '$src/providers/MapMarker.provider';
+import { MapMarkerType } from '$src/enums/MapMarkerType.enum';
 
 const containerStyles = {
 	base: 'flex flex-col gap-2 text-black dark:text-white'
@@ -16,11 +19,27 @@ const containerStyles = {
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 	className?: string;
 	stationName: string;
+	stationPosition: number[][];
 	departures: Departure[];
 }
 
-function DepartureBoard({ stationName, departures, className, ...props }: ContainerProps) {
+function DepartureBoard({ stationName, stationPosition, departures, className, ...props }: ContainerProps) {
 	const containerClasses = clsx(className, containerStyles.base);
+	const [_, setMapMarkers] = useMapMarker();
+
+	// set the map marker to the station
+	useEffect(() => {
+		setMapMarkers([
+			{
+				type: MapMarkerType.POINT,
+				positions: stationPosition
+			}
+		]);
+
+		return () => {
+			setMapMarkers([]);
+		};
+	}, [stationPosition]);
 
 	return (
 		<div className={containerClasses} {...props}>

@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import { t } from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 // Internal dependencies
 import { Journey } from '_packages/shared/types/other';
@@ -11,6 +11,9 @@ import lineTransportType from '$src/utils/lineTransportType.util';
 import dayjs from '$src/utils/dayjs.util';
 import { faArrowRight, faChevronDown, faChevronRight, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { TransportType } from '_packages/shared/enums';
+import { useMapMarker } from '$src/providers/MapMarker.provider';
+import { MapMarkerType } from '$src/enums/MapMarkerType.enum';
+import { MapMarker } from '$src/types/MapMarker.type';
 
 const containerStyles = {
 	base: 'flex flex-col gap-2 text-black dark:text-white'
@@ -23,8 +26,15 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 
 function JourneyList({ journeys, className, ...props }: ContainerProps) {
 	const containerClasses = clsx(className, containerStyles.base);
+	const [_, setMapMarkers] = useMapMarker();
 
 	const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+	useEffect(() => {
+		return () => {
+			setMapMarkers([]);
+		};
+	}, []);
 
 	return (
 		<div className={containerClasses} {...props}>
@@ -33,7 +43,60 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 					<button
 						key={Math.random()}
 						className="flex flex-col gap-2 p-2 rounded-md bg-gray-100 dark:bg-neutral-700"
-						onClick={() => setExpandedIndex(index === expandedIndex ? null : index)}
+						onClick={() => {
+							const newIndex = index === expandedIndex ? null : index;
+
+							setExpandedIndex(newIndex);
+
+							if (newIndex !== null) {
+								const markers: MapMarker[] = [];
+
+								journey.legs.forEach((leg) => {
+									if (!markers.length) {
+										markers.push({
+											type: MapMarkerType.POINT,
+											positions: [
+												[leg.originStop.northingCoordinate, leg.originStop.eastingCoordinate]
+											]
+										});
+									}
+
+									if (leg.line.transportType === TransportType.WALK) {
+										markers.push({
+											type: MapMarkerType.DASHED_LINE,
+											positions: [
+												[leg.originStop.northingCoordinate, leg.originStop.eastingCoordinate],
+												[
+													leg.destinationStop.northingCoordinate,
+													leg.destinationStop.eastingCoordinate
+												]
+											],
+											colorAsClass: lineColor(leg.line.lineHue, 'stroke')
+										});
+									} else {
+										markers.push({
+											type: MapMarkerType.SOLID_LINE,
+											positions: leg.line.path || [],
+											colorAsClass: lineColor(leg.line.lineHue, 'stroke')
+										});
+									}
+
+									markers.push({
+										type: MapMarkerType.POINT,
+										positions: [
+											[
+												leg.destinationStop.northingCoordinate,
+												leg.destinationStop.eastingCoordinate
+											]
+										]
+									});
+								});
+
+								setMapMarkers(markers);
+							} else {
+								setMapMarkers([]);
+							}
+						}}
 					>
 						<header className="w-full flex flex-col gap-2">
 							<h2 className="title_base flex gap-2 items-center">
@@ -96,13 +159,13 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 													);
 												} else if (truncate && !prevTrunced) {
 													return (
-														<>
+														<Fragment key={Math.random()}>
 															<FontAwesomeIcon icon={faEllipsis} className="ml-1 mr-1" />
 															<FontAwesomeIcon
 																icon={faChevronRight}
 																className="ml-1 mr-1"
 															/>
-														</>
+														</Fragment>
 													);
 												} else {
 													return null;

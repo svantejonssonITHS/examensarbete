@@ -21,6 +21,7 @@ import {
 import { Endpoint } from '_packages/shared/enums';
 import { Departure } from '_packages/shared/types/other';
 import DepartureBoard from '$src/components/DepartureBoard';
+import { Station } from '_packages/shared/types/models';
 
 interface DeparturesProps {
 	className?: string;
@@ -31,7 +32,7 @@ function Departures({ className, onClose }: DeparturesProps) {
 	const [selectedValue, setSelectedValue] = useState<Option | undefined>(undefined);
 	const [stationQuery, setStationQuery] = useState<GetStationsRequest | undefined>(undefined);
 	const [departuresQuery, setDeparturesQuery] = useState<GetDeparturesRequest | undefined>(undefined);
-	const [shownStation, setShownStation] = useState<Option | undefined>(undefined);
+	const [shownStation, setShownStation] = useState<Station | undefined>(undefined);
 	const [departures, setDepartures] = useState<Departure[] | undefined>(undefined);
 
 	const stationsRequest = useApi<GetStationsRequest, GetStationsResponse>(
@@ -51,14 +52,14 @@ function Departures({ className, onClose }: DeparturesProps) {
 	useEffect(() => {
 		if (departuresRequest.departures) {
 			setDepartures(departuresRequest.departures);
-			setShownStation(selectedValue);
+			setShownStation(stationsRequest.stations?.find((station) => station.slId === selectedValue?.value));
 		}
 	}, [departuresRequest.departures]);
 
 	useEffect(() => {
 		let updateInterval: NodeJS.Timeout | undefined;
 
-		if (departures && selectedValue && selectedValue === shownStation) {
+		if (departures && selectedValue && selectedValue.value === shownStation?.slId) {
 			updateInterval = setInterval(() => {
 				setDeparturesQuery({ slId: selectedValue.value });
 			}, 10000);
@@ -107,8 +108,12 @@ function Departures({ className, onClose }: DeparturesProps) {
 				</Button>
 			</div>
 			<div className="flex flex-col gap-2">
-				{selectedValue && selectedValue === shownStation && departures ? (
-					<DepartureBoard stationName={selectedValue.label} departures={departures} />
+				{selectedValue && selectedValue.value === shownStation?.slId && departures ? (
+					<DepartureBoard
+						stationName={selectedValue.label}
+						stationPosition={[[shownStation.northingCoordinate, shownStation.eastingCoordinate]]}
+						departures={departures}
+					/>
 				) : departuresRequest.loading ? (
 					<div className="text-gray-500 dark:text-gray-400 flex gap-2 items-center justify-center">
 						<FontAwesomeIcon icon={faSpinner} spin />
