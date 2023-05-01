@@ -81,7 +81,7 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 															<p
 																className={clsx(
 																	'w-12 h-6 grid place-items-center rounded-sm text-sm font-bold text-white',
-																	lineColor(leg.line.lineHue).toString()
+																	lineColor(leg.line.lineHue, 'bg').toString()
 																)}
 															>
 																{leg.line.lineNumber}
@@ -184,7 +184,7 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 													<p
 														className={clsx(
 															'w-12 h-6 grid place-items-center rounded-sm text-sm font-bold text-white',
-															lineColor(leg.line.lineHue).toString()
+															lineColor(leg.line.lineHue, 'bg').toString()
 														)}
 													>
 														{leg.line.lineNumber}
@@ -207,7 +207,7 @@ function JourneyList({ journeys, className, ...props }: ContainerProps) {
 												<div
 													className={clsx(
 														'col-start-2 col-end-3 row-start-2 row-end-5 w-1/4 h-3/4 rounded-full m-auto',
-														lineColor(leg.line.lineHue).toString()
+														lineColor(leg.line.lineHue, 'bg').toString()
 													)}
 												/>
 												<h3 className="col-start-3 col-end-4 row-start-2 row-end-3 truncate place-self-start">

@@ -37,7 +37,7 @@ function DepartureBoard({ stationName, departures, className, ...props }: Contai
 						<p
 							className={clsx(
 								'w-12 h-6 grid place-items-center rounded-sm text-sm font-bold text-white',
-								lineColor(departure.lineHue).toString()
+								lineColor(departure.lineHue, 'bg').toString()
 							)}
 						>
 							{departure.lineNumber}
